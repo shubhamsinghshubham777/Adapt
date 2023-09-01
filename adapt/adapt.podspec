@@ -1,7 +1,7 @@
 Pod::Spec.new do |spec|
     spec.name                     = 'adapt'
     spec.version                  = '1.0.0'
-    spec.homepage                 = 'empty'
+    spec.homepage                 = 'https://github.com/shubhamsinghshubham777/Adapt'
     spec.source                   = { :http=> ''}
     spec.authors                  = ''
     spec.license                  = ''

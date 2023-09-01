@@ -3,9 +3,9 @@ agp = "8.1.1"
 androidx-activityCompose = "1.7.2"
 androidx-appcompat = "1.6.1"
 compose = "1.5.0"
-# This needs to be at least 1.5.2 (reason: https://github.com/JetBrains/compose-multiplatform/issues/3531#issuecomment-1690831975)
-compose-compiler = "1.5.2"
+compose-compiler = "1.5.2" # This needs to be at least 1.5.2 (reason: https://github.com/JetBrains/compose-multiplatform/issues/3531#issuecomment-1690831975)
 kotlin = "1.9.10"
+maven-publish = "0.25.3"
 
 [libraries]
 androidx-activityCompose = { module = "androidx.activity:activity-compose", version.ref = "androidx-activityCompose" }
@@ -17,4 +17,5 @@ android-library = { id = "com.android.library", version.ref = "agp" }
 cocoapods = { id = "org.jetbrains.kotlin.native.cocoapods", version.ref = "kotlin" }
 compose = { id = "org.jetbrains.compose", version.ref = "compose" }
 kotlin-android = { id = "org.jetbrains.kotlin.android", version.ref = "kotlin" }
+maven-publish = { id = "com.vanniktech.maven.publish", version.ref = "maven-publish" }
 multiplatform = { id = "org.jetbrains.kotlin.multiplatform", version.ref = "kotlin" }

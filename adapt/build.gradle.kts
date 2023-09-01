@@ -1,9 +1,28 @@
-import org.jetbrains.compose.desktop.application.dsl.TargetFormat
+/*
+ * Copyright 2023 Shubham Singh
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
+@file:Suppress("UnstableApiUsage")
+
+import com.vanniktech.maven.publish.SonatypeHost
 
 plugins {
     alias(libs.plugins.android.library)
     alias(libs.plugins.cocoapods)
     alias(libs.plugins.compose)
+    alias(libs.plugins.maven.publish)
     alias(libs.plugins.multiplatform)
 }
 
@@ -13,7 +32,7 @@ kotlin {
     androidTarget {
         compilations.all {
             kotlinOptions {
-                jvmTarget = "1.8"
+                jvmTarget = "17"
             }
         }
     }
@@ -32,7 +51,7 @@ kotlin {
     cocoapods {
         version = "1.0.0"
         summary = "Adapt UI library"
-        homepage = "empty"
+        homepage = "https://github.com/shubhamsinghshubham777/Adapt"
         ios.deploymentTarget = "11.0"
         framework {
             baseName = "adapt"
@@ -91,8 +110,8 @@ android {
         resources.srcDirs("src/commonMain/resources")
     }
     compileOptions {
-        sourceCompatibility = JavaVersion.VERSION_1_8
-        targetCompatibility = JavaVersion.VERSION_1_8
+        sourceCompatibility = JavaVersion.VERSION_17
+        targetCompatibility = JavaVersion.VERSION_17
     }
     composeOptions {
         kotlinCompilerExtensionVersion = libs.versions.compose.compiler.get()
@@ -102,18 +121,40 @@ android {
     }
 }
 
-compose.desktop {
-    application {
-        mainClass = "MainKt"
-
-        nativeDistributions {
-            targetFormats(TargetFormat.Dmg, TargetFormat.Msi, TargetFormat.Deb)
-            packageName = "design.adapt.desktopApp"
-            packageVersion = "1.0.0"
+mavenPublishing {
+    publishToMavenCentral(SonatypeHost.S01)
+    signAllPublications()
+    coordinates(
+        groupId = "io.github.shubhamsinghshubham777",
+        artifactId = "adapt",
+        version = "1.0.0-SNAPSHOT"
+    )
+    pom {
+        name.set("Adapt")
+        description.set(
+            "Compose Multiplatform UI components for Android, iOS, Desktop, and Web. Unleash " +
+                    "limitless creativity."
+        )
+        inceptionYear.set("2023")
+        url.set("https://github.com/shubhamsinghshubham777/Adapt")
+        licenses {
+            license {
+                name.set("The Apache License, Version 2.0")
+                url.set("http://www.apache.org/licenses/LICENSE-2.0.txt")
+                distribution.set("http://www.apache.org/licenses/LICENSE-2.0.txt")
+            }
+        }
+        developers {
+            developer {
+                id.set("shubhamsinghshubham777")
+                name.set("Shubham Singh")
+                url.set("https://github.com/shubhamsinghshubham777/")
+            }
+        }
+        scm {
+            url.set("https://github.com/shubhamsinghshubham777/Adapt")
+            connection.set("scm:git:git://github.com/shubhamsinghshubham777/Adapt.git")
+            developerConnection.set("scm:git:ssh://git@github.com/shubhamsinghshubham777/Adapt.git")
         }
     }
-}
-
-compose.experimental {
-    web.application {}
 }
