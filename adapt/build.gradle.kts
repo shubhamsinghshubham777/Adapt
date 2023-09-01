@@ -30,8 +30,6 @@ plugins {
 kotlin {
     targetHierarchy.default()
     androidTarget {
-        publishLibraryVariants("release")
-
         compilations.all {
             kotlinOptions {
                 jvmTarget = "17"
