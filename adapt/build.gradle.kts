@@ -16,8 +16,6 @@
 
 @file:Suppress("UnstableApiUsage")
 
-import com.vanniktech.maven.publish.SonatypeHost
-
 plugins {
     alias(libs.plugins.android.library)
     alias(libs.plugins.cocoapods)
@@ -118,43 +116,5 @@ android {
     }
     buildFeatures {
         compose = true
-    }
-}
-
-mavenPublishing {
-    publishToMavenCentral(SonatypeHost.S01)
-    signAllPublications()
-    coordinates(
-        groupId = "io.github.shubhamsinghshubham777",
-        artifactId = "adapt",
-        version = "1.0.0-SNAPSHOT"
-    )
-    pom {
-        name.set("Adapt")
-        description.set(
-            "Compose Multiplatform UI components for Android, iOS, Desktop, and Web. Unleash " +
-                    "limitless creativity."
-        )
-        inceptionYear.set("2023")
-        url.set("https://github.com/shubhamsinghshubham777/Adapt")
-        licenses {
-            license {
-                name.set("The Apache License, Version 2.0")
-                url.set("http://www.apache.org/licenses/LICENSE-2.0.txt")
-                distribution.set("http://www.apache.org/licenses/LICENSE-2.0.txt")
-            }
-        }
-        developers {
-            developer {
-                id.set("shubhamsinghshubham777")
-                name.set("Shubham Singh")
-                url.set("https://github.com/shubhamsinghshubham777/")
-            }
-        }
-        scm {
-            url.set("https://github.com/shubhamsinghshubham777/Adapt")
-            connection.set("scm:git:git://github.com/shubhamsinghshubham777/Adapt.git")
-            developerConnection.set("scm:git:ssh://git@github.com/shubhamsinghshubham777/Adapt.git")
-        }
     }
 }
