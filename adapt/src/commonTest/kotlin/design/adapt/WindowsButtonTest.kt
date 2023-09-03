@@ -16,10 +16,6 @@
 
 package design.adapt
 
-import java.awt.Desktop
-import java.net.URI
-
-internal actual fun openUrl(url: String?) {
-    val uri = url?.let { URI.create(it) } ?: return
-    Desktop.getDesktop().browse(uri)
+// TODO: Learn how to write UI tests for common module's composables
+class WindowsButtonTest {
 }

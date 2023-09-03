@@ -1,5 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
-<!--
+<?xml version="1.0" encoding="utf-8"?><!--
   ~ Copyright 2023 Shubham Singh
   ~
   ~ Licensed under the Apache License, Version 2.0 (the "License");
@@ -18,16 +17,15 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android">
 
     <application
-        android:name=".AndroidApp"
         android:icon="@android:drawable/ic_menu_compass"
         android:label="Adapt"
         android:theme="@style/Theme.AppCompat.DayNight.NoActionBar">
         <activity
             android:name=".AppActivity"
             android:configChanges="orientation|screenSize|screenLayout|keyboardHidden"
+            android:exported="true"
             android:launchMode="singleInstance"
-            android:windowSoftInputMode="adjustResize"
-            android:exported="true">
+            android:windowSoftInputMode="adjustResize">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />

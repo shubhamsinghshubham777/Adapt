@@ -16,8 +16,21 @@
 
 package design.adapt
 
-import kotlinx.browser.window
+import androidx.compose.foundation.isSystemInDarkTheme
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.darkColorScheme
+import androidx.compose.material3.lightColorScheme
+import androidx.compose.runtime.Composable
 
-internal actual fun openUrl(url: String?) {
-    url?.let { window.open(it) }
+@Composable
+internal fun AdaptPreviewsTheme(
+    useDarkTheme: Boolean = isSystemInDarkTheme(),
+    content: @Composable () -> Unit
+) {
+    val colors = if (!useDarkTheme) lightColorScheme() else darkColorScheme()
+
+    MaterialTheme(
+        colorScheme = colors,
+        content = content
+    )
 }
