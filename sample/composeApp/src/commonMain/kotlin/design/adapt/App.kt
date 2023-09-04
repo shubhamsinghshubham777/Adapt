@@ -24,10 +24,17 @@ import androidx.compose.foundation.layout.wrapContentSize
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.rememberCoroutineScope
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import design.adapt.theme.AppTheme
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.launch
 
 @Composable
 internal fun App() = AppTheme {
@@ -37,14 +44,29 @@ internal fun App() = AppTheme {
             verticalArrangement = Arrangement.Center,
             horizontalAlignment = Alignment.CenterHorizontally,
         ) {
+            var isFirstLoading by remember { mutableStateOf(false) }
+            var isSecondLoading by remember { mutableStateOf(false) }
+            val coroutineScope = rememberCoroutineScope()
             WindowsButton(
-                onClick = {},
+                onClick = {
+                    coroutineScope.launch {
+                        isFirstLoading = true
+                        delay(3000)
+                        isFirstLoading = false
+                    }
+                },
                 requestFocus = true,
-            ) { Text("Windows Button #1") }
+            ) { Text(if (isFirstLoading) "Loading..." else "Windows Button #1") }
             WindowsButton(
                 modifier = Modifier.padding(top = 16.dp),
-                onClick = {}
-            ) { Text("Windows Button #2") }
+                onClick = {
+                    coroutineScope.launch {
+                        isSecondLoading = true
+                        delay(3000)
+                        isSecondLoading = false
+                    }
+                }
+            ) { Text(if (isSecondLoading) "Loading..." else "Windows Button #2") }
         }
     }
 }

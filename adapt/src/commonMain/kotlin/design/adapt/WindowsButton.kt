@@ -63,6 +63,9 @@ import androidx.compose.ui.input.key.type
 import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.semantics.Role
+import androidx.compose.ui.semantics.disabled
+import androidx.compose.ui.semantics.onClick
+import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.unit.dp
 import kotlinx.coroutines.launch
 
@@ -118,7 +121,7 @@ fun WindowsButton(
     Box(
         modifier = modifier
             .focusRequester(focusRequester)
-            .handleKeyEvents(interactionSource = interactionSource)
+            .handleKeyEvents(interactionSource = interactionSource, onClick = onClick)
             .graphicsLayer { alpha = opacity }
             .border(
                 width = WindowsButtonDefaults.FocusBorderWidth,
@@ -154,6 +157,15 @@ fun WindowsButton(
                 enabled = enabled,
             )
             .focusable(enabled = enabled, interactionSource = interactionSource)
+            .semantics {
+                if (!enabled) this.disabled()
+                this.onClick(
+                    action = {
+                        onClick()
+                        return@onClick true
+                    }
+                )
+            }
             .padding(contentPadding),
         content = {
             CompositionLocalProvider(
@@ -167,6 +179,7 @@ fun WindowsButton(
 /**
  * Contains default values for [WindowsButton]'s properties.
  */
+// TODO: Check access modifiers for all variables inside
 object WindowsButtonDefaults {
     val ButtonShape = RoundedCornerShape(4.dp)
     val ButtonFocusBorderShape = RoundedCornerShape(8.dp)
@@ -284,7 +297,10 @@ private val AcceptedKeys = listOf(
  * primarily depend on hardware input (like desktop, laptop, TV, etc).
  */
 @Composable
-private fun Modifier.handleKeyEvents(interactionSource: MutableInteractionSource) = composed {
+private fun Modifier.handleKeyEvents(
+    interactionSource: MutableInteractionSource,
+    onClick: () -> Unit,
+) = composed {
     val focusManager = LocalFocusManager.current
     val coroutineScope = rememberCoroutineScope()
     var pressInteraction: PressInteraction.Press? by remember { mutableStateOf(null) }
@@ -313,6 +329,7 @@ private fun Modifier.handleKeyEvents(interactionSource: MutableInteractionSource
                                 pressInteraction?.let {
                                     interactionSource.emit(PressInteraction.Release(it))
                                     pressInteraction = null
+                                    onClick()
                                 }
                             }
                         }
