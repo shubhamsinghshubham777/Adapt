@@ -1,10 +1,10 @@
 [versions]
-agp = "8.1.1"
-androidx-activityCompose = "1.7.2"
+agp = "8.3.1"
+androidx-activityCompose = "1.8.2"
 androidx-appcompat = "1.6.1"
-compose = "1.5.0"
-compose-compiler = "1.5.2" # This needs to be at least 1.5.2 (reason: https://github.com/JetBrains/compose-multiplatform/issues/3531#issuecomment-1690831975)
-kotlin = "1.9.10"
+compose = "1.6.10-dev1551"
+compose-compiler = "1.5.11"
+kotlin = "1.9.23"
 maven-publish = "0.25.3"
 
 [libraries]

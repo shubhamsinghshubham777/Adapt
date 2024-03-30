@@ -11,6 +11,17 @@ Pod::Spec.new do |spec|
     spec.ios.deployment_target = '11.0'
                 
                 
+    if !Dir.exist?('build/cocoapods/framework/adapt.framework') || Dir.empty?('build/cocoapods/framework/adapt.framework')
+        raise "
+
+        Kotlin framework 'adapt' doesn't exist yet, so a proper Xcode project can't be generated.
+        'pod install' should be executed after running ':generateDummyFramework' Gradle task:
+
+            ./gradlew :adapt:generateDummyFramework
+
+        Alternatively, proper pod installation is performed during Gradle sync in the IDE (if Podfile location is set)"
+    end
+                
     spec.pod_target_xcconfig = {
         'KOTLIN_PROJECT_PATH' => ':adapt',
         'PRODUCT_MODULE_NAME' => 'adapt',
@@ -35,5 +46,5 @@ Pod::Spec.new do |spec|
             SCRIPT
         }
     ]
-    spec.resources = ['build/compose/ios/adapt/compose-resources']
+    spec.resources = ['build\compose\ios\adapt\compose-resources']
 end

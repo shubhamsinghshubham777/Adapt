@@ -25,7 +25,7 @@ plugins {
 
 @OptIn(org.jetbrains.kotlin.gradle.ExperimentalKotlinGradlePluginApi::class)
 kotlin {
-    targetHierarchy.default()
+    applyDefaultHierarchyTemplate()
     androidTarget {
         compilations.all {
             kotlinOptions {
@@ -107,12 +107,6 @@ kotlin {
         }
 
     }
-}
-
-// TODO: Remove this when JetBrains Compose supports Kotlin 1.9.10
-compose {
-    kotlinCompilerPlugin.set(dependencies.compiler.forKotlin("1.9.0"))
-    kotlinCompilerPluginArgs.add("suppressKotlinVersionCompatibilityCheck=1.9.10")
 }
 
 android {
