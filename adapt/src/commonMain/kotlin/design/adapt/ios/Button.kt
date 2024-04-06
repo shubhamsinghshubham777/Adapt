@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package design.adapt.cupertino
+package design.adapt.ios
 
 import androidx.compose.animation.core.animateFloatAsState
 import androidx.compose.animation.core.spring
@@ -50,21 +50,21 @@ import design.adapt.LocalContentColor
 import design.adapt.LocalTextStyle
 
 @Composable
-fun CupertinoButton(
+fun IOSButton(
     onClick: () -> Unit,
     modifier: Modifier = Modifier,
-    size: CupertinoButtonSize = CupertinoButtonSize.Small,
-    style: CupertinoButtonStyle = CupertinoButtonStyle.Borderless,
-    colors: CupertinoButtonColors = CupertinoButtonDefaults.buttonColors(),
+    size: IOSButtonSize = IOSButtonSize.Small,
+    style: IOSButtonStyle = IOSButtonStyle.Borderless,
+    colors: IOSButtonColors = IOSButtonDefaults.buttonColors(),
     icon: (@Composable () -> Unit)? = null,
     text: (@Composable () -> Unit)? = null,
-    shape: Shape = CupertinoButtonDefaults.shape(
+    shape: Shape = IOSButtonDefaults.shape(
         isIconOnly = icon != null && text == null,
         size = size
     ),
     enabled: Boolean = true,
     onMaterial: Boolean = false,
-    textStyle: TextStyle = CupertinoButtonDefaults.textStyle(size),
+    textStyle: TextStyle = IOSButtonDefaults.textStyle(size),
     interactionSource: MutableInteractionSource = remember { MutableInteractionSource() },
 ) {
     val density = LocalDensity.current
@@ -76,57 +76,57 @@ fun CupertinoButton(
     val onPressAlpha by animateFloatAsState(
         targetValue = if (isPressed) 0.5f else 0f,
         animationSpec = when {
-            style == CupertinoButtonStyle.Borderless && isPressed -> tween(durationMillis = 0)
+            style == IOSButtonStyle.Borderless && isPressed -> tween(durationMillis = 0)
             else -> spring()
         },
     )
 
     val horizontalArrangement: Dp = remember(size) {
         when (size) {
-            CupertinoButtonSize.Small -> 3.dp
-            CupertinoButtonSize.Medium -> 4.dp
-            CupertinoButtonSize.Large -> 4.dp
+            IOSButtonSize.Small -> 3.dp
+            IOSButtonSize.Medium -> 4.dp
+            IOSButtonSize.Large -> 4.dp
         }
     }
 
     val horizontalPadding: Dp = remember(size) {
         when (size) {
-            CupertinoButtonSize.Small -> 10.dp
-            CupertinoButtonSize.Medium -> 14.dp
-            CupertinoButtonSize.Large -> 20.dp
+            IOSButtonSize.Small -> 10.dp
+            IOSButtonSize.Medium -> 14.dp
+            IOSButtonSize.Large -> 20.dp
         }
     }
 
     val verticalPadding: Dp = remember(size) {
         when (size) {
-            CupertinoButtonSize.Small -> 4.dp
-            CupertinoButtonSize.Medium -> 7.dp
-            CupertinoButtonSize.Large -> 14.dp
+            IOSButtonSize.Small -> 4.dp
+            IOSButtonSize.Medium -> 7.dp
+            IOSButtonSize.Large -> 14.dp
         }
     }
 
     val containerColor: Color = remember(style, enabled, isInLightMode, onMaterial, colors) {
         when (style) {
-            CupertinoButtonStyle.Borderless -> {
+            IOSButtonStyle.Borderless -> {
                 if (enabled) colors.borderlessContainerColor
                 else colors.disabledBorderlessContainerColor
             }
 
-            CupertinoButtonStyle.BezeledGray -> {
+            IOSButtonStyle.BezeledGray -> {
                 if (enabled) colors.bezeledGrayContainerColor
                 // The material color should only be used with light mode
                 else if (isInLightMode && onMaterial) colors.disabledOnMaterialBezeledGrayContainerColor
                 else colors.disabledBezeledGrayContainerColor
             }
 
-            CupertinoButtonStyle.Bezeled -> {
+            IOSButtonStyle.Bezeled -> {
                 if (enabled) colors.bezeledContainerColor
                 // The material color should only be used with light mode
                 else if (isInLightMode && onMaterial) colors.disabledOnMaterialBezeledContainerColor
                 else colors.disabledBezeledContainerColor
             }
 
-            CupertinoButtonStyle.Filled -> {
+            IOSButtonStyle.Filled -> {
                 if (enabled) colors.filledContainerColor
                 // The material color should only be used with light mode
                 else if (isInLightMode && onMaterial) colors.disabledOnMaterialFilledContainerColor
@@ -137,26 +137,26 @@ fun CupertinoButton(
 
     val contentColor: Color = remember(style, enabled, isInLightMode, onMaterial, colors) {
         when (style) {
-            CupertinoButtonStyle.Borderless -> {
+            IOSButtonStyle.Borderless -> {
                 if (enabled) colors.borderlessContentColor
                 else colors.disabledBorderlessContentColor
             }
 
-            CupertinoButtonStyle.BezeledGray -> {
+            IOSButtonStyle.BezeledGray -> {
                 if (enabled) colors.bezeledGrayContentColor
                 // The material color should only be used with light mode
                 else if (isInLightMode && onMaterial) colors.disabledOnMaterialBezeledGrayContentColor
                 else colors.disabledBezeledGrayContentColor
             }
 
-            CupertinoButtonStyle.Bezeled -> {
+            IOSButtonStyle.Bezeled -> {
                 if (enabled) colors.bezeledContentColor
                 // The material color should only be used with light mode
                 else if (isInLightMode && onMaterial) colors.disabledOnMaterialBezeledContentColor
                 else colors.disabledBezeledContentColor
             }
 
-            CupertinoButtonStyle.Filled -> {
+            IOSButtonStyle.Filled -> {
                 if (enabled) colors.filledContentColor
                 // The material color should only be used with light mode
                 else if (isInLightMode && onMaterial) colors.disabledOnMaterialFilledContentColor
@@ -174,7 +174,7 @@ fun CupertinoButton(
                 onClick = onClick,
             )
             .graphicsLayer {
-                alpha = if (style == CupertinoButtonStyle.Borderless) 1 - onPressAlpha else 1f
+                alpha = if (style == IOSButtonStyle.Borderless) 1 - onPressAlpha else 1f
             }
             .background(color = containerColor, shape = shape)
             .drawWithCache {
@@ -183,7 +183,7 @@ fun CupertinoButton(
                     drawOutline(
                         outline = shape.createOutline(this.size, layoutDirection, density),
                         color = Color.Black.copy(alpha = 0.5f),
-                        alpha = if (style != CupertinoButtonStyle.Borderless) onPressAlpha else 0f,
+                        alpha = if (style != IOSButtonStyle.Borderless) onPressAlpha else 0f,
                     )
                 }
             }
@@ -198,8 +198,8 @@ fun CupertinoButton(
             CompositionLocalProvider(LocalContentColor provides contentColor) {
                 Box(
                     modifier = Modifier.defaultMinSize(
-                        minWidth = CupertinoButtonDefaults.IconSize,
-                        minHeight = CupertinoButtonDefaults.IconSize,
+                        minWidth = IOSButtonDefaults.IconSize,
+                        minHeight = IOSButtonDefaults.IconSize,
                     ),
                     contentAlignment = Alignment.Center,
                 ) {
@@ -219,7 +219,7 @@ fun CupertinoButton(
 }
 
 @Immutable
-data class CupertinoButtonColors(
+data class IOSButtonColors(
     val borderlessContainerColor: Color,
     val borderlessContentColor: Color,
     val bezeledGrayContainerColor: Color,
@@ -244,32 +244,32 @@ data class CupertinoButtonColors(
     val disabledOnMaterialFilledContentColor: Color,
 )
 
-object CupertinoButtonDefaults {
+object IOSButtonDefaults {
     @Composable
     fun buttonColors(
         borderlessContainerColor: Color = Color.Transparent,
-        borderlessContentColor: Color = CupertinoTheme.colorScheme.systemBlue,
-        bezeledGrayContainerColor: Color = CupertinoTheme.colorScheme.fillTertiary,
-        bezeledGrayContentColor: Color = CupertinoTheme.colorScheme.systemBlue,
-        bezeledContainerColor: Color = CupertinoTheme.colorScheme.systemBlue.copy(alpha = 0.15f),
-        bezeledContentColor: Color = CupertinoTheme.colorScheme.systemBlue,
-        filledContainerColor: Color = CupertinoTheme.colorScheme.systemBlue,
-        filledContentColor: Color = CupertinoTheme.colorScheme.systemWhite,
+        borderlessContentColor: Color = IOSTheme.colorScheme.systemBlue,
+        bezeledGrayContainerColor: Color = IOSTheme.colorScheme.fillTertiary,
+        bezeledGrayContentColor: Color = IOSTheme.colorScheme.systemBlue,
+        bezeledContainerColor: Color = IOSTheme.colorScheme.systemBlue.copy(alpha = 0.15f),
+        bezeledContentColor: Color = IOSTheme.colorScheme.systemBlue,
+        filledContainerColor: Color = IOSTheme.colorScheme.systemBlue,
+        filledContentColor: Color = IOSTheme.colorScheme.systemWhite,
         disabledBorderlessContainerColor: Color = Color.Transparent,
-        disabledBorderlessContentColor: Color = CupertinoTheme.colorScheme.labelTertiary,
-        disabledBezeledGrayContainerColor: Color = CupertinoTheme.colorScheme.fillTertiary,
-        disabledBezeledGrayContentColor: Color = CupertinoTheme.colorScheme.labelTertiary,
-        disabledBezeledContainerColor: Color = CupertinoTheme.colorScheme.fillTertiary,
-        disabledBezeledContentColor: Color = CupertinoTheme.colorScheme.labelTertiary,
-        disabledFilledContainerColor: Color = CupertinoTheme.colorScheme.fillTertiary,
-        disabledFilledContentColor: Color = CupertinoTheme.colorScheme.labelTertiary,
-        disabledOnMaterialBezeledGrayContainerColor: Color = CupertinoTheme.colorScheme.systemWhite.copy(alpha = 0.12f),
-        disabledOnMaterialBezeledGrayContentColor: Color = CupertinoTheme.colorScheme.labelTertiary,
-        disabledOnMaterialBezeledContainerColor: Color = CupertinoTheme.colorScheme.systemWhite.copy(alpha = 0.12f),
-        disabledOnMaterialBezeledContentColor: Color = CupertinoTheme.colorScheme.labelTertiary,
-        disabledOnMaterialFilledContainerColor: Color = CupertinoTheme.colorScheme.systemWhite.copy(alpha = 0.12f),
-        disabledOnMaterialFilledContentColor: Color = CupertinoTheme.colorScheme.labelTertiary,
-    ): CupertinoButtonColors = CupertinoButtonColors(
+        disabledBorderlessContentColor: Color = IOSTheme.colorScheme.labelTertiary,
+        disabledBezeledGrayContainerColor: Color = IOSTheme.colorScheme.fillTertiary,
+        disabledBezeledGrayContentColor: Color = IOSTheme.colorScheme.labelTertiary,
+        disabledBezeledContainerColor: Color = IOSTheme.colorScheme.fillTertiary,
+        disabledBezeledContentColor: Color = IOSTheme.colorScheme.labelTertiary,
+        disabledFilledContainerColor: Color = IOSTheme.colorScheme.fillTertiary,
+        disabledFilledContentColor: Color = IOSTheme.colorScheme.labelTertiary,
+        disabledOnMaterialBezeledGrayContainerColor: Color = IOSTheme.colorScheme.systemWhite.copy(alpha = 0.12f),
+        disabledOnMaterialBezeledGrayContentColor: Color = IOSTheme.colorScheme.labelTertiary,
+        disabledOnMaterialBezeledContainerColor: Color = IOSTheme.colorScheme.systemWhite.copy(alpha = 0.12f),
+        disabledOnMaterialBezeledContentColor: Color = IOSTheme.colorScheme.labelTertiary,
+        disabledOnMaterialFilledContainerColor: Color = IOSTheme.colorScheme.systemWhite.copy(alpha = 0.12f),
+        disabledOnMaterialFilledContentColor: Color = IOSTheme.colorScheme.labelTertiary,
+    ): IOSButtonColors = IOSButtonColors(
         borderlessContainerColor = borderlessContainerColor,
         borderlessContentColor = borderlessContentColor,
         bezeledGrayContainerColor = bezeledGrayContainerColor,
@@ -294,25 +294,25 @@ object CupertinoButtonDefaults {
         disabledOnMaterialFilledContentColor = disabledOnMaterialFilledContentColor,
     )
 
-    fun shape(isIconOnly: Boolean, size: CupertinoButtonSize): Shape = RoundedCornerShape(
+    fun shape(isIconOnly: Boolean, size: IOSButtonSize): Shape = RoundedCornerShape(
         when {
             isIconOnly -> 400.dp
-            size == CupertinoButtonSize.Large -> 12.dp
+            size == IOSButtonSize.Large -> 12.dp
             else -> 40.dp
         }
     )
 
     @Composable
-    fun textStyle(size: CupertinoButtonSize): TextStyle = with(LocalCupertinoTypography.current) {
+    fun textStyle(size: IOSButtonSize): TextStyle = with(LocalIOSTypography.current) {
         when (size) {
-            CupertinoButtonSize.Small -> subheadlineRegular
-            CupertinoButtonSize.Medium -> subheadlineRegular
-            CupertinoButtonSize.Large -> bodyRegular
+            IOSButtonSize.Small -> subheadlineRegular
+            IOSButtonSize.Medium -> subheadlineRegular
+            IOSButtonSize.Large -> bodyRegular
         }
     }
 
     val IconSize = 20.dp
 }
 
-enum class CupertinoButtonSize { Small, Medium, Large }
-enum class CupertinoButtonStyle { Borderless, BezeledGray, Bezeled, Filled }
+enum class IOSButtonSize { Small, Medium, Large }
+enum class IOSButtonStyle { Borderless, BezeledGray, Bezeled, Filled }

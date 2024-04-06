@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package design.adapt.cupertino
+package design.adapt.ios
 
 import androidx.compose.material3.Icon
 import androidx.compose.runtime.Composable
@@ -25,7 +25,7 @@ import androidx.compose.ui.graphics.vector.ImageVector
 import design.adapt.LocalContentColor
 
 @Composable
-fun CupertinoIcon(
+fun IOSIcon(
     painter: Painter,
     contentDescription: String?,
     modifier: Modifier = Modifier,
@@ -33,7 +33,7 @@ fun CupertinoIcon(
 ) = Icon(painter, contentDescription, modifier, tint)
 
 @Composable
-fun CupertinoIcon(
+fun IOSIcon(
     imageVector: ImageVector,
     contentDescription: String?,
     modifier: Modifier = Modifier,

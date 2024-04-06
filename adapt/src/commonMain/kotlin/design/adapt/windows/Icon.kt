@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package design.adapt.winui
+package design.adapt.windows
 
 import androidx.compose.material3.Icon
 import androidx.compose.runtime.Composable

@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package design.adapt.winui
+package design.adapt.windows
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border

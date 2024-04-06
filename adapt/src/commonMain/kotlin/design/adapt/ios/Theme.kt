@@ -14,34 +14,34 @@
  * limitations under the License.
  */
 
-package design.adapt.cupertino
+package design.adapt.ios
 
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.runtime.ReadOnlyComposable
 import design.adapt.LocalTextStyle
 
-object CupertinoTheme {
-    val colorScheme: CupertinoColorScheme
+object IOSTheme {
+    val colorScheme: IOSColorScheme
         @Composable
         @ReadOnlyComposable
-        get() = LocalCupertinoColorScheme.current
+        get() = LocalIOSColorScheme.current
 
-    val typography: CupertinoTypography
+    val typography: IOSTypography
         @Composable
         @ReadOnlyComposable
-        get() = LocalCupertinoTypography.current
+        get() = LocalIOSTypography.current
 }
 
 @Composable
-fun CupertinoTheme(
-    colorScheme: CupertinoColorScheme = CupertinoTheme.colorScheme,
-    typography: CupertinoTypography = CupertinoTheme.typography,
+fun IOSTheme(
+    colorScheme: IOSColorScheme = IOSTheme.colorScheme,
+    typography: IOSTypography = IOSTheme.typography,
     content: @Composable () -> Unit
 ) {
     CompositionLocalProvider(
-        LocalCupertinoColorScheme provides colorScheme,
-        LocalCupertinoTypography provides typography,
+        LocalIOSColorScheme provides colorScheme,
+        LocalIOSTypography provides typography,
         LocalTextStyle provides typography.subheadlineRegular,
         content = content
     )

@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package design.adapt.winui
+package design.adapt.ios
 
 import androidx.compose.foundation.text.BasicText
 import androidx.compose.runtime.Composable
@@ -28,7 +28,7 @@ import design.adapt.LocalContentColor
 import design.adapt.LocalTextStyle
 
 @Composable
-fun WindowsText(
+fun IOSText(
     text: String,
     modifier: Modifier = Modifier,
     style: TextStyle? = null,
@@ -54,7 +54,7 @@ fun WindowsText(
 }
 
 @Composable
-fun WindowsText(
+fun IOSText(
     text: AnnotatedString,
     modifier: Modifier = Modifier,
     style: TextStyle? = null,

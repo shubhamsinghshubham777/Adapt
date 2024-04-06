@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package design.adapt.previews.winui
+package design.adapt.previews.windows
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.interaction.HoverInteraction
@@ -39,15 +39,15 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import design.adapt.R
-import design.adapt.winui.WindowsButton
-import design.adapt.winui.WindowsButtonIconSide
-import design.adapt.winui.WindowsButtonSize
-import design.adapt.winui.WindowsButtonStyle
-import design.adapt.winui.WindowsIcon
-import design.adapt.winui.WindowsText
-import design.adapt.winui.WindowsTheme
-import design.adapt.winui.darkWindowsColorScheme
-import design.adapt.winui.lightWindowsColorScheme
+import design.adapt.windows.WindowsButton
+import design.adapt.windows.WindowsButtonIconSide
+import design.adapt.windows.WindowsButtonSize
+import design.adapt.windows.WindowsButtonStyle
+import design.adapt.windows.WindowsIcon
+import design.adapt.windows.WindowsText
+import design.adapt.windows.WindowsTheme
+import design.adapt.windows.darkWindowsColorScheme
+import design.adapt.windows.lightWindowsColorScheme
 
 @Preview(device = "spec:width=1080px,height=5000px,dpi=440")
 @Composable

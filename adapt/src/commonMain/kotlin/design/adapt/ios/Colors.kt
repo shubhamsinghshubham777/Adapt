@@ -14,16 +14,16 @@
  * limitations under the License.
  */
 
-package design.adapt.cupertino
+package design.adapt.ios
 
 import androidx.compose.runtime.Immutable
 import androidx.compose.runtime.compositionLocalOf
 import androidx.compose.ui.graphics.Color
 
-val LocalCupertinoColorScheme = compositionLocalOf { cupertinoColorSchemeLight }
+val LocalIOSColorScheme = compositionLocalOf { iOSColorSchemeLight }
 
 @Immutable
-data class CupertinoColorScheme(
+data class IOSColorScheme(
     val systemRed: Color,
     val systemOrange: Color,
     val systemYellow: Color,
@@ -44,16 +44,16 @@ data class CupertinoColorScheme(
     val systemGray5: Color,
     val systemGray6: Color,
     val systemWhite: Color,
-    val systemBackgroundPrimary: (CupertinoBackgroundColorVariant) -> Color,
-    val systemBackgroundSecondary: (CupertinoBackgroundColorVariant) -> Color,
-    val systemBackgroundTertiary: (CupertinoBackgroundColorVariant) -> Color,
+    val systemBackgroundPrimary: (IOSBackgroundColorVariant) -> Color,
+    val systemBackgroundSecondary: (IOSBackgroundColorVariant) -> Color,
+    val systemBackgroundTertiary: (IOSBackgroundColorVariant) -> Color,
     val labelPrimary: Color,
     val labelSecondary: Color,
     val labelTertiary: Color,
     val labelQuaternary: Color,
-    val systemGroupedBackgroundPrimary: (CupertinoBackgroundColorVariant) -> Color,
-    val systemGroupedBackgroundSecondary: (CupertinoBackgroundColorVariant) -> Color,
-    val systemGroupedBackgroundTertiary: (CupertinoBackgroundColorVariant) -> Color,
+    val systemGroupedBackgroundPrimary: (IOSBackgroundColorVariant) -> Color,
+    val systemGroupedBackgroundSecondary: (IOSBackgroundColorVariant) -> Color,
+    val systemGroupedBackgroundTertiary: (IOSBackgroundColorVariant) -> Color,
     val fillPrimary: Color,
     val fillSecondary: Color,
     val fillTertiary: Color,
@@ -62,9 +62,9 @@ data class CupertinoColorScheme(
     val separatorNonOpaque: Color,
 )
 
-enum class CupertinoBackgroundColorVariant { Elevated, Base }
+enum class IOSBackgroundColorVariant { Elevated, Base }
 
-internal val cupertinoColorSchemeLight = CupertinoColorScheme(
+internal val iOSColorSchemeLight = IOSColorScheme(
     systemRed = Color(0XFFFF3B30),
     systemOrange = Color(0XFFFF9500),
     systemYellow = Color(0XFFFFCC00),
@@ -103,7 +103,7 @@ internal val cupertinoColorSchemeLight = CupertinoColorScheme(
     separatorNonOpaque = Color(0X5C3C3C43),
 )
 
-internal val cupertinoColorSchemeDark = CupertinoColorScheme(
+internal val iOSColorSchemeDark = IOSColorScheme(
     systemRed = Color(0XFFFF453A),
     systemOrange = Color(0XFFFF9F0A),
     systemYellow = Color(0XFFFFD60A),
@@ -126,20 +126,20 @@ internal val cupertinoColorSchemeDark = CupertinoColorScheme(
     systemWhite = Color(0XFFFFFFFF),
     systemBackgroundPrimary = { variant ->
         when (variant) {
-            CupertinoBackgroundColorVariant.Elevated -> Color(0XFF1C1C1E)
-            CupertinoBackgroundColorVariant.Base -> Color(0XFF000000)
+            IOSBackgroundColorVariant.Elevated -> Color(0XFF1C1C1E)
+            IOSBackgroundColorVariant.Base -> Color(0XFF000000)
         }
     },
     systemBackgroundSecondary = { variant ->
         when (variant) {
-            CupertinoBackgroundColorVariant.Elevated -> Color(0XFF2C2C2E)
-            CupertinoBackgroundColorVariant.Base -> Color(0XFF1C1C1E)
+            IOSBackgroundColorVariant.Elevated -> Color(0XFF2C2C2E)
+            IOSBackgroundColorVariant.Base -> Color(0XFF1C1C1E)
         }
     },
     systemBackgroundTertiary = { variant ->
         when (variant) {
-            CupertinoBackgroundColorVariant.Elevated -> Color(0XFF3A3A3C)
-            CupertinoBackgroundColorVariant.Base -> Color(0XFF2C2C2E)
+            IOSBackgroundColorVariant.Elevated -> Color(0XFF3A3A3C)
+            IOSBackgroundColorVariant.Base -> Color(0XFF2C2C2E)
         }
     },
     labelPrimary = Color(0XFFFFFFFF),
@@ -148,20 +148,20 @@ internal val cupertinoColorSchemeDark = CupertinoColorScheme(
     labelQuaternary = Color(0X29EBEBF5),
     systemGroupedBackgroundPrimary = { variant ->
         when (variant) {
-            CupertinoBackgroundColorVariant.Elevated -> Color(0XFF1C1C1E)
-            CupertinoBackgroundColorVariant.Base -> Color(0XFF000000)
+            IOSBackgroundColorVariant.Elevated -> Color(0XFF1C1C1E)
+            IOSBackgroundColorVariant.Base -> Color(0XFF000000)
         }
     },
     systemGroupedBackgroundSecondary = { variant ->
         when (variant) {
-            CupertinoBackgroundColorVariant.Elevated -> Color(0XFF2C2C2E)
-            CupertinoBackgroundColorVariant.Base -> Color(0XFF1C1C1E)
+            IOSBackgroundColorVariant.Elevated -> Color(0XFF2C2C2E)
+            IOSBackgroundColorVariant.Base -> Color(0XFF1C1C1E)
         }
     },
     systemGroupedBackgroundTertiary = { variant ->
         when (variant) {
-            CupertinoBackgroundColorVariant.Elevated -> Color(0XFF3A3A3C)
-            CupertinoBackgroundColorVariant.Base -> Color(0XFF2C2C2E)
+            IOSBackgroundColorVariant.Elevated -> Color(0XFF3A3A3C)
+            IOSBackgroundColorVariant.Base -> Color(0XFF2C2C2E)
         }
     },
     fillPrimary = Color(0X5C787880),

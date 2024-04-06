@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package design.adapt.cupertino
+package design.adapt.windows
 
 import androidx.compose.foundation.text.BasicText
 import androidx.compose.runtime.Composable
@@ -28,7 +28,7 @@ import design.adapt.LocalContentColor
 import design.adapt.LocalTextStyle
 
 @Composable
-fun CupertinoText(
+fun WindowsText(
     text: String,
     modifier: Modifier = Modifier,
     style: TextStyle? = null,
@@ -54,7 +54,7 @@ fun CupertinoText(
 }
 
 @Composable
-fun CupertinoText(
+fun WindowsText(
     text: AnnotatedString,
     modifier: Modifier = Modifier,
     style: TextStyle? = null,
