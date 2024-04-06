@@ -114,7 +114,7 @@ android {
     compileSdk = 34
 
     defaultConfig {
-        minSdk = 21
+        minSdk = 23
         targetSdk = 34
 
         applicationId = "design.adapt.androidApp"

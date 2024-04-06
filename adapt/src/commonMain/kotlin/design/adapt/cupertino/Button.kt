@@ -16,8 +16,13 @@
 
 package design.adapt.cupertino
 
+import androidx.compose.animation.core.animateFloatAsState
+import androidx.compose.animation.core.spring
+import androidx.compose.animation.core.tween
 import androidx.compose.foundation.background
-import androidx.compose.foundation.gestures.detectTapGestures
+import androidx.compose.foundation.clickable
+import androidx.compose.foundation.interaction.MutableInteractionSource
+import androidx.compose.foundation.interaction.collectIsPressedAsState
 import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -28,15 +33,21 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.runtime.Immutable
+import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.drawWithCache
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.Shape
-import androidx.compose.ui.input.pointer.pointerInput
+import androidx.compose.ui.graphics.drawOutline
+import androidx.compose.ui.graphics.graphicsLayer
+import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
+import design.adapt.LocalContentColor
+import design.adapt.LocalTextStyle
 
 @Composable
 fun CupertinoButton(
@@ -45,20 +56,30 @@ fun CupertinoButton(
     size: CupertinoButtonSize = CupertinoButtonSize.Small,
     style: CupertinoButtonStyle = CupertinoButtonStyle.Borderless,
     colors: CupertinoButtonColors = CupertinoButtonDefaults.buttonColors(),
-    shape: Shape? = null,
+    icon: (@Composable () -> Unit)? = null,
+    text: (@Composable () -> Unit)? = null,
+    shape: Shape = CupertinoButtonDefaults.shape(
+        isIconOnly = icon != null && text == null,
+        size = size
+    ),
     enabled: Boolean = true,
     onMaterial: Boolean = false,
     textStyle: TextStyle = CupertinoButtonDefaults.textStyle(size),
-    icon: (@Composable () -> Unit)? = null,
-    text: (@Composable () -> Unit)? = null,
+    interactionSource: MutableInteractionSource = remember { MutableInteractionSource() },
 ) {
-    val isInLightMode = !isSystemInDarkTheme()
+    val density = LocalDensity.current
 
+    val isInLightMode = !isSystemInDarkTheme()
     val isIconOnly = remember(icon, text) { icon != null && text == null }
 
-    val defaultShape = remember(shape, isIconOnly, size) {
-        shape ?: CupertinoButtonDefaults.shape(isIconOnly = isIconOnly, size = size)
-    }
+    val isPressed by interactionSource.collectIsPressedAsState()
+    val onPressAlpha by animateFloatAsState(
+        targetValue = if (isPressed) 0.5f else 0f,
+        animationSpec = when {
+            style == CupertinoButtonStyle.Borderless && isPressed -> tween(durationMillis = 0)
+            else -> spring()
+        },
+    )
 
     val horizontalArrangement: Dp = remember(size) {
         when (size) {
@@ -146,8 +167,26 @@ fun CupertinoButton(
 
     Row(
         modifier = modifier
-            .pointerInput(Unit) { detectTapGestures { onClick() } }
-            .background(color = containerColor, shape = defaultShape)
+            .clickable(
+                enabled = enabled,
+                interactionSource = interactionSource,
+                indication = null,
+                onClick = onClick,
+            )
+            .graphicsLayer {
+                alpha = if (style == CupertinoButtonStyle.Borderless) 1 - onPressAlpha else 1f
+            }
+            .background(color = containerColor, shape = shape)
+            .drawWithCache {
+                onDrawWithContent {
+                    drawContent()
+                    drawOutline(
+                        outline = shape.createOutline(this.size, layoutDirection, density),
+                        color = Color.Black.copy(alpha = 0.5f),
+                        alpha = if (style != CupertinoButtonStyle.Borderless) onPressAlpha else 0f,
+                    )
+                }
+            }
             .padding(
                 horizontal = if (isIconOnly) verticalPadding else horizontalPadding,
                 vertical = verticalPadding,
@@ -171,7 +210,7 @@ fun CupertinoButton(
 
         text?.let { safeText ->
             CompositionLocalProvider(
-                LocalCupertinoTextStyle provides textStyle,
+                LocalTextStyle provides textStyle,
                 LocalContentColor provides contentColor,
                 content = safeText,
             )
@@ -209,27 +248,27 @@ object CupertinoButtonDefaults {
     @Composable
     fun buttonColors(
         borderlessContainerColor: Color = Color.Transparent,
-        borderlessContentColor: Color = CupertinoTheme.colors.systemBlue,
-        bezeledGrayContainerColor: Color = CupertinoTheme.colors.fillTertiary,
-        bezeledGrayContentColor: Color = CupertinoTheme.colors.systemBlue,
-        bezeledContainerColor: Color = CupertinoTheme.colors.systemBlue.copy(alpha = 0.15f),
-        bezeledContentColor: Color = CupertinoTheme.colors.systemBlue,
-        filledContainerColor: Color = CupertinoTheme.colors.systemBlue,
-        filledContentColor: Color = CupertinoTheme.colors.systemWhite,
+        borderlessContentColor: Color = CupertinoTheme.colorScheme.systemBlue,
+        bezeledGrayContainerColor: Color = CupertinoTheme.colorScheme.fillTertiary,
+        bezeledGrayContentColor: Color = CupertinoTheme.colorScheme.systemBlue,
+        bezeledContainerColor: Color = CupertinoTheme.colorScheme.systemBlue.copy(alpha = 0.15f),
+        bezeledContentColor: Color = CupertinoTheme.colorScheme.systemBlue,
+        filledContainerColor: Color = CupertinoTheme.colorScheme.systemBlue,
+        filledContentColor: Color = CupertinoTheme.colorScheme.systemWhite,
         disabledBorderlessContainerColor: Color = Color.Transparent,
-        disabledBorderlessContentColor: Color = CupertinoTheme.colors.labelTertiary,
-        disabledBezeledGrayContainerColor: Color = CupertinoTheme.colors.fillTertiary,
-        disabledBezeledGrayContentColor: Color = CupertinoTheme.colors.labelTertiary,
-        disabledBezeledContainerColor: Color = CupertinoTheme.colors.fillTertiary,
-        disabledBezeledContentColor: Color = CupertinoTheme.colors.labelTertiary,
-        disabledFilledContainerColor: Color = CupertinoTheme.colors.fillTertiary,
-        disabledFilledContentColor: Color = CupertinoTheme.colors.labelTertiary,
-        disabledOnMaterialBezeledGrayContainerColor: Color = CupertinoTheme.colors.systemWhite.copy(alpha = 0.12f),
-        disabledOnMaterialBezeledGrayContentColor: Color = CupertinoTheme.colors.labelTertiary,
-        disabledOnMaterialBezeledContainerColor: Color = CupertinoTheme.colors.systemWhite.copy(alpha = 0.12f),
-        disabledOnMaterialBezeledContentColor: Color = CupertinoTheme.colors.labelTertiary,
-        disabledOnMaterialFilledContainerColor: Color = CupertinoTheme.colors.systemWhite.copy(alpha = 0.12f),
-        disabledOnMaterialFilledContentColor: Color = CupertinoTheme.colors.labelTertiary,
+        disabledBorderlessContentColor: Color = CupertinoTheme.colorScheme.labelTertiary,
+        disabledBezeledGrayContainerColor: Color = CupertinoTheme.colorScheme.fillTertiary,
+        disabledBezeledGrayContentColor: Color = CupertinoTheme.colorScheme.labelTertiary,
+        disabledBezeledContainerColor: Color = CupertinoTheme.colorScheme.fillTertiary,
+        disabledBezeledContentColor: Color = CupertinoTheme.colorScheme.labelTertiary,
+        disabledFilledContainerColor: Color = CupertinoTheme.colorScheme.fillTertiary,
+        disabledFilledContentColor: Color = CupertinoTheme.colorScheme.labelTertiary,
+        disabledOnMaterialBezeledGrayContainerColor: Color = CupertinoTheme.colorScheme.systemWhite.copy(alpha = 0.12f),
+        disabledOnMaterialBezeledGrayContentColor: Color = CupertinoTheme.colorScheme.labelTertiary,
+        disabledOnMaterialBezeledContainerColor: Color = CupertinoTheme.colorScheme.systemWhite.copy(alpha = 0.12f),
+        disabledOnMaterialBezeledContentColor: Color = CupertinoTheme.colorScheme.labelTertiary,
+        disabledOnMaterialFilledContainerColor: Color = CupertinoTheme.colorScheme.systemWhite.copy(alpha = 0.12f),
+        disabledOnMaterialFilledContentColor: Color = CupertinoTheme.colorScheme.labelTertiary,
     ): CupertinoButtonColors = CupertinoButtonColors(
         borderlessContainerColor = borderlessContainerColor,
         borderlessContentColor = borderlessContentColor,

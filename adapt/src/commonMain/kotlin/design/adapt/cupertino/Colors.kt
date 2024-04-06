@@ -16,25 +16,14 @@
 
 package design.adapt.cupertino
 
-import androidx.compose.runtime.Composable
 import androidx.compose.runtime.Immutable
-import androidx.compose.runtime.ReadOnlyComposable
 import androidx.compose.runtime.compositionLocalOf
 import androidx.compose.ui.graphics.Color
 
-object CupertinoTheme {
-    val colors: CupertinoColors
-        @Composable
-        @ReadOnlyComposable
-        get() = LocalCupertinoColors.current
-}
-
-val LocalCupertinoColors = compositionLocalOf { cupertinoColorsLight }
-
-val LocalContentColor = compositionLocalOf { cupertinoColorsLight.systemBlue }
+val LocalCupertinoColorScheme = compositionLocalOf { cupertinoColorSchemeLight }
 
 @Immutable
-data class CupertinoColors(
+data class CupertinoColorScheme(
     val systemRed: Color,
     val systemOrange: Color,
     val systemYellow: Color,
@@ -75,7 +64,7 @@ data class CupertinoColors(
 
 enum class CupertinoBackgroundColorVariant { Elevated, Base }
 
-internal val cupertinoColorsLight = CupertinoColors(
+internal val cupertinoColorSchemeLight = CupertinoColorScheme(
     systemRed = Color(0XFFFF3B30),
     systemOrange = Color(0XFFFF9500),
     systemYellow = Color(0XFFFFCC00),
@@ -114,7 +103,7 @@ internal val cupertinoColorsLight = CupertinoColors(
     separatorNonOpaque = Color(0X5C3C3C43),
 )
 
-internal val cupertinoColorsDark = CupertinoColors(
+internal val cupertinoColorSchemeDark = CupertinoColorScheme(
     systemRed = Color(0XFFFF453A),
     systemOrange = Color(0XFFFF9F0A),
     systemYellow = Color(0XFFFFD60A),

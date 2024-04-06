@@ -19,16 +19,20 @@ package design.adapt.previews.cupertino
 import android.content.res.Configuration
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
+import androidx.compose.foundation.horizontalScroll
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.RowScope
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.PlayArrow
 import androidx.compose.runtime.Composable
@@ -46,8 +50,9 @@ import design.adapt.cupertino.CupertinoButtonSize
 import design.adapt.cupertino.CupertinoButtonStyle
 import design.adapt.cupertino.CupertinoIcon
 import design.adapt.cupertino.CupertinoText
-import design.adapt.cupertino.LocalCupertinoColors
-import design.adapt.cupertino.cupertinoColorsDark
+import design.adapt.cupertino.CupertinoTheme
+import design.adapt.cupertino.LocalCupertinoColorScheme
+import design.adapt.cupertino.cupertinoColorSchemeDark
 
 @Preview(device = "spec:id=reference_desktop,shape=Normal,width=1920,height=1700,unit=dp,dpi=160")
 @Composable
@@ -61,7 +66,7 @@ fun LightMode() {
 )
 @Composable
 fun DarkMode() {
-    CompositionLocalProvider(LocalCupertinoColors provides cupertinoColorsDark) {
+    CompositionLocalProvider(LocalCupertinoColorScheme provides cupertinoColorSchemeDark) {
         Buttons()
     }
 }
@@ -97,354 +102,367 @@ private fun Buttons() {
     val padding13 = remember { movableContentOf { Spacer(modifier = Modifier.width(68.dp)) } }
     val gapBetweenButtonTypes = remember { movableContentOf { Spacer(modifier = Modifier.height(40.dp)) } }
 
-    Box(
-        modifier = Modifier
-            .background(
-                color = Color(color = 0xFFCCCCCC),
-                shape = RoundedCornerShape(2.dp)
+    val commonRow: @Composable (@Composable RowScope.() -> Unit) -> Unit = remember {
+        movableContentOf { content ->
+            Row(
+                modifier = Modifier.horizontalScroll(rememberScrollState()),
+                content = content
             )
-            .border(
-                width = 1.dp,
-                color = Color.Black.copy(alpha = 0.25f),
-                shape = RoundedCornerShape(2.dp)
-            )
-    ) {
-        Column(
-            modifier = Modifier.padding(32.dp),
-            verticalArrangement = Arrangement.spacedBy(10.dp)
+        }
+    }
+
+    CupertinoTheme {
+        Box(
+            modifier = Modifier
+                .background(
+                    color = Color(color = 0xFFCCCCCC),
+                    shape = RoundedCornerShape(2.dp)
+                )
+                .border(
+                    width = 1.dp,
+                    color = Color.Black.copy(alpha = 0.25f),
+                    shape = RoundedCornerShape(2.dp)
+                )
         ) {
-            // Borderless
-            Row {
-                CupertinoButton(onClick = {}, text = text, icon = icon, enabled = true, size = CupertinoButtonSize.Small, style = CupertinoButtonStyle.Borderless, onMaterial = false)
-                padding1()
-                CupertinoButton(onClick = {}, text = text, icon = icon, enabled = true, size = CupertinoButtonSize.Small, style = CupertinoButtonStyle.Borderless, onMaterial = true)
-                padding2()
-                CupertinoButton(onClick = {}, text = text, icon = icon, enabled = true, size = CupertinoButtonSize.Medium, style = CupertinoButtonStyle.Borderless, onMaterial = false)
-                padding3()
-                CupertinoButton(onClick = {}, text = text, icon = icon, enabled = true, size = CupertinoButtonSize.Medium, style = CupertinoButtonStyle.Borderless, onMaterial = true)
-                padding4()
-                CupertinoButton(onClick = {}, text = text, icon = icon, enabled = true, size = CupertinoButtonSize.Large, style = CupertinoButtonStyle.Borderless, onMaterial = false)
-                padding5()
-                CupertinoButton(onClick = {}, text = text, icon = icon, enabled = true, size = CupertinoButtonSize.Large, style = CupertinoButtonStyle.Borderless, onMaterial = true)
-            }
-            Row {
-                CupertinoButton(onClick = {}, text = text, icon = icon, enabled = false, size = CupertinoButtonSize.Small, style = CupertinoButtonStyle.Borderless, onMaterial = false)
-                padding1()
-                CupertinoButton(onClick = {}, text = text, icon = icon, enabled = false, size = CupertinoButtonSize.Small, style = CupertinoButtonStyle.Borderless, onMaterial = true)
-                padding2()
-                CupertinoButton(onClick = {}, text = text, icon = icon, enabled = false, size = CupertinoButtonSize.Medium, style = CupertinoButtonStyle.Borderless, onMaterial = false)
-                padding3()
-                CupertinoButton(onClick = {}, text = text, icon = icon, enabled = false, size = CupertinoButtonSize.Medium, style = CupertinoButtonStyle.Borderless, onMaterial = true)
-                padding4()
-                CupertinoButton(onClick = {}, text = text, icon = icon, enabled = false, size = CupertinoButtonSize.Large, style = CupertinoButtonStyle.Borderless, onMaterial = false)
-                padding5()
-                CupertinoButton(onClick = {}, text = text, icon = icon, enabled = false, size = CupertinoButtonSize.Large, style = CupertinoButtonStyle.Borderless, onMaterial = true)
-            }
-            Row {
-                padding6()
-                CupertinoButton(onClick = {}, icon = icon, enabled = true, size = CupertinoButtonSize.Small, style = CupertinoButtonStyle.Borderless, onMaterial = false)
-                padding7()
-                CupertinoButton(onClick = {}, icon = icon, enabled = true, size = CupertinoButtonSize.Small, style = CupertinoButtonStyle.Borderless, onMaterial = true)
-                padding8()
-                CupertinoButton(onClick = {}, icon = icon, enabled = true, size = CupertinoButtonSize.Medium, style = CupertinoButtonStyle.Borderless, onMaterial = false)
-                padding9()
-                CupertinoButton(onClick = {}, icon = icon, enabled = true, size = CupertinoButtonSize.Medium, style = CupertinoButtonStyle.Borderless, onMaterial = true)
-                padding10()
-                CupertinoButton(onClick = {}, icon = icon, enabled = true, size = CupertinoButtonSize.Large, style = CupertinoButtonStyle.Borderless, onMaterial = false)
-                padding11()
-                CupertinoButton(onClick = {}, icon = icon, enabled = true, size = CupertinoButtonSize.Large, style = CupertinoButtonStyle.Borderless, onMaterial = true)
-            }
-            Row {
-                padding6()
-                CupertinoButton(onClick = {}, icon = icon, enabled = false, size = CupertinoButtonSize.Small, style = CupertinoButtonStyle.Borderless, onMaterial = false)
-                padding7()
-                CupertinoButton(onClick = {}, icon = icon, enabled = false, size = CupertinoButtonSize.Small, style = CupertinoButtonStyle.Borderless, onMaterial = true)
-                padding8()
-                CupertinoButton(onClick = {}, icon = icon, enabled = false, size = CupertinoButtonSize.Medium, style = CupertinoButtonStyle.Borderless, onMaterial = false)
-                padding9()
-                CupertinoButton(onClick = {}, icon = icon, enabled = false, size = CupertinoButtonSize.Medium, style = CupertinoButtonStyle.Borderless, onMaterial = true)
-                padding10()
-                CupertinoButton(onClick = {}, icon = icon, enabled = false, size = CupertinoButtonSize.Large, style = CupertinoButtonStyle.Borderless, onMaterial = false)
-                padding11()
-                CupertinoButton(onClick = {}, icon = icon, enabled = false, size = CupertinoButtonSize.Large, style = CupertinoButtonStyle.Borderless, onMaterial = true)
-            }
-            Row {
-                CupertinoButton(onClick = {}, text = text, enabled = true, size = CupertinoButtonSize.Small, style = CupertinoButtonStyle.Borderless, onMaterial = false)
-                padding12()
-                CupertinoButton(onClick = {}, text = text, enabled = true, size = CupertinoButtonSize.Small, style = CupertinoButtonStyle.Borderless, onMaterial = true)
-                padding13()
-                CupertinoButton(onClick = {}, text = text, enabled = true, size = CupertinoButtonSize.Medium, style = CupertinoButtonStyle.Borderless, onMaterial = false)
-                padding12()
-                CupertinoButton(onClick = {}, text = text, enabled = true, size = CupertinoButtonSize.Medium, style = CupertinoButtonStyle.Borderless, onMaterial = true)
-                padding13()
-                CupertinoButton(onClick = {}, text = text, enabled = true, size = CupertinoButtonSize.Large, style = CupertinoButtonStyle.Borderless, onMaterial = false)
-                padding2()
-                CupertinoButton(onClick = {}, text = text, enabled = true, size = CupertinoButtonSize.Large, style = CupertinoButtonStyle.Borderless, onMaterial = true)
-            }
-            Row {
-                CupertinoButton(onClick = {}, text = text, enabled = false, size = CupertinoButtonSize.Small, style = CupertinoButtonStyle.Borderless, onMaterial = false)
-                padding12()
-                CupertinoButton(onClick = {}, text = text, enabled = false, size = CupertinoButtonSize.Small, style = CupertinoButtonStyle.Borderless, onMaterial = true)
-                padding13()
-                CupertinoButton(onClick = {}, text = text, enabled = false, size = CupertinoButtonSize.Medium, style = CupertinoButtonStyle.Borderless, onMaterial = false)
-                padding12()
-                CupertinoButton(onClick = {}, text = text, enabled = false, size = CupertinoButtonSize.Medium, style = CupertinoButtonStyle.Borderless, onMaterial = true)
-                padding13()
-                CupertinoButton(onClick = {}, text = text, enabled = false, size = CupertinoButtonSize.Large, style = CupertinoButtonStyle.Borderless, onMaterial = false)
-                padding2()
-                CupertinoButton(onClick = {}, text = text, enabled = false, size = CupertinoButtonSize.Large, style = CupertinoButtonStyle.Borderless, onMaterial = true)
-            }
+            Column(
+                modifier = Modifier
+                    .verticalScroll(rememberScrollState())
+                    .padding(32.dp),
+                verticalArrangement = Arrangement.spacedBy(10.dp)
+            ) {
+                // Borderless
+                commonRow {
+                    CupertinoButton(onClick = {}, text = text, icon = icon, enabled = true, size = CupertinoButtonSize.Small, style = CupertinoButtonStyle.Borderless, onMaterial = false)
+                    padding1()
+                    CupertinoButton(onClick = {}, text = text, icon = icon, enabled = true, size = CupertinoButtonSize.Small, style = CupertinoButtonStyle.Borderless, onMaterial = true)
+                    padding2()
+                    CupertinoButton(onClick = {}, text = text, icon = icon, enabled = true, size = CupertinoButtonSize.Medium, style = CupertinoButtonStyle.Borderless, onMaterial = false)
+                    padding3()
+                    CupertinoButton(onClick = {}, text = text, icon = icon, enabled = true, size = CupertinoButtonSize.Medium, style = CupertinoButtonStyle.Borderless, onMaterial = true)
+                    padding4()
+                    CupertinoButton(onClick = {}, text = text, icon = icon, enabled = true, size = CupertinoButtonSize.Large, style = CupertinoButtonStyle.Borderless, onMaterial = false)
+                    padding5()
+                    CupertinoButton(onClick = {}, text = text, icon = icon, enabled = true, size = CupertinoButtonSize.Large, style = CupertinoButtonStyle.Borderless, onMaterial = true)
+                }
+                commonRow {
+                    CupertinoButton(onClick = {}, text = text, icon = icon, enabled = false, size = CupertinoButtonSize.Small, style = CupertinoButtonStyle.Borderless, onMaterial = false)
+                    padding1()
+                    CupertinoButton(onClick = {}, text = text, icon = icon, enabled = false, size = CupertinoButtonSize.Small, style = CupertinoButtonStyle.Borderless, onMaterial = true)
+                    padding2()
+                    CupertinoButton(onClick = {}, text = text, icon = icon, enabled = false, size = CupertinoButtonSize.Medium, style = CupertinoButtonStyle.Borderless, onMaterial = false)
+                    padding3()
+                    CupertinoButton(onClick = {}, text = text, icon = icon, enabled = false, size = CupertinoButtonSize.Medium, style = CupertinoButtonStyle.Borderless, onMaterial = true)
+                    padding4()
+                    CupertinoButton(onClick = {}, text = text, icon = icon, enabled = false, size = CupertinoButtonSize.Large, style = CupertinoButtonStyle.Borderless, onMaterial = false)
+                    padding5()
+                    CupertinoButton(onClick = {}, text = text, icon = icon, enabled = false, size = CupertinoButtonSize.Large, style = CupertinoButtonStyle.Borderless, onMaterial = true)
+                }
+                commonRow {
+                    padding6()
+                    CupertinoButton(onClick = {}, icon = icon, enabled = true, size = CupertinoButtonSize.Small, style = CupertinoButtonStyle.Borderless, onMaterial = false)
+                    padding7()
+                    CupertinoButton(onClick = {}, icon = icon, enabled = true, size = CupertinoButtonSize.Small, style = CupertinoButtonStyle.Borderless, onMaterial = true)
+                    padding8()
+                    CupertinoButton(onClick = {}, icon = icon, enabled = true, size = CupertinoButtonSize.Medium, style = CupertinoButtonStyle.Borderless, onMaterial = false)
+                    padding9()
+                    CupertinoButton(onClick = {}, icon = icon, enabled = true, size = CupertinoButtonSize.Medium, style = CupertinoButtonStyle.Borderless, onMaterial = true)
+                    padding10()
+                    CupertinoButton(onClick = {}, icon = icon, enabled = true, size = CupertinoButtonSize.Large, style = CupertinoButtonStyle.Borderless, onMaterial = false)
+                    padding11()
+                    CupertinoButton(onClick = {}, icon = icon, enabled = true, size = CupertinoButtonSize.Large, style = CupertinoButtonStyle.Borderless, onMaterial = true)
+                }
+                commonRow {
+                    padding6()
+                    CupertinoButton(onClick = {}, icon = icon, enabled = false, size = CupertinoButtonSize.Small, style = CupertinoButtonStyle.Borderless, onMaterial = false)
+                    padding7()
+                    CupertinoButton(onClick = {}, icon = icon, enabled = false, size = CupertinoButtonSize.Small, style = CupertinoButtonStyle.Borderless, onMaterial = true)
+                    padding8()
+                    CupertinoButton(onClick = {}, icon = icon, enabled = false, size = CupertinoButtonSize.Medium, style = CupertinoButtonStyle.Borderless, onMaterial = false)
+                    padding9()
+                    CupertinoButton(onClick = {}, icon = icon, enabled = false, size = CupertinoButtonSize.Medium, style = CupertinoButtonStyle.Borderless, onMaterial = true)
+                    padding10()
+                    CupertinoButton(onClick = {}, icon = icon, enabled = false, size = CupertinoButtonSize.Large, style = CupertinoButtonStyle.Borderless, onMaterial = false)
+                    padding11()
+                    CupertinoButton(onClick = {}, icon = icon, enabled = false, size = CupertinoButtonSize.Large, style = CupertinoButtonStyle.Borderless, onMaterial = true)
+                }
+                commonRow {
+                    CupertinoButton(onClick = {}, text = text, enabled = true, size = CupertinoButtonSize.Small, style = CupertinoButtonStyle.Borderless, onMaterial = false)
+                    padding12()
+                    CupertinoButton(onClick = {}, text = text, enabled = true, size = CupertinoButtonSize.Small, style = CupertinoButtonStyle.Borderless, onMaterial = true)
+                    padding13()
+                    CupertinoButton(onClick = {}, text = text, enabled = true, size = CupertinoButtonSize.Medium, style = CupertinoButtonStyle.Borderless, onMaterial = false)
+                    padding12()
+                    CupertinoButton(onClick = {}, text = text, enabled = true, size = CupertinoButtonSize.Medium, style = CupertinoButtonStyle.Borderless, onMaterial = true)
+                    padding13()
+                    CupertinoButton(onClick = {}, text = text, enabled = true, size = CupertinoButtonSize.Large, style = CupertinoButtonStyle.Borderless, onMaterial = false)
+                    padding2()
+                    CupertinoButton(onClick = {}, text = text, enabled = true, size = CupertinoButtonSize.Large, style = CupertinoButtonStyle.Borderless, onMaterial = true)
+                }
+                commonRow {
+                    CupertinoButton(onClick = {}, text = text, enabled = false, size = CupertinoButtonSize.Small, style = CupertinoButtonStyle.Borderless, onMaterial = false)
+                    padding12()
+                    CupertinoButton(onClick = {}, text = text, enabled = false, size = CupertinoButtonSize.Small, style = CupertinoButtonStyle.Borderless, onMaterial = true)
+                    padding13()
+                    CupertinoButton(onClick = {}, text = text, enabled = false, size = CupertinoButtonSize.Medium, style = CupertinoButtonStyle.Borderless, onMaterial = false)
+                    padding12()
+                    CupertinoButton(onClick = {}, text = text, enabled = false, size = CupertinoButtonSize.Medium, style = CupertinoButtonStyle.Borderless, onMaterial = true)
+                    padding13()
+                    CupertinoButton(onClick = {}, text = text, enabled = false, size = CupertinoButtonSize.Large, style = CupertinoButtonStyle.Borderless, onMaterial = false)
+                    padding2()
+                    CupertinoButton(onClick = {}, text = text, enabled = false, size = CupertinoButtonSize.Large, style = CupertinoButtonStyle.Borderless, onMaterial = true)
+                }
 
-            gapBetweenButtonTypes()
+                gapBetweenButtonTypes()
 
-            // Bezeled Gray
-            Row {
-                CupertinoButton(onClick = {}, text = text, icon = icon, enabled = true, size = CupertinoButtonSize.Small, style = CupertinoButtonStyle.BezeledGray, onMaterial = false)
-                padding1()
-                CupertinoButton(onClick = {}, text = text, icon = icon, enabled = true, size = CupertinoButtonSize.Small, style = CupertinoButtonStyle.BezeledGray, onMaterial = true)
-                padding2()
-                CupertinoButton(onClick = {}, text = text, icon = icon, enabled = true, size = CupertinoButtonSize.Medium, style = CupertinoButtonStyle.BezeledGray, onMaterial = false)
-                padding3()
-                CupertinoButton(onClick = {}, text = text, icon = icon, enabled = true, size = CupertinoButtonSize.Medium, style = CupertinoButtonStyle.BezeledGray, onMaterial = true)
-                padding4()
-                CupertinoButton(onClick = {}, text = text, icon = icon, enabled = true, size = CupertinoButtonSize.Large, style = CupertinoButtonStyle.BezeledGray, onMaterial = false)
-                padding5()
-                CupertinoButton(onClick = {}, text = text, icon = icon, enabled = true, size = CupertinoButtonSize.Large, style = CupertinoButtonStyle.BezeledGray, onMaterial = true)
-            }
-            Row {
-                CupertinoButton(onClick = {}, text = text, icon = icon, enabled = false, size = CupertinoButtonSize.Small, style = CupertinoButtonStyle.BezeledGray, onMaterial = false)
-                padding1()
-                CupertinoButton(onClick = {}, text = text, icon = icon, enabled = false, size = CupertinoButtonSize.Small, style = CupertinoButtonStyle.BezeledGray, onMaterial = true)
-                padding2()
-                CupertinoButton(onClick = {}, text = text, icon = icon, enabled = false, size = CupertinoButtonSize.Medium, style = CupertinoButtonStyle.BezeledGray, onMaterial = false)
-                padding3()
-                CupertinoButton(onClick = {}, text = text, icon = icon, enabled = false, size = CupertinoButtonSize.Medium, style = CupertinoButtonStyle.BezeledGray, onMaterial = true)
-                padding4()
-                CupertinoButton(onClick = {}, text = text, icon = icon, enabled = false, size = CupertinoButtonSize.Large, style = CupertinoButtonStyle.BezeledGray, onMaterial = false)
-                padding5()
-                CupertinoButton(onClick = {}, text = text, icon = icon, enabled = false, size = CupertinoButtonSize.Large, style = CupertinoButtonStyle.BezeledGray, onMaterial = true)
-            }
-            Row {
-                padding6()
-                CupertinoButton(onClick = {}, icon = icon, enabled = true, size = CupertinoButtonSize.Small, style = CupertinoButtonStyle.BezeledGray, onMaterial = false)
-                padding7()
-                CupertinoButton(onClick = {}, icon = icon, enabled = true, size = CupertinoButtonSize.Small, style = CupertinoButtonStyle.BezeledGray, onMaterial = true)
-                padding8()
-                CupertinoButton(onClick = {}, icon = icon, enabled = true, size = CupertinoButtonSize.Medium, style = CupertinoButtonStyle.BezeledGray, onMaterial = false)
-                padding9()
-                CupertinoButton(onClick = {}, icon = icon, enabled = true, size = CupertinoButtonSize.Medium, style = CupertinoButtonStyle.BezeledGray, onMaterial = true)
-                padding10()
-                CupertinoButton(onClick = {}, icon = icon, enabled = true, size = CupertinoButtonSize.Large, style = CupertinoButtonStyle.BezeledGray, onMaterial = false)
-                padding11()
-                CupertinoButton(onClick = {}, icon = icon, enabled = true, size = CupertinoButtonSize.Large, style = CupertinoButtonStyle.BezeledGray, onMaterial = true)
-            }
-            Row {
-                padding6()
-                CupertinoButton(onClick = {}, icon = icon, enabled = false, size = CupertinoButtonSize.Small, style = CupertinoButtonStyle.BezeledGray, onMaterial = false)
-                padding7()
-                CupertinoButton(onClick = {}, icon = icon, enabled = false, size = CupertinoButtonSize.Small, style = CupertinoButtonStyle.BezeledGray, onMaterial = true)
-                padding8()
-                CupertinoButton(onClick = {}, icon = icon, enabled = false, size = CupertinoButtonSize.Medium, style = CupertinoButtonStyle.BezeledGray, onMaterial = false)
-                padding9()
-                CupertinoButton(onClick = {}, icon = icon, enabled = false, size = CupertinoButtonSize.Medium, style = CupertinoButtonStyle.BezeledGray, onMaterial = true)
-                padding10()
-                CupertinoButton(onClick = {}, icon = icon, enabled = false, size = CupertinoButtonSize.Large, style = CupertinoButtonStyle.BezeledGray, onMaterial = false)
-                padding11()
-                CupertinoButton(onClick = {}, icon = icon, enabled = false, size = CupertinoButtonSize.Large, style = CupertinoButtonStyle.BezeledGray, onMaterial = true)
-            }
-            Row {
-                CupertinoButton(onClick = {}, text = text, enabled = true, size = CupertinoButtonSize.Small, style = CupertinoButtonStyle.BezeledGray, onMaterial = false)
-                padding12()
-                CupertinoButton(onClick = {}, text = text, enabled = true, size = CupertinoButtonSize.Small, style = CupertinoButtonStyle.BezeledGray, onMaterial = true)
-                padding13()
-                CupertinoButton(onClick = {}, text = text, enabled = true, size = CupertinoButtonSize.Medium, style = CupertinoButtonStyle.BezeledGray, onMaterial = false)
-                padding12()
-                CupertinoButton(onClick = {}, text = text, enabled = true, size = CupertinoButtonSize.Medium, style = CupertinoButtonStyle.BezeledGray, onMaterial = true)
-                padding13()
-                CupertinoButton(onClick = {}, text = text, enabled = true, size = CupertinoButtonSize.Large, style = CupertinoButtonStyle.BezeledGray, onMaterial = false)
-                padding2()
-                CupertinoButton(onClick = {}, text = text, enabled = true, size = CupertinoButtonSize.Large, style = CupertinoButtonStyle.BezeledGray, onMaterial = true)
-            }
-            Row {
-                CupertinoButton(onClick = {}, text = text, enabled = false, size = CupertinoButtonSize.Small, style = CupertinoButtonStyle.BezeledGray, onMaterial = false)
-                padding12()
-                CupertinoButton(onClick = {}, text = text, enabled = false, size = CupertinoButtonSize.Small, style = CupertinoButtonStyle.BezeledGray, onMaterial = true)
-                padding13()
-                CupertinoButton(onClick = {}, text = text, enabled = false, size = CupertinoButtonSize.Medium, style = CupertinoButtonStyle.BezeledGray, onMaterial = false)
-                padding12()
-                CupertinoButton(onClick = {}, text = text, enabled = false, size = CupertinoButtonSize.Medium, style = CupertinoButtonStyle.BezeledGray, onMaterial = true)
-                padding13()
-                CupertinoButton(onClick = {}, text = text, enabled = false, size = CupertinoButtonSize.Large, style = CupertinoButtonStyle.BezeledGray, onMaterial = false)
-                padding2()
-                CupertinoButton(onClick = {}, text = text, enabled = false, size = CupertinoButtonSize.Large, style = CupertinoButtonStyle.BezeledGray, onMaterial = true)
-            }
+                // Bezeled Gray
+                commonRow {
+                    CupertinoButton(onClick = {}, text = text, icon = icon, enabled = true, size = CupertinoButtonSize.Small, style = CupertinoButtonStyle.BezeledGray, onMaterial = false)
+                    padding1()
+                    CupertinoButton(onClick = {}, text = text, icon = icon, enabled = true, size = CupertinoButtonSize.Small, style = CupertinoButtonStyle.BezeledGray, onMaterial = true)
+                    padding2()
+                    CupertinoButton(onClick = {}, text = text, icon = icon, enabled = true, size = CupertinoButtonSize.Medium, style = CupertinoButtonStyle.BezeledGray, onMaterial = false)
+                    padding3()
+                    CupertinoButton(onClick = {}, text = text, icon = icon, enabled = true, size = CupertinoButtonSize.Medium, style = CupertinoButtonStyle.BezeledGray, onMaterial = true)
+                    padding4()
+                    CupertinoButton(onClick = {}, text = text, icon = icon, enabled = true, size = CupertinoButtonSize.Large, style = CupertinoButtonStyle.BezeledGray, onMaterial = false)
+                    padding5()
+                    CupertinoButton(onClick = {}, text = text, icon = icon, enabled = true, size = CupertinoButtonSize.Large, style = CupertinoButtonStyle.BezeledGray, onMaterial = true)
+                }
+                commonRow {
+                    CupertinoButton(onClick = {}, text = text, icon = icon, enabled = false, size = CupertinoButtonSize.Small, style = CupertinoButtonStyle.BezeledGray, onMaterial = false)
+                    padding1()
+                    CupertinoButton(onClick = {}, text = text, icon = icon, enabled = false, size = CupertinoButtonSize.Small, style = CupertinoButtonStyle.BezeledGray, onMaterial = true)
+                    padding2()
+                    CupertinoButton(onClick = {}, text = text, icon = icon, enabled = false, size = CupertinoButtonSize.Medium, style = CupertinoButtonStyle.BezeledGray, onMaterial = false)
+                    padding3()
+                    CupertinoButton(onClick = {}, text = text, icon = icon, enabled = false, size = CupertinoButtonSize.Medium, style = CupertinoButtonStyle.BezeledGray, onMaterial = true)
+                    padding4()
+                    CupertinoButton(onClick = {}, text = text, icon = icon, enabled = false, size = CupertinoButtonSize.Large, style = CupertinoButtonStyle.BezeledGray, onMaterial = false)
+                    padding5()
+                    CupertinoButton(onClick = {}, text = text, icon = icon, enabled = false, size = CupertinoButtonSize.Large, style = CupertinoButtonStyle.BezeledGray, onMaterial = true)
+                }
+                commonRow {
+                    padding6()
+                    CupertinoButton(onClick = {}, icon = icon, enabled = true, size = CupertinoButtonSize.Small, style = CupertinoButtonStyle.BezeledGray, onMaterial = false)
+                    padding7()
+                    CupertinoButton(onClick = {}, icon = icon, enabled = true, size = CupertinoButtonSize.Small, style = CupertinoButtonStyle.BezeledGray, onMaterial = true)
+                    padding8()
+                    CupertinoButton(onClick = {}, icon = icon, enabled = true, size = CupertinoButtonSize.Medium, style = CupertinoButtonStyle.BezeledGray, onMaterial = false)
+                    padding9()
+                    CupertinoButton(onClick = {}, icon = icon, enabled = true, size = CupertinoButtonSize.Medium, style = CupertinoButtonStyle.BezeledGray, onMaterial = true)
+                    padding10()
+                    CupertinoButton(onClick = {}, icon = icon, enabled = true, size = CupertinoButtonSize.Large, style = CupertinoButtonStyle.BezeledGray, onMaterial = false)
+                    padding11()
+                    CupertinoButton(onClick = {}, icon = icon, enabled = true, size = CupertinoButtonSize.Large, style = CupertinoButtonStyle.BezeledGray, onMaterial = true)
+                }
+                commonRow {
+                    padding6()
+                    CupertinoButton(onClick = {}, icon = icon, enabled = false, size = CupertinoButtonSize.Small, style = CupertinoButtonStyle.BezeledGray, onMaterial = false)
+                    padding7()
+                    CupertinoButton(onClick = {}, icon = icon, enabled = false, size = CupertinoButtonSize.Small, style = CupertinoButtonStyle.BezeledGray, onMaterial = true)
+                    padding8()
+                    CupertinoButton(onClick = {}, icon = icon, enabled = false, size = CupertinoButtonSize.Medium, style = CupertinoButtonStyle.BezeledGray, onMaterial = false)
+                    padding9()
+                    CupertinoButton(onClick = {}, icon = icon, enabled = false, size = CupertinoButtonSize.Medium, style = CupertinoButtonStyle.BezeledGray, onMaterial = true)
+                    padding10()
+                    CupertinoButton(onClick = {}, icon = icon, enabled = false, size = CupertinoButtonSize.Large, style = CupertinoButtonStyle.BezeledGray, onMaterial = false)
+                    padding11()
+                    CupertinoButton(onClick = {}, icon = icon, enabled = false, size = CupertinoButtonSize.Large, style = CupertinoButtonStyle.BezeledGray, onMaterial = true)
+                }
+                commonRow {
+                    CupertinoButton(onClick = {}, text = text, enabled = true, size = CupertinoButtonSize.Small, style = CupertinoButtonStyle.BezeledGray, onMaterial = false)
+                    padding12()
+                    CupertinoButton(onClick = {}, text = text, enabled = true, size = CupertinoButtonSize.Small, style = CupertinoButtonStyle.BezeledGray, onMaterial = true)
+                    padding13()
+                    CupertinoButton(onClick = {}, text = text, enabled = true, size = CupertinoButtonSize.Medium, style = CupertinoButtonStyle.BezeledGray, onMaterial = false)
+                    padding12()
+                    CupertinoButton(onClick = {}, text = text, enabled = true, size = CupertinoButtonSize.Medium, style = CupertinoButtonStyle.BezeledGray, onMaterial = true)
+                    padding13()
+                    CupertinoButton(onClick = {}, text = text, enabled = true, size = CupertinoButtonSize.Large, style = CupertinoButtonStyle.BezeledGray, onMaterial = false)
+                    padding2()
+                    CupertinoButton(onClick = {}, text = text, enabled = true, size = CupertinoButtonSize.Large, style = CupertinoButtonStyle.BezeledGray, onMaterial = true)
+                }
+                commonRow {
+                    CupertinoButton(onClick = {}, text = text, enabled = false, size = CupertinoButtonSize.Small, style = CupertinoButtonStyle.BezeledGray, onMaterial = false)
+                    padding12()
+                    CupertinoButton(onClick = {}, text = text, enabled = false, size = CupertinoButtonSize.Small, style = CupertinoButtonStyle.BezeledGray, onMaterial = true)
+                    padding13()
+                    CupertinoButton(onClick = {}, text = text, enabled = false, size = CupertinoButtonSize.Medium, style = CupertinoButtonStyle.BezeledGray, onMaterial = false)
+                    padding12()
+                    CupertinoButton(onClick = {}, text = text, enabled = false, size = CupertinoButtonSize.Medium, style = CupertinoButtonStyle.BezeledGray, onMaterial = true)
+                    padding13()
+                    CupertinoButton(onClick = {}, text = text, enabled = false, size = CupertinoButtonSize.Large, style = CupertinoButtonStyle.BezeledGray, onMaterial = false)
+                    padding2()
+                    CupertinoButton(onClick = {}, text = text, enabled = false, size = CupertinoButtonSize.Large, style = CupertinoButtonStyle.BezeledGray, onMaterial = true)
+                }
 
-            gapBetweenButtonTypes()
+                gapBetweenButtonTypes()
 
-            // Bezeled
-            Row {
-                CupertinoButton(onClick = {}, text = text, icon = icon, enabled = true, size = CupertinoButtonSize.Small, style = CupertinoButtonStyle.Bezeled, onMaterial = false)
-                padding1()
-                CupertinoButton(onClick = {}, text = text, icon = icon, enabled = true, size = CupertinoButtonSize.Small, style = CupertinoButtonStyle.Bezeled, onMaterial = true)
-                padding2()
-                CupertinoButton(onClick = {}, text = text, icon = icon, enabled = true, size = CupertinoButtonSize.Medium, style = CupertinoButtonStyle.Bezeled, onMaterial = false)
-                padding3()
-                CupertinoButton(onClick = {}, text = text, icon = icon, enabled = true, size = CupertinoButtonSize.Medium, style = CupertinoButtonStyle.Bezeled, onMaterial = true)
-                padding4()
-                CupertinoButton(onClick = {}, text = text, icon = icon, enabled = true, size = CupertinoButtonSize.Large, style = CupertinoButtonStyle.Bezeled, onMaterial = false)
-                padding5()
-                CupertinoButton(onClick = {}, text = text, icon = icon, enabled = true, size = CupertinoButtonSize.Large, style = CupertinoButtonStyle.Bezeled, onMaterial = true)
-            }
-            Row {
-                CupertinoButton(onClick = {}, text = text, icon = icon, enabled = false, size = CupertinoButtonSize.Small, style = CupertinoButtonStyle.Bezeled, onMaterial = false)
-                padding1()
-                CupertinoButton(onClick = {}, text = text, icon = icon, enabled = false, size = CupertinoButtonSize.Small, style = CupertinoButtonStyle.Bezeled, onMaterial = true)
-                padding2()
-                CupertinoButton(onClick = {}, text = text, icon = icon, enabled = false, size = CupertinoButtonSize.Medium, style = CupertinoButtonStyle.Bezeled, onMaterial = false)
-                padding3()
-                CupertinoButton(onClick = {}, text = text, icon = icon, enabled = false, size = CupertinoButtonSize.Medium, style = CupertinoButtonStyle.Bezeled, onMaterial = true)
-                padding4()
-                CupertinoButton(onClick = {}, text = text, icon = icon, enabled = false, size = CupertinoButtonSize.Large, style = CupertinoButtonStyle.Bezeled, onMaterial = false)
-                padding5()
-                CupertinoButton(onClick = {}, text = text, icon = icon, enabled = false, size = CupertinoButtonSize.Large, style = CupertinoButtonStyle.Bezeled, onMaterial = true)
-            }
-            Row {
-                padding6()
-                CupertinoButton(onClick = {}, icon = icon, enabled = true, size = CupertinoButtonSize.Small, style = CupertinoButtonStyle.Bezeled, onMaterial = false)
-                padding7()
-                CupertinoButton(onClick = {}, icon = icon, enabled = true, size = CupertinoButtonSize.Small, style = CupertinoButtonStyle.Bezeled, onMaterial = true)
-                padding8()
-                CupertinoButton(onClick = {}, icon = icon, enabled = true, size = CupertinoButtonSize.Medium, style = CupertinoButtonStyle.Bezeled, onMaterial = false)
-                padding9()
-                CupertinoButton(onClick = {}, icon = icon, enabled = true, size = CupertinoButtonSize.Medium, style = CupertinoButtonStyle.Bezeled, onMaterial = true)
-                padding10()
-                CupertinoButton(onClick = {}, icon = icon, enabled = true, size = CupertinoButtonSize.Large, style = CupertinoButtonStyle.Bezeled, onMaterial = false)
-                padding11()
-                CupertinoButton(onClick = {}, icon = icon, enabled = true, size = CupertinoButtonSize.Large, style = CupertinoButtonStyle.Bezeled, onMaterial = true)
-            }
-            Row {
-                padding6()
-                CupertinoButton(onClick = {}, icon = icon, enabled = false, size = CupertinoButtonSize.Small, style = CupertinoButtonStyle.Bezeled, onMaterial = false)
-                padding7()
-                CupertinoButton(onClick = {}, icon = icon, enabled = false, size = CupertinoButtonSize.Small, style = CupertinoButtonStyle.Bezeled, onMaterial = true)
-                padding8()
-                CupertinoButton(onClick = {}, icon = icon, enabled = false, size = CupertinoButtonSize.Medium, style = CupertinoButtonStyle.Bezeled, onMaterial = false)
-                padding9()
-                CupertinoButton(onClick = {}, icon = icon, enabled = false, size = CupertinoButtonSize.Medium, style = CupertinoButtonStyle.Bezeled, onMaterial = true)
-                padding10()
-                CupertinoButton(onClick = {}, icon = icon, enabled = false, size = CupertinoButtonSize.Large, style = CupertinoButtonStyle.Bezeled, onMaterial = false)
-                padding11()
-                CupertinoButton(onClick = {}, icon = icon, enabled = false, size = CupertinoButtonSize.Large, style = CupertinoButtonStyle.Bezeled, onMaterial = true)
-            }
-            Row {
-                CupertinoButton(onClick = {}, text = text, enabled = true, size = CupertinoButtonSize.Small, style = CupertinoButtonStyle.Bezeled, onMaterial = false)
-                padding12()
-                CupertinoButton(onClick = {}, text = text, enabled = true, size = CupertinoButtonSize.Small, style = CupertinoButtonStyle.Bezeled, onMaterial = true)
-                padding13()
-                CupertinoButton(onClick = {}, text = text, enabled = true, size = CupertinoButtonSize.Medium, style = CupertinoButtonStyle.Bezeled, onMaterial = false)
-                padding12()
-                CupertinoButton(onClick = {}, text = text, enabled = true, size = CupertinoButtonSize.Medium, style = CupertinoButtonStyle.Bezeled, onMaterial = true)
-                padding13()
-                CupertinoButton(onClick = {}, text = text, enabled = true, size = CupertinoButtonSize.Large, style = CupertinoButtonStyle.Bezeled, onMaterial = false)
-                padding2()
-                CupertinoButton(onClick = {}, text = text, enabled = true, size = CupertinoButtonSize.Large, style = CupertinoButtonStyle.Bezeled, onMaterial = true)
-            }
-            Row {
-                CupertinoButton(onClick = {}, text = text, enabled = false, size = CupertinoButtonSize.Small, style = CupertinoButtonStyle.Bezeled, onMaterial = false)
-                padding12()
-                CupertinoButton(onClick = {}, text = text, enabled = false, size = CupertinoButtonSize.Small, style = CupertinoButtonStyle.Bezeled, onMaterial = true)
-                padding13()
-                CupertinoButton(onClick = {}, text = text, enabled = false, size = CupertinoButtonSize.Medium, style = CupertinoButtonStyle.Bezeled, onMaterial = false)
-                padding12()
-                CupertinoButton(onClick = {}, text = text, enabled = false, size = CupertinoButtonSize.Medium, style = CupertinoButtonStyle.Bezeled, onMaterial = true)
-                padding13()
-                CupertinoButton(onClick = {}, text = text, enabled = false, size = CupertinoButtonSize.Large, style = CupertinoButtonStyle.Bezeled, onMaterial = false)
-                padding2()
-                CupertinoButton(onClick = {}, text = text, enabled = false, size = CupertinoButtonSize.Large, style = CupertinoButtonStyle.Bezeled, onMaterial = true)
-            }
+                // Bezeled
+                commonRow {
+                    CupertinoButton(onClick = {}, text = text, icon = icon, enabled = true, size = CupertinoButtonSize.Small, style = CupertinoButtonStyle.Bezeled, onMaterial = false)
+                    padding1()
+                    CupertinoButton(onClick = {}, text = text, icon = icon, enabled = true, size = CupertinoButtonSize.Small, style = CupertinoButtonStyle.Bezeled, onMaterial = true)
+                    padding2()
+                    CupertinoButton(onClick = {}, text = text, icon = icon, enabled = true, size = CupertinoButtonSize.Medium, style = CupertinoButtonStyle.Bezeled, onMaterial = false)
+                    padding3()
+                    CupertinoButton(onClick = {}, text = text, icon = icon, enabled = true, size = CupertinoButtonSize.Medium, style = CupertinoButtonStyle.Bezeled, onMaterial = true)
+                    padding4()
+                    CupertinoButton(onClick = {}, text = text, icon = icon, enabled = true, size = CupertinoButtonSize.Large, style = CupertinoButtonStyle.Bezeled, onMaterial = false)
+                    padding5()
+                    CupertinoButton(onClick = {}, text = text, icon = icon, enabled = true, size = CupertinoButtonSize.Large, style = CupertinoButtonStyle.Bezeled, onMaterial = true)
+                }
+                commonRow {
+                    CupertinoButton(onClick = {}, text = text, icon = icon, enabled = false, size = CupertinoButtonSize.Small, style = CupertinoButtonStyle.Bezeled, onMaterial = false)
+                    padding1()
+                    CupertinoButton(onClick = {}, text = text, icon = icon, enabled = false, size = CupertinoButtonSize.Small, style = CupertinoButtonStyle.Bezeled, onMaterial = true)
+                    padding2()
+                    CupertinoButton(onClick = {}, text = text, icon = icon, enabled = false, size = CupertinoButtonSize.Medium, style = CupertinoButtonStyle.Bezeled, onMaterial = false)
+                    padding3()
+                    CupertinoButton(onClick = {}, text = text, icon = icon, enabled = false, size = CupertinoButtonSize.Medium, style = CupertinoButtonStyle.Bezeled, onMaterial = true)
+                    padding4()
+                    CupertinoButton(onClick = {}, text = text, icon = icon, enabled = false, size = CupertinoButtonSize.Large, style = CupertinoButtonStyle.Bezeled, onMaterial = false)
+                    padding5()
+                    CupertinoButton(onClick = {}, text = text, icon = icon, enabled = false, size = CupertinoButtonSize.Large, style = CupertinoButtonStyle.Bezeled, onMaterial = true)
+                }
+                commonRow {
+                    padding6()
+                    CupertinoButton(onClick = {}, icon = icon, enabled = true, size = CupertinoButtonSize.Small, style = CupertinoButtonStyle.Bezeled, onMaterial = false)
+                    padding7()
+                    CupertinoButton(onClick = {}, icon = icon, enabled = true, size = CupertinoButtonSize.Small, style = CupertinoButtonStyle.Bezeled, onMaterial = true)
+                    padding8()
+                    CupertinoButton(onClick = {}, icon = icon, enabled = true, size = CupertinoButtonSize.Medium, style = CupertinoButtonStyle.Bezeled, onMaterial = false)
+                    padding9()
+                    CupertinoButton(onClick = {}, icon = icon, enabled = true, size = CupertinoButtonSize.Medium, style = CupertinoButtonStyle.Bezeled, onMaterial = true)
+                    padding10()
+                    CupertinoButton(onClick = {}, icon = icon, enabled = true, size = CupertinoButtonSize.Large, style = CupertinoButtonStyle.Bezeled, onMaterial = false)
+                    padding11()
+                    CupertinoButton(onClick = {}, icon = icon, enabled = true, size = CupertinoButtonSize.Large, style = CupertinoButtonStyle.Bezeled, onMaterial = true)
+                }
+                commonRow {
+                    padding6()
+                    CupertinoButton(onClick = {}, icon = icon, enabled = false, size = CupertinoButtonSize.Small, style = CupertinoButtonStyle.Bezeled, onMaterial = false)
+                    padding7()
+                    CupertinoButton(onClick = {}, icon = icon, enabled = false, size = CupertinoButtonSize.Small, style = CupertinoButtonStyle.Bezeled, onMaterial = true)
+                    padding8()
+                    CupertinoButton(onClick = {}, icon = icon, enabled = false, size = CupertinoButtonSize.Medium, style = CupertinoButtonStyle.Bezeled, onMaterial = false)
+                    padding9()
+                    CupertinoButton(onClick = {}, icon = icon, enabled = false, size = CupertinoButtonSize.Medium, style = CupertinoButtonStyle.Bezeled, onMaterial = true)
+                    padding10()
+                    CupertinoButton(onClick = {}, icon = icon, enabled = false, size = CupertinoButtonSize.Large, style = CupertinoButtonStyle.Bezeled, onMaterial = false)
+                    padding11()
+                    CupertinoButton(onClick = {}, icon = icon, enabled = false, size = CupertinoButtonSize.Large, style = CupertinoButtonStyle.Bezeled, onMaterial = true)
+                }
+                commonRow {
+                    CupertinoButton(onClick = {}, text = text, enabled = true, size = CupertinoButtonSize.Small, style = CupertinoButtonStyle.Bezeled, onMaterial = false)
+                    padding12()
+                    CupertinoButton(onClick = {}, text = text, enabled = true, size = CupertinoButtonSize.Small, style = CupertinoButtonStyle.Bezeled, onMaterial = true)
+                    padding13()
+                    CupertinoButton(onClick = {}, text = text, enabled = true, size = CupertinoButtonSize.Medium, style = CupertinoButtonStyle.Bezeled, onMaterial = false)
+                    padding12()
+                    CupertinoButton(onClick = {}, text = text, enabled = true, size = CupertinoButtonSize.Medium, style = CupertinoButtonStyle.Bezeled, onMaterial = true)
+                    padding13()
+                    CupertinoButton(onClick = {}, text = text, enabled = true, size = CupertinoButtonSize.Large, style = CupertinoButtonStyle.Bezeled, onMaterial = false)
+                    padding2()
+                    CupertinoButton(onClick = {}, text = text, enabled = true, size = CupertinoButtonSize.Large, style = CupertinoButtonStyle.Bezeled, onMaterial = true)
+                }
+                commonRow {
+                    CupertinoButton(onClick = {}, text = text, enabled = false, size = CupertinoButtonSize.Small, style = CupertinoButtonStyle.Bezeled, onMaterial = false)
+                    padding12()
+                    CupertinoButton(onClick = {}, text = text, enabled = false, size = CupertinoButtonSize.Small, style = CupertinoButtonStyle.Bezeled, onMaterial = true)
+                    padding13()
+                    CupertinoButton(onClick = {}, text = text, enabled = false, size = CupertinoButtonSize.Medium, style = CupertinoButtonStyle.Bezeled, onMaterial = false)
+                    padding12()
+                    CupertinoButton(onClick = {}, text = text, enabled = false, size = CupertinoButtonSize.Medium, style = CupertinoButtonStyle.Bezeled, onMaterial = true)
+                    padding13()
+                    CupertinoButton(onClick = {}, text = text, enabled = false, size = CupertinoButtonSize.Large, style = CupertinoButtonStyle.Bezeled, onMaterial = false)
+                    padding2()
+                    CupertinoButton(onClick = {}, text = text, enabled = false, size = CupertinoButtonSize.Large, style = CupertinoButtonStyle.Bezeled, onMaterial = true)
+                }
 
-            gapBetweenButtonTypes()
+                gapBetweenButtonTypes()
 
-            // Filled
-            Row {
-                CupertinoButton(onClick = {}, text = text, icon = icon, enabled = true, size = CupertinoButtonSize.Small, style = CupertinoButtonStyle.Filled, onMaterial = false)
-                padding1()
-                CupertinoButton(onClick = {}, text = text, icon = icon, enabled = true, size = CupertinoButtonSize.Small, style = CupertinoButtonStyle.Filled, onMaterial = true)
-                padding2()
-                CupertinoButton(onClick = {}, text = text, icon = icon, enabled = true, size = CupertinoButtonSize.Medium, style = CupertinoButtonStyle.Filled, onMaterial = false)
-                padding3()
-                CupertinoButton(onClick = {}, text = text, icon = icon, enabled = true, size = CupertinoButtonSize.Medium, style = CupertinoButtonStyle.Filled, onMaterial = true)
-                padding4()
-                CupertinoButton(onClick = {}, text = text, icon = icon, enabled = true, size = CupertinoButtonSize.Large, style = CupertinoButtonStyle.Filled, onMaterial = false)
-                padding5()
-                CupertinoButton(onClick = {}, text = text, icon = icon, enabled = true, size = CupertinoButtonSize.Large, style = CupertinoButtonStyle.Filled, onMaterial = true)
-            }
-            Row {
-                CupertinoButton(onClick = {}, text = text, icon = icon, enabled = false, size = CupertinoButtonSize.Small, style = CupertinoButtonStyle.Filled, onMaterial = false)
-                padding1()
-                CupertinoButton(onClick = {}, text = text, icon = icon, enabled = false, size = CupertinoButtonSize.Small, style = CupertinoButtonStyle.Filled, onMaterial = true)
-                padding2()
-                CupertinoButton(onClick = {}, text = text, icon = icon, enabled = false, size = CupertinoButtonSize.Medium, style = CupertinoButtonStyle.Filled, onMaterial = false)
-                padding3()
-                CupertinoButton(onClick = {}, text = text, icon = icon, enabled = false, size = CupertinoButtonSize.Medium, style = CupertinoButtonStyle.Filled, onMaterial = true)
-                padding4()
-                CupertinoButton(onClick = {}, text = text, icon = icon, enabled = false, size = CupertinoButtonSize.Large, style = CupertinoButtonStyle.Filled, onMaterial = false)
-                padding5()
-                CupertinoButton(onClick = {}, text = text, icon = icon, enabled = false, size = CupertinoButtonSize.Large, style = CupertinoButtonStyle.Filled, onMaterial = true)
-            }
-            Row {
-                padding6()
-                CupertinoButton(onClick = {}, icon = icon, enabled = true, size = CupertinoButtonSize.Small, style = CupertinoButtonStyle.Filled, onMaterial = false)
-                padding7()
-                CupertinoButton(onClick = {}, icon = icon, enabled = true, size = CupertinoButtonSize.Small, style = CupertinoButtonStyle.Filled, onMaterial = true)
-                padding8()
-                CupertinoButton(onClick = {}, icon = icon, enabled = true, size = CupertinoButtonSize.Medium, style = CupertinoButtonStyle.Filled, onMaterial = false)
-                padding9()
-                CupertinoButton(onClick = {}, icon = icon, enabled = true, size = CupertinoButtonSize.Medium, style = CupertinoButtonStyle.Filled, onMaterial = true)
-                padding10()
-                CupertinoButton(onClick = {}, icon = icon, enabled = true, size = CupertinoButtonSize.Large, style = CupertinoButtonStyle.Filled, onMaterial = false)
-                padding11()
-                CupertinoButton(onClick = {}, icon = icon, enabled = true, size = CupertinoButtonSize.Large, style = CupertinoButtonStyle.Filled, onMaterial = true)
-            }
-            Row {
-                padding6()
-                CupertinoButton(onClick = {}, icon = icon, enabled = false, size = CupertinoButtonSize.Small, style = CupertinoButtonStyle.Filled, onMaterial = false)
-                padding7()
-                CupertinoButton(onClick = {}, icon = icon, enabled = false, size = CupertinoButtonSize.Small, style = CupertinoButtonStyle.Filled, onMaterial = true)
-                padding8()
-                CupertinoButton(onClick = {}, icon = icon, enabled = false, size = CupertinoButtonSize.Medium, style = CupertinoButtonStyle.Filled, onMaterial = false)
-                padding9()
-                CupertinoButton(onClick = {}, icon = icon, enabled = false, size = CupertinoButtonSize.Medium, style = CupertinoButtonStyle.Filled, onMaterial = true)
-                padding10()
-                CupertinoButton(onClick = {}, icon = icon, enabled = false, size = CupertinoButtonSize.Large, style = CupertinoButtonStyle.Filled, onMaterial = false)
-                padding11()
-                CupertinoButton(onClick = {}, icon = icon, enabled = false, size = CupertinoButtonSize.Large, style = CupertinoButtonStyle.Filled, onMaterial = true)
-            }
-            Row {
-                CupertinoButton(onClick = {}, text = text, enabled = true, size = CupertinoButtonSize.Small, style = CupertinoButtonStyle.Filled, onMaterial = false)
-                padding12()
-                CupertinoButton(onClick = {}, text = text, enabled = true, size = CupertinoButtonSize.Small, style = CupertinoButtonStyle.Filled, onMaterial = true)
-                padding13()
-                CupertinoButton(onClick = {}, text = text, enabled = true, size = CupertinoButtonSize.Medium, style = CupertinoButtonStyle.Filled, onMaterial = false)
-                padding12()
-                CupertinoButton(onClick = {}, text = text, enabled = true, size = CupertinoButtonSize.Medium, style = CupertinoButtonStyle.Filled, onMaterial = true)
-                padding13()
-                CupertinoButton(onClick = {}, text = text, enabled = true, size = CupertinoButtonSize.Large, style = CupertinoButtonStyle.Filled, onMaterial = false)
-                padding2()
-                CupertinoButton(onClick = {}, text = text, enabled = true, size = CupertinoButtonSize.Large, style = CupertinoButtonStyle.Filled, onMaterial = true)
-            }
-            Row {
-                CupertinoButton(onClick = {}, text = text, enabled = false, size = CupertinoButtonSize.Small, style = CupertinoButtonStyle.Filled, onMaterial = false)
-                padding12()
-                CupertinoButton(onClick = {}, text = text, enabled = false, size = CupertinoButtonSize.Small, style = CupertinoButtonStyle.Filled, onMaterial = true)
-                padding13()
-                CupertinoButton(onClick = {}, text = text, enabled = false, size = CupertinoButtonSize.Medium, style = CupertinoButtonStyle.Filled, onMaterial = false)
-                padding12()
-                CupertinoButton(onClick = {}, text = text, enabled = false, size = CupertinoButtonSize.Medium, style = CupertinoButtonStyle.Filled, onMaterial = true)
-                padding13()
-                CupertinoButton(onClick = {}, text = text, enabled = false, size = CupertinoButtonSize.Large, style = CupertinoButtonStyle.Filled, onMaterial = false)
-                padding2()
-                CupertinoButton(onClick = {}, text = text, enabled = false, size = CupertinoButtonSize.Large, style = CupertinoButtonStyle.Filled, onMaterial = true)
+                // Filled
+                commonRow {
+                    CupertinoButton(onClick = {}, text = text, icon = icon, enabled = true, size = CupertinoButtonSize.Small, style = CupertinoButtonStyle.Filled, onMaterial = false)
+                    padding1()
+                    CupertinoButton(onClick = {}, text = text, icon = icon, enabled = true, size = CupertinoButtonSize.Small, style = CupertinoButtonStyle.Filled, onMaterial = true)
+                    padding2()
+                    CupertinoButton(onClick = {}, text = text, icon = icon, enabled = true, size = CupertinoButtonSize.Medium, style = CupertinoButtonStyle.Filled, onMaterial = false)
+                    padding3()
+                    CupertinoButton(onClick = {}, text = text, icon = icon, enabled = true, size = CupertinoButtonSize.Medium, style = CupertinoButtonStyle.Filled, onMaterial = true)
+                    padding4()
+                    CupertinoButton(onClick = {}, text = text, icon = icon, enabled = true, size = CupertinoButtonSize.Large, style = CupertinoButtonStyle.Filled, onMaterial = false)
+                    padding5()
+                    CupertinoButton(onClick = {}, text = text, icon = icon, enabled = true, size = CupertinoButtonSize.Large, style = CupertinoButtonStyle.Filled, onMaterial = true)
+                }
+                commonRow {
+                    CupertinoButton(onClick = {}, text = text, icon = icon, enabled = false, size = CupertinoButtonSize.Small, style = CupertinoButtonStyle.Filled, onMaterial = false)
+                    padding1()
+                    CupertinoButton(onClick = {}, text = text, icon = icon, enabled = false, size = CupertinoButtonSize.Small, style = CupertinoButtonStyle.Filled, onMaterial = true)
+                    padding2()
+                    CupertinoButton(onClick = {}, text = text, icon = icon, enabled = false, size = CupertinoButtonSize.Medium, style = CupertinoButtonStyle.Filled, onMaterial = false)
+                    padding3()
+                    CupertinoButton(onClick = {}, text = text, icon = icon, enabled = false, size = CupertinoButtonSize.Medium, style = CupertinoButtonStyle.Filled, onMaterial = true)
+                    padding4()
+                    CupertinoButton(onClick = {}, text = text, icon = icon, enabled = false, size = CupertinoButtonSize.Large, style = CupertinoButtonStyle.Filled, onMaterial = false)
+                    padding5()
+                    CupertinoButton(onClick = {}, text = text, icon = icon, enabled = false, size = CupertinoButtonSize.Large, style = CupertinoButtonStyle.Filled, onMaterial = true)
+                }
+                commonRow {
+                    padding6()
+                    CupertinoButton(onClick = {}, icon = icon, enabled = true, size = CupertinoButtonSize.Small, style = CupertinoButtonStyle.Filled, onMaterial = false)
+                    padding7()
+                    CupertinoButton(onClick = {}, icon = icon, enabled = true, size = CupertinoButtonSize.Small, style = CupertinoButtonStyle.Filled, onMaterial = true)
+                    padding8()
+                    CupertinoButton(onClick = {}, icon = icon, enabled = true, size = CupertinoButtonSize.Medium, style = CupertinoButtonStyle.Filled, onMaterial = false)
+                    padding9()
+                    CupertinoButton(onClick = {}, icon = icon, enabled = true, size = CupertinoButtonSize.Medium, style = CupertinoButtonStyle.Filled, onMaterial = true)
+                    padding10()
+                    CupertinoButton(onClick = {}, icon = icon, enabled = true, size = CupertinoButtonSize.Large, style = CupertinoButtonStyle.Filled, onMaterial = false)
+                    padding11()
+                    CupertinoButton(onClick = {}, icon = icon, enabled = true, size = CupertinoButtonSize.Large, style = CupertinoButtonStyle.Filled, onMaterial = true)
+                }
+                commonRow {
+                    padding6()
+                    CupertinoButton(onClick = {}, icon = icon, enabled = false, size = CupertinoButtonSize.Small, style = CupertinoButtonStyle.Filled, onMaterial = false)
+                    padding7()
+                    CupertinoButton(onClick = {}, icon = icon, enabled = false, size = CupertinoButtonSize.Small, style = CupertinoButtonStyle.Filled, onMaterial = true)
+                    padding8()
+                    CupertinoButton(onClick = {}, icon = icon, enabled = false, size = CupertinoButtonSize.Medium, style = CupertinoButtonStyle.Filled, onMaterial = false)
+                    padding9()
+                    CupertinoButton(onClick = {}, icon = icon, enabled = false, size = CupertinoButtonSize.Medium, style = CupertinoButtonStyle.Filled, onMaterial = true)
+                    padding10()
+                    CupertinoButton(onClick = {}, icon = icon, enabled = false, size = CupertinoButtonSize.Large, style = CupertinoButtonStyle.Filled, onMaterial = false)
+                    padding11()
+                    CupertinoButton(onClick = {}, icon = icon, enabled = false, size = CupertinoButtonSize.Large, style = CupertinoButtonStyle.Filled, onMaterial = true)
+                }
+                commonRow {
+                    CupertinoButton(onClick = {}, text = text, enabled = true, size = CupertinoButtonSize.Small, style = CupertinoButtonStyle.Filled, onMaterial = false)
+                    padding12()
+                    CupertinoButton(onClick = {}, text = text, enabled = true, size = CupertinoButtonSize.Small, style = CupertinoButtonStyle.Filled, onMaterial = true)
+                    padding13()
+                    CupertinoButton(onClick = {}, text = text, enabled = true, size = CupertinoButtonSize.Medium, style = CupertinoButtonStyle.Filled, onMaterial = false)
+                    padding12()
+                    CupertinoButton(onClick = {}, text = text, enabled = true, size = CupertinoButtonSize.Medium, style = CupertinoButtonStyle.Filled, onMaterial = true)
+                    padding13()
+                    CupertinoButton(onClick = {}, text = text, enabled = true, size = CupertinoButtonSize.Large, style = CupertinoButtonStyle.Filled, onMaterial = false)
+                    padding2()
+                    CupertinoButton(onClick = {}, text = text, enabled = true, size = CupertinoButtonSize.Large, style = CupertinoButtonStyle.Filled, onMaterial = true)
+                }
+                commonRow {
+                    CupertinoButton(onClick = {}, text = text, enabled = false, size = CupertinoButtonSize.Small, style = CupertinoButtonStyle.Filled, onMaterial = false)
+                    padding12()
+                    CupertinoButton(onClick = {}, text = text, enabled = false, size = CupertinoButtonSize.Small, style = CupertinoButtonStyle.Filled, onMaterial = true)
+                    padding13()
+                    CupertinoButton(onClick = {}, text = text, enabled = false, size = CupertinoButtonSize.Medium, style = CupertinoButtonStyle.Filled, onMaterial = false)
+                    padding12()
+                    CupertinoButton(onClick = {}, text = text, enabled = false, size = CupertinoButtonSize.Medium, style = CupertinoButtonStyle.Filled, onMaterial = true)
+                    padding13()
+                    CupertinoButton(onClick = {}, text = text, enabled = false, size = CupertinoButtonSize.Large, style = CupertinoButtonStyle.Filled, onMaterial = false)
+                    padding2()
+                    CupertinoButton(onClick = {}, text = text, enabled = false, size = CupertinoButtonSize.Large, style = CupertinoButtonStyle.Filled, onMaterial = true)
+                }
             }
         }
     }

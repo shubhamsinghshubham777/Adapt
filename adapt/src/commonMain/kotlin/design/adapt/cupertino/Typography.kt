@@ -301,8 +301,6 @@ data class CupertinoTypography(
     ),
 )
 
-val LocalCupertinoTextStyle = compositionLocalOf { CupertinoTypography().subheadlineRegular }
-
 val LocalCupertinoTypography = compositionLocalOf { CupertinoTypography() }
 
 // TODO: Create a composable font provider that uses the SF-Pro font family here

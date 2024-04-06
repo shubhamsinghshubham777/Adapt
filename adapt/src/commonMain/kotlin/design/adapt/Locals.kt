@@ -16,6 +16,9 @@
 
 package design.adapt
 
-// TODO: Learn how to write UI tests for common module's composables
-class WindowsButtonTest {
-}
+import androidx.compose.runtime.compositionLocalOf
+import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.text.TextStyle
+
+val LocalContentColor = compositionLocalOf { Color.Black }
+val LocalTextStyle = compositionLocalOf { TextStyle() }
