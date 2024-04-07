@@ -31,7 +31,6 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.runtime.Immutable
-import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.movableContentOf
 import androidx.compose.runtime.remember
@@ -68,10 +67,6 @@ fun WindowsButton(
     val isPressed by interactionSource.collectIsPressedAsState()
     val isCompactButton = remember(size) { size == WindowsButtonSize.Compact }
     val isIconOnlyButton = remember(icon, text) { icon != null && text == null }
-
-    LaunchedEffect(isPressed) {
-        println("isPressed: $isPressed")
-    }
 
     val buttonMargin = remember(isCompactButton, isIconOnlyButton) {
         if (isCompactButton) {

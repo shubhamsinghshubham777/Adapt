@@ -17,6 +17,7 @@
 package design.adapt
 
 import androidx.compose.foundation.interaction.MutableInteractionSource
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
@@ -78,10 +79,13 @@ fun AdaptButton(
                 content = {
                     CompositionLocalProvider(
                         LocalContentColor provides configuration.android.colors.contentColor,
+                        LocalTextStyle provides androidx.compose.material3.LocalTextStyle.current,
                     ) {
-                        Row {
+                        Row(
+                            horizontalArrangement = Arrangement.spacedBy(8.dp),
+                            verticalAlignment = Alignment.CenterVertically,
+                        ) {
                             icon?.invoke()
-                            Spacer(modifier = Modifier.width(8.dp))
                             text?.invoke()
                         }
                     }
