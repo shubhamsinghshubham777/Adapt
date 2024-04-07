@@ -14,10 +14,9 @@
  * limitations under the License.
  */
 
-package design.adapt.ios
+package design.adapt.cupertino
 
 import androidx.compose.runtime.Immutable
-import androidx.compose.runtime.compositionLocalOf
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontStyle
@@ -25,7 +24,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.sp
 
 @Immutable
-data class IOSTypography(
+data class CupertinoTypography(
     val fontFamily: FontFamily? = null,
     val largeTitleRegular: TextStyle = TextStyle(
         fontFamily = fontFamily,
@@ -300,7 +299,5 @@ data class IOSTypography(
         letterSpacing = (-0.4).sp,
     ),
 )
-
-val LocalIOSTypography = compositionLocalOf { IOSTypography() }
 
 // TODO: Create a composable font provider that uses the SF-Pro font family here

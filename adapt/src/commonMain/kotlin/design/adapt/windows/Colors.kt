@@ -17,10 +17,7 @@
 package design.adapt.windows
 
 import androidx.compose.runtime.Immutable
-import androidx.compose.runtime.compositionLocalOf
 import androidx.compose.ui.graphics.Color
-
-val LocalWindowsColorScheme = compositionLocalOf { lightWindowsColorScheme() }
 
 @Immutable
 data class WindowsColorScheme(
@@ -51,7 +48,7 @@ data class WindowsColorScheme(
     val focusStrokeInner: Color,
 )
 
-fun lightWindowsColorScheme(
+fun lightColorSchemeWindows(
     fillAccentDefault: Color = Color(0XFF005FB8),
     fillAccentSecondary: Color = Color(0XE6005FB8),
     fillAccentTertiary: Color = Color(0XCC005FB8),
@@ -111,7 +108,7 @@ fun lightWindowsColorScheme(
     focusStrokeInner = focusStrokeInner,
 )
 
-fun darkWindowsColorScheme(
+fun darkColorSchemeWindows(
     fillAccentDefault: Color = Color(0XFF60CDFF),
     fillAccentSecondary: Color = Color(0XE660CDFF),
     fillAccentTertiary: Color = Color(0XCC60CDFF),

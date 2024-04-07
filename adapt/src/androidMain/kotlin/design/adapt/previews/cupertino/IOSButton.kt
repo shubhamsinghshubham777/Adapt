@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package design.adapt.previews.ios
+package design.adapt.previews.cupertino
 
 import android.content.res.Configuration
 import androidx.compose.foundation.background
@@ -46,17 +46,17 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import design.adapt.AdaptIcon
 import design.adapt.AdaptText
-import design.adapt.ios.IOSButton
-import design.adapt.ios.IOSButtonDefaults
-import design.adapt.ios.IOSButtonSize
-import design.adapt.ios.IOSButtonStyle
-import design.adapt.ios.IOSTheme
-import design.adapt.ios.LocalIOSColorScheme
-import design.adapt.ios.iOSColorSchemeDark
+import design.adapt.cupertino.IOSButton
+import design.adapt.cupertino.IOSButtonDefaults
+import design.adapt.cupertino.IOSButtonSize
+import design.adapt.cupertino.IOSButtonStyle
+import design.adapt.cupertino.IOSTheme
+import design.adapt.cupertino.LocalIOSColorScheme
+import design.adapt.cupertino.darkColorSchemeCupertino
 
 @Preview(device = "spec:id=reference_desktop,shape=Normal,width=1920,height=1700,unit=dp,dpi=160")
 @Composable
-fun LightMode() {
+private fun LightMode() {
     Buttons()
 }
 
@@ -65,8 +65,8 @@ fun LightMode() {
     uiMode = Configuration.UI_MODE_NIGHT_YES or Configuration.UI_MODE_TYPE_NORMAL
 )
 @Composable
-fun DarkMode() {
-    CompositionLocalProvider(LocalIOSColorScheme provides iOSColorSchemeDark) {
+private fun DarkMode() {
+    CompositionLocalProvider(LocalIOSColorScheme provides darkColorSchemeCupertino()) {
         Buttons()
     }
 }

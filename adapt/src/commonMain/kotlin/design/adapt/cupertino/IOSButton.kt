@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package design.adapt.ios
+package design.adapt.cupertino
 
 import androidx.compose.animation.core.animateFloatAsState
 import androidx.compose.animation.core.spring
@@ -69,7 +69,6 @@ fun IOSButton(
     ),
     enabled: Boolean = true,
     onMaterial: Boolean = false,
-    textStyle: TextStyle = IOSButtonDefaults.textStyle(size),
     interactionSource: MutableInteractionSource = remember { MutableInteractionSource() },
 ) {
     val density = LocalDensity.current
@@ -169,8 +168,8 @@ fun IOSButton(
 
         text?.let { safeText ->
             CompositionLocalProvider(
-                LocalTextStyle provides textStyle,
                 LocalContentColor provides contentColor,
+                LocalTextStyle provides IOSButtonDefaults.textStyle(size),
                 content = safeText,
             )
         }

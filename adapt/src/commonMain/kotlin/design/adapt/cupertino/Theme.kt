@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package design.adapt.ios
+package design.adapt.cupertino
 
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.CompositionLocalProvider
@@ -22,12 +22,12 @@ import androidx.compose.runtime.ReadOnlyComposable
 import design.adapt.LocalTextStyle
 
 object IOSTheme {
-    val colorScheme: IOSColorScheme
+    val colorScheme: CupertinoColorScheme
         @Composable
         @ReadOnlyComposable
         get() = LocalIOSColorScheme.current
 
-    val typography: IOSTypography
+    val typography: CupertinoTypography
         @Composable
         @ReadOnlyComposable
         get() = LocalIOSTypography.current
@@ -35,13 +35,39 @@ object IOSTheme {
 
 @Composable
 fun IOSTheme(
-    colorScheme: IOSColorScheme = IOSTheme.colorScheme,
-    typography: IOSTypography = IOSTheme.typography,
+    colorScheme: CupertinoColorScheme = IOSTheme.colorScheme,
+    typography: CupertinoTypography = IOSTheme.typography,
     content: @Composable () -> Unit
 ) {
     CompositionLocalProvider(
         LocalIOSColorScheme provides colorScheme,
         LocalIOSTypography provides typography,
+        LocalTextStyle provides typography.subheadlineRegular,
+        content = content
+    )
+}
+
+object MacOSTheme {
+    val colorScheme: CupertinoColorScheme
+        @Composable
+        @ReadOnlyComposable
+        get() = LocalMacOSColorScheme.current
+
+    val typography: CupertinoTypography
+        @Composable
+        @ReadOnlyComposable
+        get() = LocalMacOSTypography.current
+}
+
+@Composable
+fun MacOSTheme(
+    colorScheme: CupertinoColorScheme = MacOSTheme.colorScheme,
+    typography: CupertinoTypography = MacOSTheme.typography,
+    content: @Composable () -> Unit
+) {
+    CompositionLocalProvider(
+        LocalMacOSColorScheme provides colorScheme,
+        LocalMacOSTypography provides typography,
         LocalTextStyle provides typography.subheadlineRegular,
         content = content
     )

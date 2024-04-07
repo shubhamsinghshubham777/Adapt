@@ -17,7 +17,6 @@
 package design.adapt.windows
 
 import androidx.compose.runtime.Immutable
-import androidx.compose.runtime.compositionLocalOf
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontWeight
@@ -75,5 +74,3 @@ data class WindowsTypography(
         lineHeight = 92.sp,
     ),
 )
-
-val LocalWindowsTypography = compositionLocalOf { WindowsTypography() }

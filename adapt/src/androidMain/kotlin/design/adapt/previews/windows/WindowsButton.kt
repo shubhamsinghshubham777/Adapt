@@ -46,14 +46,14 @@ import design.adapt.windows.WindowsButtonIconSide
 import design.adapt.windows.WindowsButtonSize
 import design.adapt.windows.WindowsButtonStyle
 import design.adapt.windows.WindowsTheme
-import design.adapt.windows.darkWindowsColorScheme
-import design.adapt.windows.lightWindowsColorScheme
+import design.adapt.windows.darkColorSchemeWindows
+import design.adapt.windows.lightColorSchemeWindows
 
-@Preview(device = "spec:width=1080px,height=5000px,dpi=440")
+@Preview(device = "spec:width=1080px,height=3800px,dpi=440")
 @Composable
 private fun LightButtons() {
     WindowsTheme(
-        colorScheme = lightWindowsColorScheme(),
+        colorScheme = lightColorSchemeWindows(),
         content = {
             Box(
                 modifier = Modifier
@@ -66,11 +66,11 @@ private fun LightButtons() {
     )
 }
 
-@Preview(device = "spec:width=1080px,height=5000px,dpi=440")
+@Preview(device = "spec:width=1080px,height=3800px,dpi=440")
 @Composable
 private fun DarkButtons() {
     WindowsTheme(
-        colorScheme = darkWindowsColorScheme(),
+        colorScheme = darkColorSchemeWindows(),
         content = {
             Box(
                 modifier = Modifier

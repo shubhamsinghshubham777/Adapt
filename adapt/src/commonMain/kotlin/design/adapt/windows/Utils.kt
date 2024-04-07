@@ -31,7 +31,7 @@ import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 
 @Composable
-fun Modifier.focusBorder(
+internal fun Modifier.focusBorder(
     interactionSource: InteractionSource,
     innerColor: Color = LocalWindowsColorScheme.current.focusStrokeInner,
     outerColor: Color = LocalWindowsColorScheme.current.focusStrokeOuter,
