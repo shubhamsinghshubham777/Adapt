@@ -38,13 +38,13 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import design.adapt.AdaptIcon
+import design.adapt.AdaptText
 import design.adapt.R
 import design.adapt.windows.WindowsButton
 import design.adapt.windows.WindowsButtonIconSide
 import design.adapt.windows.WindowsButtonSize
 import design.adapt.windows.WindowsButtonStyle
-import design.adapt.windows.WindowsIcon
-import design.adapt.windows.WindowsText
 import design.adapt.windows.WindowsTheme
 import design.adapt.windows.darkWindowsColorScheme
 import design.adapt.windows.lightWindowsColorScheme
@@ -86,12 +86,12 @@ private fun DarkButtons() {
 @Composable
 private fun WindowsButtonPreviews() {
     val text = remember {
-        movableContentOf { WindowsText(text = "Text") }
+        movableContentOf { AdaptText(text = "Text") }
     }
 
     val icon = remember {
         movableContentOf {
-            WindowsIcon(
+            AdaptIcon(
                 modifier = Modifier.size(21.dp),
                 painter = painterResource(id = R.drawable.ic_checkbox_circle),
                 contentDescription = null,

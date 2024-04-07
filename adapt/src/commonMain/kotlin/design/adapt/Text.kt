@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package design.adapt.windows
+package design.adapt
 
 import androidx.compose.foundation.text.BasicText
 import androidx.compose.runtime.Composable
@@ -24,11 +24,9 @@ import androidx.compose.ui.text.AnnotatedString
 import androidx.compose.ui.text.TextLayoutResult
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.style.TextOverflow
-import design.adapt.LocalContentColor
-import design.adapt.LocalTextStyle
 
 @Composable
-fun WindowsText(
+fun AdaptText(
     text: String,
     modifier: Modifier = Modifier,
     style: TextStyle? = null,
@@ -54,7 +52,7 @@ fun WindowsText(
 }
 
 @Composable
-fun WindowsText(
+fun AdaptText(
     text: AnnotatedString,
     modifier: Modifier = Modifier,
     style: TextStyle? = null,

@@ -44,12 +44,12 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.rememberVectorPainter
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import design.adapt.AdaptIcon
+import design.adapt.AdaptText
 import design.adapt.ios.IOSButton
 import design.adapt.ios.IOSButtonDefaults
 import design.adapt.ios.IOSButtonSize
 import design.adapt.ios.IOSButtonStyle
-import design.adapt.ios.IOSIcon
-import design.adapt.ios.IOSText
 import design.adapt.ios.IOSTheme
 import design.adapt.ios.LocalIOSColorScheme
 import design.adapt.ios.iOSColorSchemeDark
@@ -75,12 +75,12 @@ fun DarkMode() {
 private fun Buttons() {
     val text = remember {
         movableContentOf {
-            IOSText(text = "Play")
+            AdaptText(text = "Play")
         }
     }
     val icon = remember {
         movableContentOf {
-            IOSIcon(
+            AdaptIcon(
                 modifier = Modifier.size(IOSButtonDefaults.IconSize),
                 painter = rememberVectorPainter(image = Icons.Default.PlayArrow),
                 contentDescription = null,

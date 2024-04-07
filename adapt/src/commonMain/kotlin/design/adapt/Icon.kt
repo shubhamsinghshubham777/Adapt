@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package design.adapt.windows
+package design.adapt
 
 import androidx.compose.material3.Icon
 import androidx.compose.runtime.Composable
@@ -22,10 +22,9 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.painter.Painter
 import androidx.compose.ui.graphics.vector.ImageVector
-import design.adapt.LocalContentColor
 
 @Composable
-fun WindowsIcon(
+fun AdaptIcon(
     painter: Painter,
     contentDescription: String?,
     modifier: Modifier = Modifier,
@@ -33,7 +32,7 @@ fun WindowsIcon(
 ) = Icon(painter, contentDescription, modifier, tint)
 
 @Composable
-fun WindowsIcon(
+fun AdaptIcon(
     imageVector: ImageVector,
     contentDescription: String?,
     modifier: Modifier = Modifier,
