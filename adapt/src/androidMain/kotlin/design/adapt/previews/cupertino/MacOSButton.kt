@@ -30,7 +30,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import design.adapt.AdaptText
 import design.adapt.cupertino.MacOSButton
-import design.adapt.cupertino.MacOSButtonType
+import design.adapt.cupertino.MacOSButtonStyle
 import design.adapt.cupertino.MacOSTheme
 import design.adapt.cupertino.darkColorSchemeCupertino
 import design.adapt.cupertino.lightColorSchemeCupertino
@@ -66,11 +66,11 @@ private fun Buttons() {
             modifier = Modifier.padding(20.dp),
             verticalArrangement = Arrangement.spacedBy(8.dp),
         ) {
-            MacOSButton(onClick = {}, text = text, type = MacOSButtonType.Primary, enabled = true)
-            MacOSButton(onClick = {}, text = text, type = MacOSButtonType.Primary, enabled = false)
-            MacOSButton(onClick = {}, text = text, type = MacOSButtonType.Secondary, enabled = true)
-            MacOSButton(onClick = {}, text = text, type = MacOSButtonType.Secondary, enabled = false)
-            MacOSButton(onClick = {}, text = text, type = MacOSButtonType.Destructive)
+            MacOSButton(onClick = {}, text = text, style = MacOSButtonStyle.Primary, enabled = true)
+            MacOSButton(onClick = {}, text = text, style = MacOSButtonStyle.Primary, enabled = false)
+            MacOSButton(onClick = {}, text = text, style = MacOSButtonStyle.Secondary, enabled = true)
+            MacOSButton(onClick = {}, text = text, style = MacOSButtonStyle.Secondary, enabled = false)
+            MacOSButton(onClick = {}, text = text, style = MacOSButtonStyle.Destructive)
         }
     }
 }

@@ -16,7 +16,4 @@
 
 package design.adapt
 
-import androidx.compose.runtime.Composable
-
-@Composable
-internal fun App() {}
+actual val platform: Platform = Platform.Web

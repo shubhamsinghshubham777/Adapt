@@ -47,8 +47,8 @@ import design.adapt.LocalContentColor
 fun WindowsButton(
     onClick: () -> Unit,
     modifier: Modifier = Modifier,
-    style: WindowsButtonStyle = WindowsButtonStyle.Accent,
-    size: WindowsButtonSize = WindowsButtonSize.Standard,
+    style: WindowsButtonStyle = WindowsButtonDefaults.style,
+    size: WindowsButtonSize = WindowsButtonDefaults.size,
     icon: (@Composable () -> Unit)? = null,
     text: (@Composable () -> Unit)? = null,
     iconSide: WindowsButtonIconSide = WindowsButtonIconSide.Start,
@@ -58,14 +58,10 @@ fun WindowsButton(
         size = size,
         style = style,
     ),
-    colors: WindowsButtonColors = when (style) {
-        WindowsButtonStyle.Standard -> WindowsButtonDefaults.standardButtonColors()
-        WindowsButtonStyle.Accent -> WindowsButtonDefaults.accentButtonColors()
-        WindowsButtonStyle.Subtle -> WindowsButtonDefaults.subtleButtonColors()
-    },
+    colors: WindowsButtonColors = WindowsButtonDefaults.colors(style),
     enabled: Boolean = true,
     interactionSource: MutableInteractionSource = remember { MutableInteractionSource() },
-    shape: Shape = RoundedCornerShape(4.dp),
+    shape: Shape = WindowsButtonDefaults.shape,
     focusBorderShape: Shape = RoundedCornerShape(7.dp),
 ) {
     val isHovered by interactionSource.collectIsHoveredAsState()
@@ -184,6 +180,17 @@ data class WindowsButtonColors(
 )
 
 object WindowsButtonDefaults {
+    val style = WindowsButtonStyle.Accent
+    val size = WindowsButtonSize.Standard
+    val shape = RoundedCornerShape(4.dp)
+
+    @Composable
+    fun colors(style: WindowsButtonStyle) = when(style) {
+        WindowsButtonStyle.Standard -> standardButtonColors()
+        WindowsButtonStyle.Accent -> accentButtonColors()
+        WindowsButtonStyle.Subtle -> subtleButtonColors()
+    }
+
     @Composable
     fun standardButtonColors(
         containerColor: Color = LocalWindowsColorScheme.current.fillControlDefault,

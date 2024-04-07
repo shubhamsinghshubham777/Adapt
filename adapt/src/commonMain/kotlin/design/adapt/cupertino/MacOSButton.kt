@@ -42,14 +42,10 @@ import design.adapt.LocalTextStyle
 @Composable
 fun MacOSButton(
     onClick: () -> Unit,
-    type: MacOSButtonType = MacOSButtonType.Primary,
+    style: MacOSButtonStyle = MacOSButtonDefaults.style,
     modifier: Modifier = Modifier,
     text: @Composable () -> Unit,
-    colors: MacOSButtonColors = when (type) {
-        MacOSButtonType.Primary -> MacOSButtonDefaults.primaryButtonColors()
-        MacOSButtonType.Secondary -> MacOSButtonDefaults.secondaryButtonColors()
-        MacOSButtonType.Destructive -> MacOSButtonDefaults.destructiveButtonColors()
-    },
+    colors: MacOSButtonColors = MacOSButtonDefaults.colors(style),
     enabled: Boolean = true,
     shape: Shape = MacOSButtonDefaults.shape,
     interactionSource: MutableInteractionSource = remember { MutableInteractionSource() },
@@ -139,10 +135,18 @@ data class MacOSButtonColors(
 )
 
 @Immutable
-enum class MacOSButtonType { Primary, Secondary, Destructive }
+enum class MacOSButtonStyle { Primary, Secondary, Destructive }
 
 object MacOSButtonDefaults {
     val shape = RoundedCornerShape(5.dp)
+    val style = MacOSButtonStyle.Primary
+
+    @Composable
+    fun colors(style: MacOSButtonStyle) = when (style) {
+        MacOSButtonStyle.Primary -> primaryButtonColors()
+        MacOSButtonStyle.Secondary -> secondaryButtonColors()
+        MacOSButtonStyle.Destructive -> destructiveButtonColors()
+    }
 
     @Composable
     fun primaryButtonColors(

@@ -16,7 +16,22 @@
 
 package design.adapt
 
-import androidx.compose.runtime.Composable
+import androidx.compose.runtime.Immutable
+import androidx.compose.ui.Modifier
 
-@Composable
-internal fun App() {}
+expect val platform: Platform
+
+@Immutable
+enum class Platform {
+    Android, IOS, MacOS, Web, Windows
+}
+
+@Immutable
+data class AdaptModifier(
+    val common: Modifier = Modifier,
+    val android: Modifier = common,
+    val iOS: Modifier = common,
+    val macOS: Modifier = common,
+    val web: Modifier = common,
+    val windows: Modifier = common,
+)

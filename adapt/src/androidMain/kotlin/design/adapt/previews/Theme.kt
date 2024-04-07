@@ -14,23 +14,25 @@
  * limitations under the License.
  */
 
-package design.adapt.theme
+package design.adapt.previews
 
 import androidx.compose.foundation.isSystemInDarkTheme
-import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.darkColorScheme
-import androidx.compose.material3.lightColorScheme
 import androidx.compose.runtime.Composable
+import design.adapt.AdaptTheme
+import design.adapt.Platform
+import design.adapt.darkAdaptThemeConfiguration
+import design.adapt.lightAdaptThemeConfiguration
 
 @Composable
-internal fun AppTheme(
-    useDarkTheme: Boolean = isSystemInDarkTheme(),
-    content: @Composable () -> Unit
+fun AdaptPreviewsTheme(
+    darkTheme: Boolean = isSystemInDarkTheme(),
+    platform: Platform = design.adapt.platform,
+    content: @Composable () -> Unit,
 ) {
-    val colors = if (!useDarkTheme) lightColorScheme() else darkColorScheme()
-
-    MaterialTheme(
-        colorScheme = colors,
-        content = content
+    AdaptTheme(
+        configuration = if (darkTheme) darkAdaptThemeConfiguration()
+        else lightAdaptThemeConfiguration(),
+        platform = platform,
+        content = content,
     )
 }

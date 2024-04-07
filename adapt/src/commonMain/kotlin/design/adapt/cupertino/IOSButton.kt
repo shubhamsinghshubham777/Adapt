@@ -53,14 +53,9 @@ import design.adapt.LocalTextStyle
 fun IOSButton(
     onClick: () -> Unit,
     modifier: Modifier = Modifier,
-    size: IOSButtonSize = IOSButtonSize.Small,
-    style: IOSButtonStyle = IOSButtonStyle.Plain,
-    colors: IOSButtonColors = when (style) {
-        IOSButtonStyle.Plain -> IOSButtonDefaults.plainButtonColors()
-        IOSButtonStyle.Gray -> IOSButtonDefaults.grayButtonColors()
-        IOSButtonStyle.Tinted -> IOSButtonDefaults.tintedButtonColors()
-        IOSButtonStyle.Filled -> IOSButtonDefaults.filledButtonColors()
-    },
+    size: IOSButtonSize = IOSButtonDefaults.size,
+    style: IOSButtonStyle = IOSButtonDefaults.style,
+    colors: IOSButtonColors = IOSButtonDefaults.colors(style),
     icon: (@Composable () -> Unit)? = null,
     text: (@Composable () -> Unit)? = null,
     shape: Shape = IOSButtonDefaults.shape(
@@ -187,6 +182,17 @@ data class IOSButtonColors(
 )
 
 object IOSButtonDefaults {
+    val size = IOSButtonSize.Small
+    val style = IOSButtonStyle.Filled
+
+    @Composable
+    fun colors(style: IOSButtonStyle) = when (style) {
+        IOSButtonStyle.Plain -> plainButtonColors()
+        IOSButtonStyle.Gray -> grayButtonColors()
+        IOSButtonStyle.Tinted -> tintedButtonColors()
+        IOSButtonStyle.Filled -> filledButtonColors()
+    }
+
     @Composable
     fun plainButtonColors(
         containerColor: Color = Color.Transparent,

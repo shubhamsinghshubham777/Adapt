@@ -22,3 +22,4 @@ import androidx.compose.ui.text.TextStyle
 
 val LocalContentColor = compositionLocalOf { Color.Black }
 val LocalTextStyle = compositionLocalOf { TextStyle() }
+val LocalPlatform = compositionLocalOf { platform }

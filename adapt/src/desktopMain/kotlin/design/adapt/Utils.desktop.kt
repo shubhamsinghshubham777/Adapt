@@ -16,7 +16,9 @@
 
 package design.adapt
 
-import androidx.compose.runtime.Composable
-
-@Composable
-internal fun App() {}
+actual val platform: Platform
+    get() {
+        val osName = System.getProperty("os.name")
+        if (osName.contains("Windows", ignoreCase = true)) return Platform.Windows
+        return Platform.MacOS
+    }
