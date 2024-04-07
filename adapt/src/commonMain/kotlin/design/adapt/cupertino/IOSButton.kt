@@ -270,7 +270,7 @@ object IOSButtonDefaults {
     )
 
     @Composable
-    fun textStyle(size: IOSButtonSize): TextStyle = with(LocalIOSTypography.current) {
+    fun textStyle(size: IOSButtonSize): TextStyle = with(IOSTheme.typography) {
         when (size) {
             IOSButtonSize.Small -> subheadlineRegular
             IOSButtonSize.Medium -> subheadlineRegular
