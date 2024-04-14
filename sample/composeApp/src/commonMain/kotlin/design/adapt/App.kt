@@ -23,6 +23,7 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.ColumnScope
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.RowScope
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.height
@@ -154,22 +155,27 @@ private fun ColumnScaffold(
 }
 
 @Composable
+fun SpacedRow(content: @Composable RowScope.() -> Unit) {
+    Row(horizontalArrangement = Arrangement.spacedBy(24.dp), content = content)
+}
+
+@Composable
 private fun ButtonsDemoPage() {
     ColumnScaffold(title = "Buttons") {
-        AdaptText(text = "This 👇🏼 button should look native-like on all platforms")
+        AdaptText(text = "This button should look native-like on all platforms")
         AdaptButton(
             onClick = {},
             text = { AdaptText(text = "Adapt Button") }
         )
         AdaptText(
-            text = "This 👇🏼 button should use the Material design system on all platforms"
+            text = "This button should use the Material design system on all platforms"
         )
         Button(
             onClick = {},
             content = { Text(text = "Android Button") }
         )
         AdaptText(
-            text = "This 👇🏼 button should use iOS' variant of the Cupertino design " +
+            text = "This button should use iOS' variant of the Cupertino design " +
                     "system on all platforms",
         )
         IOSButton(
@@ -177,7 +183,7 @@ private fun ButtonsDemoPage() {
             text = { AdaptText(text = "iOS Button") }
         )
         AdaptText(
-            text = "This 👇🏼 button should use macOS' variant of the Cupertino design " +
+            text = "This button should use macOS' variant of the Cupertino design " +
                     "system on all platforms",
         )
         MacOSButton(
@@ -185,7 +191,7 @@ private fun ButtonsDemoPage() {
             text = { AdaptText(text = "macOS Button") }
         )
         AdaptText(
-            text = "This 👇🏼 button should use the WinUI design system on all platforms",
+            text = "This button should use the WinUI design system on all platforms",
         )
         WindowsButton(
             onClick = {},
@@ -197,19 +203,30 @@ private fun ButtonsDemoPage() {
 @Composable
 fun IndicatorsDemoPage() {
     ColumnScaffold(title = "Indicators") {
-        // TODO(shubham): Add AdaptCircularIndicator as well
+        AdaptText(text = "This indicator should look native-like on all platforms")
+        AdaptCircularIndicator()
         AdaptText(
-            text = "This 👇🏼 indicator should use the Material design system on all platforms"
+            text = "This indicator should use the Material design system on all platforms"
         )
-        CircularProgressIndicator()
+        SpacedRow {
+            CircularProgressIndicator()
+            CircularProgressIndicator(progress = { 0.43f })
+        }
         AdaptText(
-            text = "This 👇🏼 indicator should use iOS' variant of the Cupertino design " +
-                    "system on all platforms",
+            text = "This indicator should use the Cupertino design system on all platforms",
         )
-        CupertinoSpinner()
+        SpacedRow {
+            CupertinoSpinner()
+            CupertinoSpinner(
+                text = { AdaptText(text = "Status...") }
+            )
+        }
         AdaptText(
-            text = "This 👇🏼 indicator should use the WinUI design system on all platforms",
+            text = "This indicator should use the WinUI design system on all platforms",
         )
-        WindowsProgressRing()
+        SpacedRow {
+            WindowsProgressRing()
+            WindowsProgressRing(progress = { 0.43f })
+        }
     }
 }

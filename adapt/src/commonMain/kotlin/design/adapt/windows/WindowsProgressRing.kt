@@ -22,7 +22,6 @@ import androidx.compose.animation.core.animateFloat
 import androidx.compose.animation.core.infiniteRepeatable
 import androidx.compose.animation.core.rememberInfiniteTransition
 import androidx.compose.animation.core.tween
-import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.Canvas
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
@@ -31,15 +30,17 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.StrokeCap
 import androidx.compose.ui.graphics.drawscope.Stroke
+import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.util.lerp
 
 @Composable
 fun WindowsProgressRing(
     modifier: Modifier = Modifier,
-    progress: Float? = null,
-    borderStroke: BorderStroke = WindowsProgressRingDefaults.BorderMedium,
+    progress: (() -> Float)? = null,
+    color: Color = WindowsProgressRingDefaults.Color,
     trackColor: Color = Color.Transparent,
+    strokeWidth: Dp = WindowsProgressRingDefaults.StrokeWidthMedium,
 ) {
     val startAngle = if (progress != null) -90f
     else rememberInfiniteTransition().animateFloat(
@@ -54,9 +55,9 @@ fun WindowsProgressRing(
         ),
     ).value
 
-    val sweepAngle = if (progress != null) lerp(start = 0f, stop = 360f, fraction = progress)
+    val sweepAngle = if (progress != null) lerp(start = 0f, stop = 360f, fraction = progress())
     else rememberInfiniteTransition().animateFloat(
-        initialValue = 0f,
+        initialValue = 10f,
         targetValue = 180f,
         animationSpec = infiniteRepeatable(
             animation = tween(
@@ -71,7 +72,8 @@ fun WindowsProgressRing(
         modifier = modifier,
         startAngle = startAngle,
         sweepAngle = sweepAngle,
-        borderStroke = borderStroke,
+        color = color,
+        strokeWidth = strokeWidth,
         trackColor = trackColor,
     )
 }
@@ -81,7 +83,8 @@ private fun BasicProgressRing(
     modifier: Modifier = Modifier,
     startAngle: Float,
     sweepAngle: Float,
-    borderStroke: BorderStroke,
+    color: Color,
+    strokeWidth: Dp,
     trackColor: Color,
 ) {
     Canvas(
@@ -90,19 +93,19 @@ private fun BasicProgressRing(
                 width = WindowsProgressRingDefaults.SizeMedium,
                 height = WindowsProgressRingDefaults.SizeMedium,
             )
-            .padding(borderStroke.width / 2),
+            .padding(strokeWidth / 2),
     ) {
         drawCircle(
             color = trackColor,
-            style = Stroke(width = borderStroke.width.toPx())
+            style = Stroke(width = strokeWidth.toPx())
         )
         drawArc(
-            brush = borderStroke.brush,
+            color = color,
             startAngle = startAngle,
             sweepAngle = sweepAngle,
             useCenter = false,
             style = Stroke(
-                width = borderStroke.width.toPx(),
+                width = strokeWidth.toPx(),
                 cap = StrokeCap.Round,
             ),
         )
@@ -114,25 +117,12 @@ object WindowsProgressRingDefaults {
     val SizeMedium = 32.dp
     val SizeLarge = 64.dp
 
-    val BorderSmall
-        @Composable get() = BorderStroke(
-            width = 2.dp,
-            color = WindowsTheme.colorScheme.fillAccentDefault,
-        )
-
-    val BorderMedium
-        @Composable get() = BorderStroke(
-            width = 4.dp,
-            color = WindowsTheme.colorScheme.fillAccentDefault,
-        )
-
-    val BorderLarge
-        @Composable get() = BorderStroke(
-            width = 8.dp,
-            color = WindowsTheme.colorScheme.fillAccentDefault,
-        )
-
+    val Color @Composable get() = WindowsTheme.colorScheme.fillAccentDefault
     val TrackColor @Composable get() = WindowsTheme.colorScheme.strokeControlStrongDefault
+
+    val StrokeWidthSmall = 2.dp
+    val StrokeWidthMedium = 4.dp
+    val StrokeWidthLarge = 8.dp
 
     internal const val START_ANGLE_ANIMATION_MILLIS = 700
     internal const val SWEEP_ANGLE_ANIMATION_MILLIS = START_ANGLE_ANIMATION_MILLIS * 2

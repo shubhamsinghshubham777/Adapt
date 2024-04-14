@@ -16,6 +16,7 @@
 
 package design.adapt.windows
 
+import androidx.compose.animation.animateColorAsState
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
@@ -26,6 +27,7 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.defaultMinSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.runtime.Composable
@@ -39,6 +41,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.Shape
+import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import design.adapt.LocalContentColor
 
@@ -77,23 +80,23 @@ fun WindowsButton(
         } else PaddingValues()
     }
 
-    val containerColor = remember(colors, enabled, isHovered, isPressed) {
+    val containerColor by animateColorAsState(
         when {
-            enabled && isHovered -> colors.hoveredContainerColor
             enabled && isPressed -> colors.pressedContainerColor
+            enabled && isHovered -> colors.hoveredContainerColor
             enabled -> colors.containerColor
             else -> colors.disabledContainerColor
         }
-    }
+    )
 
-    val contentColor = remember(colors, enabled, isHovered, isPressed) {
+    val contentColor by animateColorAsState(
         when {
-            enabled && isHovered -> colors.hoveredContentColor
             enabled && isPressed -> colors.pressedContentColor
+            enabled && isHovered -> colors.hoveredContentColor
             enabled -> colors.contentColor
             else -> colors.disabledContentColor
         }
-    }
+    )
 
     val processedIcon = remember(icon, isIconOnlyButton) {
         icon?.let { safeIcon ->
@@ -110,8 +113,8 @@ fun WindowsButton(
 
     val borderColors: List<Color>? = remember(colors, enabled, isPressed) {
         when {
-            !enabled -> colors.disabledBorderColor?.let(::listOf)
             enabled && isPressed -> colors.pressedBorderColor?.let(::listOf)
+            !enabled -> colors.disabledBorderColor?.let(::listOf)
             else -> colors.borderColors
         }
     }
@@ -120,6 +123,10 @@ fun WindowsButton(
         Row(
             modifier = modifier
                 .padding(buttonMargin)
+                .defaultMinSize(
+                    minWidth = WindowsButtonDefaults.defaultWidth(style = style, size = size),
+                    minHeight = WindowsButtonDefaults.defaultHeight(style = style, size = size),
+                )
                 .focusBorder(interactionSource = interactionSource, shape = focusBorderShape)
                 .clickable(
                     enabled = enabled,
@@ -146,7 +153,10 @@ fun WindowsButton(
                     }
                 )
                 .padding(contentPadding),
-            horizontalArrangement = Arrangement.spacedBy(8.dp),
+            horizontalArrangement = Arrangement.spacedBy(
+                space = 8.dp,
+                alignment = Alignment.CenterHorizontally
+            ),
             verticalAlignment = Alignment.CenterVertically,
         ) {
             if (iconSide == WindowsButtonIconSide.Start) processedIcon?.invoke()
@@ -278,24 +288,24 @@ object WindowsButtonDefaults {
 
         return when {
             !compact && accentStyle && textOnly -> PaddingValues(
-                start = 47.5.dp,
+                start = 12.dp,
                 top = 5.dp,
-                end = 47.5.dp,
+                end = 12.dp,
                 bottom = 7.dp
             )
 
             !compact && !accentStyle && textOnly -> PaddingValues(
-                start = 46.5.dp,
+                start = 11.dp,
                 top = 4.dp,
-                end = 46.5.dp,
+                end = 11.dp,
                 bottom = 6.dp
             )
 
             !compact && hasAllContent -> PaddingValues(
-                start = 34.5.dp,
+                start = 11.dp,
                 top = 4.dp,
-                end = 34.5.dp,
-                bottom = 6.dp,
+                end = 11.dp,
+                bottom = 4.dp,
             )
 
             !compact && iconOnly -> PaddingValues(7.dp)
@@ -307,6 +317,26 @@ object WindowsButtonDefaults {
             compact && hasAllContent -> PaddingValues(start = 11.dp, end = 11.dp, bottom = 2.dp)
 
             else -> PaddingValues()
+        }
+    }
+
+    internal fun defaultWidth(style: WindowsButtonStyle, size: WindowsButtonSize): Dp {
+        val isCompact = size == WindowsButtonSize.Compact
+        return when {
+            !isCompact && (style == WindowsButtonStyle.Standard || style == WindowsButtonStyle.Subtle) -> 120.dp
+            !isCompact && style == WindowsButtonStyle.Accent -> 118.dp
+            isCompact -> 22.dp
+            else -> 0.dp
+        }
+    }
+
+    internal fun defaultHeight(style: WindowsButtonStyle, size: WindowsButtonSize): Dp {
+        val isCompact = size == WindowsButtonSize.Compact
+        return when {
+            !isCompact && (style == WindowsButtonStyle.Standard || style == WindowsButtonStyle.Subtle) -> 32.dp
+            !isCompact && style == WindowsButtonStyle.Accent -> 30.dp
+            isCompact -> 22.dp
+            else -> 0.dp
         }
     }
 }

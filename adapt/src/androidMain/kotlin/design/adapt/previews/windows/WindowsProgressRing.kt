@@ -38,7 +38,7 @@ private fun ProgressRingPreview(
             verticalArrangement = Arrangement.spacedBy(16.dp)
         ) {
             WindowsProgressRing(trackColor = WindowsProgressRingDefaults.TrackColor)
-            WindowsProgressRing(progress = 0.6f, trackColor = WindowsProgressRingDefaults.TrackColor)
+            WindowsProgressRing(progress = { 0.6f }, trackColor = WindowsProgressRingDefaults.TrackColor)
         }
     }
 }
