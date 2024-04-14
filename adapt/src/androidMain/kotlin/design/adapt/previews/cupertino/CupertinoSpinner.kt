@@ -52,26 +52,15 @@ private fun SpinnerPreview() {
             horizontalAlignment = Alignment.CenterHorizontally,
             verticalArrangement = Arrangement.spacedBy(24.dp),
         ) {
-            CupertinoSpinner(
-                modifier = Modifier.size(CupertinoSpinnerDefaults.sizeRegular),
-                color = spinnerColor
-            )
+            CupertinoSpinner()
             CupertinoSpinner(
                 modifier = Modifier.size(CupertinoSpinnerDefaults.sizeSmall),
-                color = spinnerColor
             )
-            CupertinoSpinner(
-                modifier = Modifier.size(CupertinoSpinnerDefaults.sizeRegular),
-                color = spinnerColor,
-                text = text,
-            )
+            CupertinoSpinner(text = text)
             CupertinoSpinner(
                 modifier = Modifier.size(CupertinoSpinnerDefaults.sizeSmall),
-                color = spinnerColor,
                 text = text,
             )
         }
     }
 }
-
-private val spinnerColor = Color(0x993c3c43)

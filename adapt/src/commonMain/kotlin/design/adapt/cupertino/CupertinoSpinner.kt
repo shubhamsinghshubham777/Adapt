@@ -19,7 +19,7 @@ package design.adapt.cupertino
 import androidx.compose.foundation.Canvas
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.defaultMinSize
+import androidx.compose.foundation.layout.size
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.runtime.LaunchedEffect
@@ -45,7 +45,7 @@ import kotlinx.coroutines.delay
 @Composable
 fun CupertinoSpinner(
     modifier: Modifier = Modifier,
-    color: Color,
+    color: Color = CupertinoSpinnerDefaults.Color,
     text: (@Composable () -> Unit)? = null,
 ) {
     val platformTextStyle = when (LocalPlatform.current) {
@@ -77,9 +77,9 @@ fun CupertinoSpinner(
     ) {
         Canvas(
             modifier = modifier
-                .defaultMinSize(
-                    minWidth = CupertinoSpinnerDefaults.sizeRegular,
-                    minHeight = CupertinoSpinnerDefaults.sizeRegular
+                .size(
+                    width = CupertinoSpinnerDefaults.sizeRegular,
+                    height = CupertinoSpinnerDefaults.sizeRegular
                 )
                 .graphicsLayer { rotationZ = rotationAngle }
         ) {
@@ -133,4 +133,9 @@ fun CupertinoSpinner(
 object CupertinoSpinnerDefaults {
     val sizeRegular = 30.dp
     val sizeSmall = 22.dp
+    val Color @Composable get() = when(LocalPlatform.current) {
+        Platform.IOS -> IOSTheme.colorScheme.labelSecondary
+        Platform.MacOS -> MacOSTheme.colorScheme.labelSecondary
+        else -> Color(0x993c3c43)
+    }
 }

@@ -36,6 +36,7 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.outlined.ArrowBack
 import androidx.compose.material.icons.automirrored.outlined.ArrowForward
 import androidx.compose.material3.Button
+import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -48,9 +49,11 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import design.adapt.cupertino.CupertinoSpinner
 import design.adapt.cupertino.IOSButton
 import design.adapt.cupertino.MacOSButton
 import design.adapt.windows.WindowsButton
+import design.adapt.windows.WindowsProgressRing
 import kotlinx.coroutines.launch
 
 @OptIn(ExperimentalFoundationApi::class)
@@ -194,6 +197,19 @@ private fun ButtonsDemoPage() {
 @Composable
 fun IndicatorsDemoPage() {
     ColumnScaffold(title = "Indicators") {
-        Spacer(Modifier.height(24.dp))
+        // TODO(shubham): Add AdaptCircularIndicator as well
+        AdaptText(
+            text = "This 👇🏼 indicator should use the Material design system on all platforms"
+        )
+        CircularProgressIndicator()
+        AdaptText(
+            text = "This 👇🏼 indicator should use iOS' variant of the Cupertino design " +
+                    "system on all platforms",
+        )
+        CupertinoSpinner()
+        AdaptText(
+            text = "This 👇🏼 indicator should use the WinUI design system on all platforms",
+        )
+        WindowsProgressRing()
     }
 }

@@ -44,6 +44,7 @@ data class WindowsColorScheme(
     val elevationAccentControlBorder: List<Color>,
     val elevationControlBorder: List<Color>,
     val strokeControlDefault: Color,
+    val strokeControlStrongDefault: Color,
     val focusStrokeOuter: Color,
     val focusStrokeInner: Color,
 )
@@ -78,6 +79,7 @@ fun lightColorSchemeWindows(
         Color(0x29000000),
     ),
     strokeControlDefault: Color = Color(0xf000000),
+    strokeControlStrongDefault: Color = Color(0x9c000000),
     focusStrokeOuter: Color = Color(0xe3000000),
     focusStrokeInner: Color = Color.White,
 ) = WindowsColorScheme(
@@ -104,6 +106,7 @@ fun lightColorSchemeWindows(
     elevationAccentControlBorder = elevationAccentControlBorder,
     elevationControlBorder = elevationControlBorder,
     strokeControlDefault = strokeControlDefault,
+    strokeControlStrongDefault = strokeControlStrongDefault,
     focusStrokeOuter = focusStrokeOuter,
     focusStrokeInner = focusStrokeInner,
 )
@@ -138,6 +141,7 @@ fun darkColorSchemeWindows(
         Color(0x12ffffff),
     ),
     strokeControlDefault: Color = Color(0x12ffffff),
+    strokeControlStrongDefault: Color = Color(0x99ffffff),
     focusStrokeOuter: Color = Color.White,
     focusStrokeInner: Color = Color(0xb3000000),
 ) = WindowsColorScheme(
@@ -164,6 +168,7 @@ fun darkColorSchemeWindows(
     elevationAccentControlBorder = elevationAccentControlBorder,
     elevationControlBorder = elevationControlBorder,
     strokeControlDefault = strokeControlDefault,
+    strokeControlStrongDefault = strokeControlStrongDefault,
     focusStrokeOuter = focusStrokeOuter,
     focusStrokeInner = focusStrokeInner,
 )

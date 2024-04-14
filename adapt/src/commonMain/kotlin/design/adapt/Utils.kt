@@ -23,7 +23,11 @@ expect val platform: Platform
 
 @Immutable
 enum class Platform {
-    Android, IOS, MacOS, Web, Windows
+    Android, IOS, MacOS, Web, Windows;
+
+    val isApple get() = this == IOS || this == MacOS
+    val isDesktop get() = this == MacOS || this == Windows
+    val isMobile get() = this == Android || this == IOS
 }
 
 @Immutable
