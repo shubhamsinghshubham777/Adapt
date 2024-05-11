@@ -16,7 +16,6 @@
 
 package design.adapt
 
-import android.graphics.BlurMaskFilter
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.drawBehind
 import androidx.compose.ui.geometry.Size
@@ -26,8 +25,8 @@ import androidx.compose.ui.graphics.Shape
 import androidx.compose.ui.graphics.drawOutline
 import androidx.compose.ui.graphics.drawscope.drawIntoCanvas
 import androidx.compose.ui.unit.Dp
-
-actual val platform: Platform = Platform.Android
+import org.jetbrains.skia.FilterBlurMode
+import org.jetbrains.skia.MaskFilter
 
 /**
  * Adds a drop shadow effect to the composable.
@@ -60,7 +59,7 @@ actual fun Modifier.dropShadow(
 
         if (blur.toPx() > 0) {
             paint.asFrameworkPaint().apply {
-                maskFilter = BlurMaskFilter(blur.toPx(), BlurMaskFilter.Blur.NORMAL)
+                maskFilter = MaskFilter.makeBlur(sigma = blur.toPx(), mode = FilterBlurMode.NORMAL)
             }
         }
 
