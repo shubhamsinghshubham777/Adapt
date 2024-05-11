@@ -19,35 +19,64 @@ package design.adapt
 import androidx.compose.foundation.text.BasicText
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.ColorProducer
+import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.takeOrElse
 import androidx.compose.ui.text.AnnotatedString
 import androidx.compose.ui.text.TextLayoutResult
 import androidx.compose.ui.text.TextStyle
+import androidx.compose.ui.text.font.FontFamily
+import androidx.compose.ui.text.font.FontStyle
+import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.style.TextAlign
+import androidx.compose.ui.text.style.TextDecoration
 import androidx.compose.ui.text.style.TextOverflow
+import androidx.compose.ui.unit.TextUnit
 
 @Composable
 fun AdaptText(
     text: String,
     modifier: Modifier = Modifier,
-    style: TextStyle? = null,
-    onTextLayout: ((TextLayoutResult) -> Unit)? = null,
+    color: Color = Color.Unspecified,
+    fontSize: TextUnit = TextUnit.Unspecified,
+    fontStyle: FontStyle? = null,
+    fontWeight: FontWeight? = null,
+    fontFamily: FontFamily? = null,
+    letterSpacing: TextUnit = TextUnit.Unspecified,
+    textDecoration: TextDecoration? = null,
+    textAlign: TextAlign? = null,
+    lineHeight: TextUnit = TextUnit.Unspecified,
     overflow: TextOverflow = TextOverflow.Clip,
     softWrap: Boolean = true,
     maxLines: Int = Int.MAX_VALUE,
     minLines: Int = 1,
-    color: ColorProducer? = null
+    onTextLayout: ((TextLayoutResult) -> Unit)? = null,
+    style: TextStyle = LocalTextStyle.current
 ) {
-    val contentColor = LocalContentColor.current
+    val textColor = color.takeOrElse {
+        style.color.takeOrElse {
+            LocalContentColor.current
+        }
+    }
+
     BasicText(
         text = text,
         modifier = modifier,
-        style = style ?: LocalTextStyle.current,
+        style = style.merge(
+            color = textColor,
+            fontSize = fontSize,
+            fontWeight = fontWeight,
+            textAlign = textAlign ?: TextAlign.Unspecified,
+            lineHeight = lineHeight,
+            fontFamily = fontFamily,
+            textDecoration = textDecoration,
+            fontStyle = fontStyle,
+            letterSpacing = letterSpacing
+        ),
         onTextLayout = onTextLayout,
         overflow = overflow,
         softWrap = softWrap,
         maxLines = maxLines,
         minLines = minLines,
-        color = color ?: ColorProducer { contentColor },
     )
 }
 
@@ -55,24 +84,46 @@ fun AdaptText(
 fun AdaptText(
     text: AnnotatedString,
     modifier: Modifier = Modifier,
-    style: TextStyle? = null,
-    onTextLayout: ((TextLayoutResult) -> Unit)? = null,
+    color: Color = Color.Unspecified,
+    fontSize: TextUnit = TextUnit.Unspecified,
+    fontStyle: FontStyle? = null,
+    fontWeight: FontWeight? = null,
+    fontFamily: FontFamily? = null,
+    letterSpacing: TextUnit = TextUnit.Unspecified,
+    textDecoration: TextDecoration? = null,
+    textAlign: TextAlign? = null,
+    lineHeight: TextUnit = TextUnit.Unspecified,
     overflow: TextOverflow = TextOverflow.Clip,
     softWrap: Boolean = true,
     maxLines: Int = Int.MAX_VALUE,
     minLines: Int = 1,
-    color: ColorProducer? = null
+    onTextLayout: ((TextLayoutResult) -> Unit)? = null,
+    style: TextStyle = LocalTextStyle.current
 ) {
-    val contentColor = LocalContentColor.current
+    val textColor = color.takeOrElse {
+        style.color.takeOrElse {
+            LocalContentColor.current
+        }
+    }
+
     BasicText(
         text = text,
         modifier = modifier,
-        style = style ?: LocalTextStyle.current,
+        style = style.merge(
+            color = textColor,
+            fontSize = fontSize,
+            fontWeight = fontWeight,
+            textAlign = textAlign ?: TextAlign.Unspecified,
+            lineHeight = lineHeight,
+            fontFamily = fontFamily,
+            textDecoration = textDecoration,
+            fontStyle = fontStyle,
+            letterSpacing = letterSpacing
+        ),
         onTextLayout = onTextLayout,
         overflow = overflow,
         softWrap = softWrap,
         maxLines = maxLines,
         minLines = minLines,
-        color = color ?: ColorProducer { contentColor },
     )
 }

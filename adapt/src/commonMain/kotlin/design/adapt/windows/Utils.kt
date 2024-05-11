@@ -35,8 +35,8 @@ internal fun Modifier.focusBorder(
     interactionSource: InteractionSource,
     innerColor: Color = LocalWindowsColorScheme.current.focusStrokeInner,
     outerColor: Color = LocalWindowsColorScheme.current.focusStrokeOuter,
-    shape: Shape = RoundedCornerShape(7.dp),
-    thickness: Dp = 3.dp,
+    shape: Shape = FocusBorderDefaults.Shape,
+    thickness: Dp = FocusBorderDefaults.Thickness,
 ): Modifier = composed {
     val isFocused by interactionSource.collectIsFocusedAsState()
     then(
@@ -56,4 +56,9 @@ internal fun Modifier.focusBorder(
             )
             .padding(all = thickness)
     )
+}
+
+internal object FocusBorderDefaults {
+    val Shape = RoundedCornerShape(7.dp)
+    val Thickness = 3.dp
 }

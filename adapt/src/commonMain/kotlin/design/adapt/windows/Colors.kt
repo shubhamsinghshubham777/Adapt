@@ -17,10 +17,12 @@
 package design.adapt.windows
 
 import androidx.compose.runtime.Immutable
+import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 
 @Immutable
 data class WindowsColorScheme(
+    val elevationCircle: Brush,
     val fillAccentDefault: Color,
     val fillAccentSecondary: Color,
     val fillAccentTertiary: Color,
@@ -28,6 +30,10 @@ data class WindowsColorScheme(
     val fillAccentSelectedTextBackground: Color,
     val fillControlDefault: Color,
     val fillControlSecondary: Color,
+    val fillControlAltSecondary: Color,
+    val fillControlAltTertiary: Color,
+    val fillControlAltQuaternary: Color,
+    val fillControlAltDisabled: Color,
     val fillControlTertiary: Color,
     val fillControlDisabled: Color,
     val fillSubtleTransparent: Color,
@@ -41,15 +47,21 @@ data class WindowsColorScheme(
     val fillTextOnAccentSecondary: Color,
     val fillTextOnAccentDisabled: Color,
     val fillTextOnAccentSelectedText: Color,
+    // TODO(Shubham): Replace List<Color> with Brush
     val elevationAccentControlBorder: List<Color>,
     val elevationControlBorder: List<Color>,
     val strokeControlDefault: Color,
     val strokeControlStrongDefault: Color,
+    val strokeControlStrongDisabled: Color,
     val focusStrokeOuter: Color,
     val focusStrokeInner: Color,
 )
 
 fun lightColorSchemeWindows(
+    elevationCircle: Brush = Brush.verticalGradient(
+        0.5f to Color.Black.copy(alpha = 0.06f),
+        0.95f to Color.Black.copy(alpha = 0.16f),
+    ),
     fillAccentDefault: Color = Color(0XFF005FB8),
     fillAccentSecondary: Color = Color(0XE6005FB8),
     fillAccentTertiary: Color = Color(0XCC005FB8),
@@ -57,6 +69,10 @@ fun lightColorSchemeWindows(
     fillAccentSelectedTextBackground: Color = Color(0XFF0078D4),
     fillControlDefault: Color = Color(0xb3ffffff),
     fillControlSecondary: Color = Color(0x80f9f9f9),
+    fillControlAltSecondary: Color = Color(0x5000000),
+    fillControlAltTertiary: Color = Color.Black.copy(alpha = 0.0578f),
+    fillControlAltQuaternary: Color = Color.Black.copy(alpha = 0.0924f),
+    fillControlAltDisabled: Color = Color.Transparent,
     fillControlTertiary: Color = Color(0x4df9f9f9),
     fillControlDisabled: Color = Color(0x4df9f9f9),
     fillSubtleTransparent: Color = Color.Transparent,
@@ -80,9 +96,11 @@ fun lightColorSchemeWindows(
     ),
     strokeControlDefault: Color = Color(0xf000000),
     strokeControlStrongDefault: Color = Color(0x9c000000),
+    strokeControlStrongDisabled: Color = Color.Black.copy(alpha = 0.2169f),
     focusStrokeOuter: Color = Color(0xe3000000),
     focusStrokeInner: Color = Color.White,
 ) = WindowsColorScheme(
+    elevationCircle = elevationCircle,
     fillAccentDefault = fillAccentDefault,
     fillAccentSecondary = fillAccentSecondary,
     fillAccentTertiary = fillAccentTertiary,
@@ -90,6 +108,10 @@ fun lightColorSchemeWindows(
     fillAccentSelectedTextBackground = fillAccentSelectedTextBackground,
     fillControlDefault = fillControlDefault,
     fillControlSecondary = fillControlSecondary,
+    fillControlAltSecondary = fillControlAltSecondary,
+    fillControlAltTertiary = fillControlAltTertiary,
+    fillControlAltQuaternary = fillControlAltQuaternary,
+    fillControlAltDisabled = fillControlAltDisabled,
     fillControlTertiary = fillControlTertiary,
     fillControlDisabled = fillControlDisabled,
     fillSubtleTransparent = fillSubtleTransparent,
@@ -107,11 +129,16 @@ fun lightColorSchemeWindows(
     elevationControlBorder = elevationControlBorder,
     strokeControlDefault = strokeControlDefault,
     strokeControlStrongDefault = strokeControlStrongDefault,
+    strokeControlStrongDisabled = strokeControlStrongDisabled,
     focusStrokeOuter = focusStrokeOuter,
     focusStrokeInner = focusStrokeInner,
 )
 
 fun darkColorSchemeWindows(
+    elevationCircle: Brush = Brush.verticalGradient(
+        0f to Color.White.copy(alpha = 0.09f),
+        0.5f to Color.White.copy(alpha = 0.07f),
+    ),
     fillAccentDefault: Color = Color(0XFF60CDFF),
     fillAccentSecondary: Color = Color(0XE660CDFF),
     fillAccentTertiary: Color = Color(0XCC60CDFF),
@@ -119,6 +146,10 @@ fun darkColorSchemeWindows(
     fillAccentSelectedTextBackground: Color = Color(0XFF0078D4),
     fillControlDefault: Color = Color(0xfffffff),
     fillControlSecondary: Color = Color(0x14ffffff),
+    fillControlAltSecondary: Color = Color(0x1a000000),
+    fillControlAltTertiary: Color = Color.White.copy(alpha = 0.0419f),
+    fillControlAltQuaternary: Color = Color.White.copy(alpha = 0.0698f),
+    fillControlAltDisabled: Color = Color.Transparent,
     fillControlTertiary: Color = Color(0x8ffffff),
     fillControlDisabled: Color = Color(0xaffffff),
     fillSubtleTransparent: Color = Color.Transparent,
@@ -142,9 +173,11 @@ fun darkColorSchemeWindows(
     ),
     strokeControlDefault: Color = Color(0x12ffffff),
     strokeControlStrongDefault: Color = Color(0x99ffffff),
+    strokeControlStrongDisabled: Color = Color.White.copy(alpha = 0.1581f),
     focusStrokeOuter: Color = Color.White,
     focusStrokeInner: Color = Color(0xb3000000),
 ) = WindowsColorScheme(
+    elevationCircle = elevationCircle,
     fillAccentDefault = fillAccentDefault,
     fillAccentSecondary = fillAccentSecondary,
     fillAccentTertiary = fillAccentTertiary,
@@ -152,6 +185,10 @@ fun darkColorSchemeWindows(
     fillAccentSelectedTextBackground = fillAccentSelectedTextBackground,
     fillControlDefault = fillControlDefault,
     fillControlSecondary = fillControlSecondary,
+    fillControlAltSecondary = fillControlAltSecondary,
+    fillControlAltTertiary = fillControlAltTertiary,
+    fillControlAltQuaternary = fillControlAltQuaternary,
+    fillControlAltDisabled = fillControlAltDisabled,
     fillControlTertiary = fillControlTertiary,
     fillControlDisabled = fillControlDisabled,
     fillSubtleTransparent = fillSubtleTransparent,
@@ -169,6 +206,7 @@ fun darkColorSchemeWindows(
     elevationControlBorder = elevationControlBorder,
     strokeControlDefault = strokeControlDefault,
     strokeControlStrongDefault = strokeControlStrongDefault,
+    strokeControlStrongDisabled = strokeControlStrongDisabled,
     focusStrokeOuter = focusStrokeOuter,
     focusStrokeInner = focusStrokeInner,
 )
