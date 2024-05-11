@@ -74,6 +74,15 @@ expect fun Modifier.dropShadow(
     spread: Dp = 0.dp,
 ): Modifier
 
+expect fun Modifier.innerShadow(
+    shape: Shape,
+    color: Color = Color.Black,
+    blur: Dp = 0.dp,
+    offsetX: Dp = 0.dp,
+    offsetY: Dp = 0.dp,
+    spread: Dp = 0.dp,
+): Modifier
+
 // Ref: https://stackoverflow.com/a/70031663/20325172
 @Composable
 fun animateHorizontalAlignmentAsState(targetBiasValue: Float): State<BiasAlignment.Horizontal> {
