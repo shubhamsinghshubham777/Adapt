@@ -70,8 +70,8 @@ fun WindowsToggleSwitch(
     text: @Composable (() -> Unit)? = null,
     alignTextToStart: Boolean = false,
     enabled: Boolean = true,
-    trackShape: Shape = CircleShape,
-    thumbShape: Shape = CircleShape,
+    trackShape: Shape = WindowsToggleSwitchDefaults.TrackShape,
+    thumbShape: Shape = WindowsToggleSwitchDefaults.ThumbShape,
     colors: WindowsToggleSwitchColors = WindowsToggleSwitchDefaults.colors(),
     interactionSource: MutableInteractionSource = remember { MutableInteractionSource() },
 ) {
@@ -127,18 +127,18 @@ fun WindowsToggleSwitch(
     )
 
     val animatedThumbWidth by animateDpAsState(
-        targetValue = if (isPressed || isDragged) {
-            WindowsToggleSwitchDefaults.ThumbExtendedSize.width
-        } else {
-            WindowsToggleSwitchDefaults.ThumbSize.width
+        targetValue = when {
+            isPressed || isDragged -> WindowsToggleSwitchDefaults.ThumbPressedSize
+            isHovered -> WindowsToggleSwitchDefaults.ThumbHoveredSize
+            else -> WindowsToggleSwitchDefaults.ThumbSize
         }
     )
 
     val animatedThumbHeight by animateDpAsState(
-        targetValue = if (isPressed || isDragged) {
-            WindowsToggleSwitchDefaults.ThumbExtendedSize.height
+        targetValue = if (isPressed || isDragged || isHovered) {
+            WindowsToggleSwitchDefaults.ThumbHoveredSize
         } else {
-            WindowsToggleSwitchDefaults.ThumbSize.height
+            WindowsToggleSwitchDefaults.ThumbSize
         }
     )
 
@@ -365,9 +365,12 @@ data class WindowsToggleSwitchColors(
 )
 
 object WindowsToggleSwitchDefaults {
-    val ThumbSize = DpSize(width = 12.dp, height = 12.dp)
-    val ThumbExtendedSize = DpSize(width = 17.dp, height = 14.dp)
+    val ThumbSize = 12.dp
+    val ThumbHoveredSize = 14.dp
+    val ThumbPressedSize = 17.dp
     val ToggleSize = DpSize(width = 38.dp, height = 18.dp)
+    val ThumbShape = CircleShape
+    val TrackShape = CircleShape
 
     @Composable
     fun colors(

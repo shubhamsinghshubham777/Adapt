@@ -55,8 +55,8 @@ fun MacOSSwitch(
     onCheckedChange: (checked: Boolean) -> Unit,
     modifier: Modifier = Modifier,
     enabled: Boolean = true,
-    trackShape: Shape = CircleShape,
-    thumbShape: Shape = CircleShape,
+    trackShape: Shape = MacOSSwitchDefaults.TrackShape,
+    thumbShape: Shape = MacOSSwitchDefaults.ThumbShape,
     colors: MacOSSwitchColors = MacOSSwitchDefaults.colors(),
     interactionSource: MutableInteractionSource = remember { MutableInteractionSource() }
 ) {
@@ -207,6 +207,8 @@ data class MacOSSwitchColors(
 object MacOSSwitchDefaults {
     val SwitchSize = DpSize(width = 26.dp, height = 15.dp)
     val ThumbSize = DpSize(width = 13.dp, height = 13.dp)
+    val TrackShape = CircleShape
+    val ThumbShape = CircleShape
 
     @Composable
     fun colors(

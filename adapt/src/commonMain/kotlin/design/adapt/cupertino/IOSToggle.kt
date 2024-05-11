@@ -57,8 +57,8 @@ fun IOSToggle(
     onCheckedChange: (checked: Boolean) -> Unit,
     modifier: Modifier = Modifier,
     colors: IOSToggleColors = IOSToggleDefaults.colors(),
-    trackShape: Shape = CircleShape,
-    thumbShape: Shape = CircleShape,
+    trackShape: Shape = IOSToggleDefaults.TrackShape,
+    thumbShape: Shape = IOSToggleDefaults.ThumbShape,
     interactionSource: MutableInteractionSource = remember { MutableInteractionSource() },
 ) {
     val density = LocalDensity.current
@@ -196,6 +196,8 @@ object IOSToggleDefaults {
     val ExpandedThumbWidth = ThumbWidth * 1.25f
     val ThumbHeight = 27.dp
     val ToggleSize = DpSize(51.dp, 31.dp)
+    val TrackShape = CircleShape
+    val ThumbShape = CircleShape
 
     @Composable
     fun colors(

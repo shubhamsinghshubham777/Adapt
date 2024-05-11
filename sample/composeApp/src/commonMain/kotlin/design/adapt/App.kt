@@ -29,6 +29,7 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.systemBarsPadding
+import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.pager.HorizontalPager
 import androidx.compose.foundation.pager.rememberPagerState
 import androidx.compose.foundation.rememberScrollState
@@ -39,9 +40,14 @@ import androidx.compose.material.icons.automirrored.outlined.ArrowForward
 import androidx.compose.material3.Button
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.IconButton
+import androidx.compose.material3.Switch
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -52,16 +58,19 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import design.adapt.cupertino.CupertinoSpinner
 import design.adapt.cupertino.IOSButton
+import design.adapt.cupertino.IOSToggle
 import design.adapt.cupertino.MacOSButton
+import design.adapt.cupertino.MacOSSwitch
 import design.adapt.windows.WindowsButton
 import design.adapt.windows.WindowsProgressRing
+import design.adapt.windows.WindowsToggleSwitch
 import kotlinx.coroutines.launch
 
 @OptIn(ExperimentalFoundationApi::class)
 @Composable
 internal fun App() {
     val coroutineScope = rememberCoroutineScope()
-    val horizontalPagerState = rememberPagerState { 2 }
+    val horizontalPagerState = rememberPagerState { 3 }
 
     AdaptTheme {
         Box(
@@ -121,10 +130,14 @@ internal fun App() {
                         }
                     )
                 }
-                HorizontalPager(state = horizontalPagerState) { page ->
+                HorizontalPager(
+                    state = horizontalPagerState,
+                    beyondBoundsPageCount = 1,
+                ) { page ->
                     when (page) {
                         0 -> ButtonsDemoPage()
-                        else -> IndicatorsDemoPage()
+                        1 -> IndicatorsDemoPage()
+                        else -> SwitchesDemoPage()
                     }
                 }
             }
@@ -227,6 +240,69 @@ fun IndicatorsDemoPage() {
         SpacedRow {
             WindowsProgressRing()
             WindowsProgressRing(progress = { 0.43f })
+        }
+    }
+}
+
+@Composable
+fun SwitchesDemoPage() {
+    var checked by remember { mutableStateOf(true) }
+
+    ColumnScaffold(title = "Switches") {
+        AdaptText(text = "This switch should look native-like on all platforms")
+        SpacedRow {
+            AdaptSwitch(checked = checked, onCheckedChange = { checked = it })
+            AdaptSwitch(checked = checked, onCheckedChange = { checked = it }, enabled = false)
+        }
+        AdaptText(text = "This switch should use the Material design system on all platforms")
+        SpacedRow {
+            Switch(checked = checked, onCheckedChange = { checked = it })
+            Switch(checked = checked, onCheckedChange = { checked = it }, enabled = false)
+        }
+        AdaptText(
+            text = "This switch should use iOS' variant of the Cupertino design system on all " +
+                    "platforms"
+        )
+        SpacedRow {
+            IOSToggle(checked = checked, onCheckedChange = { checked = it })
+        }
+        AdaptText(
+            text = "This switch should use macOS' variant of the Cupertino design system on all " +
+                    "platforms"
+        )
+        SpacedRow {
+            MacOSSwitch(checked = checked, onCheckedChange = { checked = it })
+            MacOSSwitch(checked = checked, onCheckedChange = { checked = it }, enabled = false)
+        }
+        AdaptText(text = "This switch should use the WinUI design system on all platforms")
+        SpacedRow {
+            WindowsToggleSwitch(checked = checked, onCheckedChange = { checked = it })
+            WindowsToggleSwitch(
+                checked = checked,
+                onCheckedChange = { checked = it },
+                enabled = false
+            )
+            WindowsToggleSwitch(
+                checked = checked,
+                onCheckedChange = { checked = it },
+                text = {
+                    AdaptText(
+                        modifier = Modifier.width(20.dp),
+                        text = if (checked) "On" else "Off"
+                    )
+                },
+            )
+            WindowsToggleSwitch(
+                checked = checked,
+                onCheckedChange = { checked = it },
+                text = {
+                    AdaptText(
+                        modifier = Modifier.width(20.dp),
+                        text = if (checked) "On" else "Off"
+                    )
+                },
+                header = { AdaptText(text = "Header") }
+            )
         }
     }
 }
