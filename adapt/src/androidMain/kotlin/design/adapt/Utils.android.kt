@@ -19,6 +19,8 @@ package design.adapt
 import android.graphics.BlurMaskFilter
 import android.graphics.PorterDuff
 import android.graphics.PorterDuffXfermode
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.drawBehind
 import androidx.compose.ui.draw.drawWithContent
@@ -30,7 +32,10 @@ import androidx.compose.ui.graphics.Paint
 import androidx.compose.ui.graphics.Shape
 import androidx.compose.ui.graphics.drawOutline
 import androidx.compose.ui.graphics.drawscope.drawIntoCanvas
+import androidx.compose.ui.platform.LocalConfiguration
+import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.unit.Dp
+import androidx.compose.ui.unit.dp
 
 actual val platform: Platform = Platform.Android
 
@@ -122,3 +127,20 @@ actual fun Modifier.innerShadow(
         }
     }
 )
+
+@Composable
+actual fun rememberScreenSizeInfo(): ScreenSizeInfo {
+    val density = LocalDensity.current
+    val config = LocalConfiguration.current
+    val hDp = config.screenHeightDp.dp
+    val wDp = config.screenWidthDp.dp
+
+    return remember(density, config) {
+        ScreenSizeInfo(
+            widthPx = with(density) { wDp.roundToPx() },
+            heightPx = with(density) { hDp.roundToPx() },
+            widthDp = wDp,
+            heightDp = hDp,
+        )
+    }
+}

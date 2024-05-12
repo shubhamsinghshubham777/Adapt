@@ -16,6 +16,9 @@
 
 package design.adapt
 
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.remember
+import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.drawBehind
 import androidx.compose.ui.draw.drawWithContent
@@ -27,6 +30,8 @@ import androidx.compose.ui.graphics.Paint
 import androidx.compose.ui.graphics.Shape
 import androidx.compose.ui.graphics.drawOutline
 import androidx.compose.ui.graphics.drawscope.drawIntoCanvas
+import androidx.compose.ui.platform.LocalDensity
+import androidx.compose.ui.platform.LocalWindowInfo
 import androidx.compose.ui.unit.Dp
 import org.jetbrains.skia.BlendMode
 import org.jetbrains.skia.FilterBlurMode
@@ -125,3 +130,19 @@ actual fun Modifier.innerShadow(
         }
     }
 )
+
+@OptIn(ExperimentalComposeUiApi::class)
+@Composable
+actual fun rememberScreenSizeInfo(): ScreenSizeInfo {
+    val density = LocalDensity.current
+    val config = LocalWindowInfo.current.containerSize
+
+    return remember(density, config) {
+        ScreenSizeInfo(
+            widthPx = config.width,
+            heightPx = config.height,
+            widthDp = with(density) { config.width.toDp() },
+            heightDp = with(density) { config.height.toDp() },
+        )
+    }
+}

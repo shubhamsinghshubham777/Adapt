@@ -36,7 +36,7 @@ enum class Platform {
     Android, IOS, MacOS, Web, Windows;
 
     val isApple get() = this == IOS || this == MacOS
-    val isDesktop get() = this == MacOS || this == Windows
+    val isDesktop get() = this == MacOS || this == Windows || this == Web
     val isMobile get() = this == Android || this == IOS
 }
 
@@ -89,3 +89,8 @@ fun animateHorizontalAlignmentAsState(targetBiasValue: Float): State<BiasAlignme
     val bias by animateFloatAsState(targetBiasValue)
     return derivedStateOf { BiasAlignment.Horizontal(bias) }
 }
+
+@Immutable
+data class ScreenSizeInfo(val widthPx: Int, val heightPx: Int, val widthDp: Dp, val heightDp: Dp)
+
+@Composable expect fun rememberScreenSizeInfo(): ScreenSizeInfo
