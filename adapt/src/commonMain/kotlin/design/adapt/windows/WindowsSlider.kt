@@ -28,6 +28,8 @@ import androidx.compose.foundation.interaction.collectIsHoveredAsState
 import androidx.compose.foundation.interaction.collectIsPressedAsState
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.defaultMinSize
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.CircleShape
@@ -62,7 +64,7 @@ import design.adapt.dropShadow
 @Composable
 fun WindowsSlider(
     value: Float,
-    onValueChanged: (value: Float) -> Unit,
+    onValueChange: (value: Float) -> Unit,
     bufferProgress: Float = 1f,
     modifier: Modifier = Modifier,
     enabled: Boolean = true,
@@ -128,7 +130,7 @@ fun WindowsSlider(
     }
 
     LaunchedEffect(dragPercent, value) {
-        if (dragPercent != value) onValueChanged(dragPercent)
+        if (dragPercent != value) onValueChange(dragPercent)
     }
 
     Column(modifier = modifier) {
@@ -162,7 +164,11 @@ fun WindowsSlider(
             // Track
             Box(
                 modifier = Modifier
-                    .size(WindowsSliderDefaults.TrackSize)
+                    .fillMaxWidth()
+                    .defaultMinSize(
+                        minWidth = WindowsSliderDefaults.TrackSize.width,
+                        minHeight = WindowsSliderDefaults.TrackSize.height
+                    )
                     .clip(trackShape)
                     .drawBehind {
                         val outline = trackShape.createOutline(size, layoutDirection, density)

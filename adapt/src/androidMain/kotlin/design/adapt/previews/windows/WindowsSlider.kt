@@ -22,6 +22,7 @@ import androidx.compose.runtime.mutableFloatStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.tooling.preview.Preview
+import design.adapt.AdaptText
 import design.adapt.windows.WindowsSlider
 import design.adapt.windows.WindowsTheme
 
@@ -32,8 +33,9 @@ private fun WindowsSliderPreviews() {
     WindowsTheme {
         WindowsSlider(
             value = value,
-            onValueChanged = { value = it },
+            onValueChange = { value = it },
             bufferProgress = 0.6f,
+            header = { AdaptText(text = "Header") }
         )
     }
 }

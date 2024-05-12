@@ -53,7 +53,7 @@ private fun CupertinoSliderPreview() {
         ) {
             CupertinoSlider(
                 value = value,
-                onValueChanged = { value = it },
+                onValueChange = { value = it },
                 steps = 4,
                 leadingIcon = {
                     AdaptIcon(
@@ -70,7 +70,7 @@ private fun CupertinoSliderPreview() {
             )
             CupertinoSlider(
                 value = value,
-                onValueChanged = { value = it },
+                onValueChange = { value = it },
             )
         }
     }

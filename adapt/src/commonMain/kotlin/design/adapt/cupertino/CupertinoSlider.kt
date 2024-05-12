@@ -68,7 +68,7 @@ import kotlinx.coroutines.launch
 @Composable
 fun CupertinoSlider(
     value: Float,
-    onValueChanged: (value: Float) -> Unit,
+    onValueChange: (value: Float) -> Unit,
     modifier: Modifier = Modifier,
     steps: Int = 0,
     enabled: Boolean = true,
@@ -156,7 +156,7 @@ fun CupertinoSlider(
 
     LaunchedEffect(adjustedHorizontalBiasFraction) {
         if (adjustedHorizontalBiasFraction != value) {
-            onValueChanged(adjustedHorizontalBiasFraction)
+            onValueChange(adjustedHorizontalBiasFraction)
         }
     }
 

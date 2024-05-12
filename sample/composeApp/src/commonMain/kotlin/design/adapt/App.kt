@@ -40,10 +40,13 @@ import androidx.compose.material.icons.automirrored.outlined.ArrowForward
 import androidx.compose.material3.Button
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.IconButton
+import androidx.compose.material3.Slider
 import androidx.compose.material3.Switch
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableFloatStateOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
@@ -56,6 +59,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import design.adapt.cupertino.CupertinoSlider
 import design.adapt.cupertino.CupertinoSpinner
 import design.adapt.cupertino.IOSButton
 import design.adapt.cupertino.IOSToggle
@@ -63,6 +67,7 @@ import design.adapt.cupertino.MacOSButton
 import design.adapt.cupertino.MacOSSwitch
 import design.adapt.windows.WindowsButton
 import design.adapt.windows.WindowsProgressRing
+import design.adapt.windows.WindowsSlider
 import design.adapt.windows.WindowsToggleSwitch
 import kotlinx.coroutines.launch
 
@@ -70,7 +75,7 @@ import kotlinx.coroutines.launch
 @Composable
 internal fun App() {
     val coroutineScope = rememberCoroutineScope()
-    val horizontalPagerState = rememberPagerState { 3 }
+    val horizontalPagerState = rememberPagerState { 4 }
 
     AdaptTheme {
         Box(
@@ -137,7 +142,8 @@ internal fun App() {
                     when (page) {
                         0 -> ButtonsDemoPage()
                         1 -> IndicatorsDemoPage()
-                        else -> SwitchesDemoPage()
+                        2 -> SwitchesDemoPage()
+                        else -> SlidersDemoPage()
                     }
                 }
             }
@@ -170,6 +176,11 @@ private fun ColumnScaffold(
 @Composable
 fun SpacedRow(content: @Composable RowScope.() -> Unit) {
     Row(horizontalArrangement = Arrangement.spacedBy(24.dp), content = content)
+}
+
+@Composable
+fun SpacedColumn(content: @Composable ColumnScope.() -> Unit) {
+    Column(verticalArrangement = Arrangement.spacedBy(24.dp), content = content)
 }
 
 @Composable
@@ -303,6 +314,55 @@ fun SwitchesDemoPage() {
                 },
                 header = { AdaptText(text = "Header") }
             )
+        }
+    }
+}
+
+@Composable
+fun SlidersDemoPage() {
+    var value1 by remember { mutableFloatStateOf(0.3f) }
+    var value2 by remember { mutableFloatStateOf(0.1f) }
+    var value3 by remember { mutableFloatStateOf(0.6f) }
+    var value4 by remember { mutableFloatStateOf(0.7f) }
+    var value5 by remember { mutableFloatStateOf(0.4f) }
+    var value6 by remember { mutableFloatStateOf(0.4f) }
+
+    ColumnScaffold(title = "Sliders") {
+        AdaptText(text = "These sliders should look native-like on all platforms")
+        SpacedColumn {
+            AdaptSlider(value = value1, onValueChange = { value1 = it })
+            AdaptSlider(value = value1, onValueChange = {}, enabled = false)
+        }
+        AdaptText(text = "These sliders should use the Material design system on all platforms")
+        SpacedColumn {
+            Slider(value = value2, onValueChange = { value2 = it })
+            Slider(value = value2, onValueChange = {}, enabled = false)
+        }
+        AdaptText(
+            text = "These sliders should use iOS' variant of the Cupertino design system on all " +
+                    "platforms"
+        )
+        CompositionLocalProvider(LocalPlatform provides Platform.IOS) {
+            SpacedColumn {
+                CupertinoSlider(value = value3, onValueChange = { value3 = it })
+                CupertinoSlider(value = value3, onValueChange = {}, enabled = false)
+            }
+        }
+        AdaptText(
+            text = "These sliders should use macOS' variant of the Cupertino design system on all " +
+                    "platforms"
+        )
+        CompositionLocalProvider(LocalPlatform provides Platform.MacOS) {
+            SpacedColumn {
+                CupertinoSlider(value = value4, onValueChange = { value4 = it })
+                CupertinoSlider(value = value4, onValueChange = {}, enabled = false)
+            }
+        }
+        AdaptText(text = "These sliders should use the WinUI design system on all platforms")
+        SpacedColumn {
+            WindowsSlider(value = value5, onValueChange = { value5 = it })
+            WindowsSlider(value = value5, onValueChange = {}, enabled = false)
+            WindowsSlider(value = value6, onValueChange = { value6 = it }, header = { AdaptText(text = "Header") })
         }
     }
 }
