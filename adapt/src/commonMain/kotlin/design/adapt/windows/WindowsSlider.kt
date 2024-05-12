@@ -20,6 +20,7 @@ import androidx.compose.animation.animateColorAsState
 import androidx.compose.animation.core.animateDpAsState
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.gestures.Orientation
+import androidx.compose.foundation.gestures.detectTapGestures
 import androidx.compose.foundation.gestures.draggable
 import androidx.compose.foundation.gestures.rememberDraggableState
 import androidx.compose.foundation.interaction.MutableInteractionSource
@@ -53,6 +54,7 @@ import androidx.compose.ui.graphics.Shape
 import androidx.compose.ui.graphics.StrokeCap
 import androidx.compose.ui.graphics.drawOutline
 import androidx.compose.ui.graphics.drawscope.Stroke
+import androidx.compose.ui.input.pointer.pointerInput
 import androidx.compose.ui.layout.onPlaced
 import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.unit.DpSize
@@ -155,7 +157,12 @@ fun WindowsSlider(
                     enabled = enabled,
                     interactionSource = interactionSource,
                     onDragStarted = { offset -> dragOffsetX = offset.x }
-                ),
+                )
+                .pointerInput(enabled) {
+                    if (enabled) {
+                        detectTapGestures { offset -> dragOffsetX = offset.x }
+                    }
+                },
             contentAlignment = BiasAlignment(
                 horizontalBias = thumbHorizontalAlignmentBias,
                 verticalBias = 0f,
