@@ -19,11 +19,10 @@ package design.adapt.previews.cupertino
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.wrapContentSize
+import androidx.compose.foundation.layout.padding
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.AddCircle
-import androidx.compose.material.icons.filled.Menu
+import androidx.compose.material.icons.automirrored.filled.VolumeMute
+import androidx.compose.material.icons.automirrored.filled.VolumeUp
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableFloatStateOf
@@ -31,6 +30,7 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
@@ -45,9 +45,8 @@ private fun CupertinoSliderPreview() {
     MacOSTheme {
         Column(
             modifier = Modifier
-                .fillMaxSize()
                 .background(Color.White)
-                .wrapContentSize(),
+                .padding(16.dp),
             horizontalAlignment = Alignment.CenterHorizontally,
             verticalArrangement = Arrangement.spacedBy(32.dp),
         ) {
@@ -57,13 +56,19 @@ private fun CupertinoSliderPreview() {
                 steps = 4,
                 leadingIcon = {
                     AdaptIcon(
-                        imageVector = Icons.Default.Menu,
+                        modifier = Modifier
+                            .padding(end = 8.dp)
+                            .alpha(0.7f),
+                        imageVector = Icons.AutoMirrored.Filled.VolumeMute,
                         contentDescription = null
                     )
                 },
                 trailingIcon = {
                     AdaptIcon(
-                        imageVector = Icons.Default.AddCircle,
+                        modifier = Modifier
+                            .padding(start = 8.dp)
+                            .alpha(0.7f),
+                        imageVector = Icons.AutoMirrored.Filled.VolumeUp,
                         contentDescription = null
                     )
                 },

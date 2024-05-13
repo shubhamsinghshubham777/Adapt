@@ -16,6 +16,7 @@
 
 package design.adapt.previews.cupertino
 
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.padding
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
@@ -23,6 +24,7 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import design.adapt.cupertino.MacOSSwitch
@@ -34,7 +36,9 @@ private fun MacOSSwitchPreview() {
     var checked by remember { mutableStateOf(true) }
     MacOSTheme {
         MacOSSwitch(
-            modifier = Modifier.padding(8.dp),
+            modifier = Modifier
+                .background(Color.White)
+                .padding(8.dp),
             checked = checked,
             onCheckedChange = { checked = it },
         )
