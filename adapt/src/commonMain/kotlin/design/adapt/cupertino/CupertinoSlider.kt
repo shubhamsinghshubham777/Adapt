@@ -53,7 +53,7 @@ import androidx.compose.ui.graphics.drawOutline
 import androidx.compose.ui.graphics.drawscope.Stroke
 import androidx.compose.ui.graphics.graphicsLayer
 import androidx.compose.ui.input.pointer.pointerInput
-import androidx.compose.ui.layout.onPlaced
+import androidx.compose.ui.layout.onGloballyPositioned
 import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.unit.DpSize
 import androidx.compose.ui.unit.dp
@@ -205,7 +205,7 @@ fun CupertinoSlider(
                 modifier = Modifier
                     .height(CupertinoSliderDefaults.TrackSize.height)
                     .clip(trackShape)
-                    .onPlaced { coordinates ->
+                    .onGloballyPositioned { coordinates ->
                         val localWidth = coordinates.size.width.toFloat()
                         if (trackWidth != localWidth) {
                             trackWidth = coordinates.size.width.toFloat()

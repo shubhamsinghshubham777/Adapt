@@ -55,7 +55,7 @@ import androidx.compose.ui.graphics.StrokeCap
 import androidx.compose.ui.graphics.drawOutline
 import androidx.compose.ui.graphics.drawscope.Stroke
 import androidx.compose.ui.input.pointer.pointerInput
-import androidx.compose.ui.layout.onPlaced
+import androidx.compose.ui.layout.onGloballyPositioned
 import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.unit.DpSize
 import androidx.compose.ui.unit.dp
@@ -211,7 +211,7 @@ fun WindowsSlider(
                             strokeWidth = size.height,
                         )
                     }
-                    .onPlaced { coordinates ->
+                    .onGloballyPositioned { coordinates ->
                         val localWidth = coordinates.size.width.toFloat()
                         if (sliderWidthPx != localWidth) {
                             sliderWidthPx = localWidth
