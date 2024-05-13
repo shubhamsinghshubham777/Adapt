@@ -37,6 +37,25 @@ would produce the following results on different platforms 👇
 
 Hence, you can mix and match Platform-specific and agnostic components according to your desired output(s) 🌟
 
+## Get Started 🚀
+![Sonatype Nexus (Snapshots)](https://img.shields.io/nexus/s/io.github.shubhamsinghshubham777/adapt?server=https%3A%2F%2Fs01.oss.sonatype.org&style=flat&label=Latest%20Version)
+
+Add the following to your shared module's `build.gradle.kts`:
+```kotlin
+implementation("io.github.shubhamsinghshubham777:adapt:0.0.1-SNAPSHOT") // Get the latest version from GitHub Releases/Tags
+```
+
+### For SNAPSHOT versions
+Add the following to your project level `settings.gradle.kts`:
+```kotlin
+dependencyResolutionManagement {
+    repositories {
+        ...
+        maven("https://s01.oss.sonatype.org/content/repositories/snapshots/") // Add this
+    }
+}
+```
+
 ## Available Components ✅
 
 | Name                | Image                                                     | Platform-agnostic variant |
