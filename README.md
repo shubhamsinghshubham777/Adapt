@@ -1,5 +1,5 @@
 # Adapt
-![badge][badge-android] ![badge][badge-ios] ![badge][badge-js] ![badge][badge-wasm] ![badge][badge-jvm]
+![badge][badge-android] ![badge][badge-ios] ![badge][badge-js] ![badge][badge-jvm]
 
 Adapt is a Compose-based UI component library that provides you components from various commonly
 used design systems on different platforms like Material 3 (for Android & Web), Cupertino (for
@@ -12,7 +12,30 @@ Material components on Apple devices).
 ## Types of components
 Adapt offers the following 2 types of composables/components:
 1. **Platform-specific** - These look the same on all platforms (e.g. `WindowsButton`, `CupertinoSpinner`)
-2. **Platform-agnostic** - These look native-like on every platform (e.g. `AdaptButton`, `AdaptCircularIndicator`)
+2. **Platform-agnostic** - These look native-like on every platform (e.g. `AdaptButton`, `AdaptCircularIndicator`).
+
+## Platform-agnostic components
+Along with Platform-specific components that allow you to write common UI for all platforms, Adapt also provides you 
+with Platform-agnostic components that display native-like components on the current platform you're running.
+
+For example, the following common code:
+```kotlin
+@Composable
+internal fun App() {
+    AdaptButton(
+        modifier = AdaptModifier(common = Modifier.fillMaxSize().wrapContentSize()),
+        onClick = {},
+        text = { AdaptText("Click me") }
+    )
+}
+```
+would produce the following results on different platforms 👇
+
+| Android (Material) | iOS (Cupertino) | Windows (WinUI3) |
+|--------------------|-----------------|------------------|
+| <img src="https://github.com/shubhamsinghshubham777/Adapt/assets/46640516/d43113fb-a0f8-4e05-8543-45e23008c79a" width=250></img> | <img src="https://github.com/shubhamsinghshubham777/Adapt/assets/46640516/c55879b8-5f65-493e-af84-c119de1f968a" width=250></img> | <img src="https://github.com/shubhamsinghshubham777/Adapt/assets/46640516/17cf6a74-d308-4269-99a9-597a483caa65" width=600></img> |
+
+Hence, you can mix and match Platform-specific and agnostic components according to your desired output(s) 🌟
 
 ## Available Components ✅
 
@@ -35,6 +58,7 @@ The long term goal of this library is to recreate all components from major desi
 that look, feel, and behave native-like.
 
 Expected upcoming components are: `Checkbox`, `TextField`, and `Date/Time Pickers`.
+Expected platform support: WASM (JS)
 
 ## Run Demo/Sample
 
@@ -72,4 +96,3 @@ Run the browser application: `./gradlew :sample:composeApp:jsBrowserDevelopmentR
 [badge-ios]: http://img.shields.io/badge/-ios-CDCDCD.svg?style=flat
 [badge-js]: http://img.shields.io/badge/-js-F8DB5D.svg?style=flat
 [badge-jvm]: http://img.shields.io/badge/-jvm-DB413D.svg?style=flat
-[badge-wasm]: https://img.shields.io/badge/-wasm-624FE8.svg?style=flat
