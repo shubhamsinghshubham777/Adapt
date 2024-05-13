@@ -68,6 +68,7 @@ kotlin {
                 @OptIn(org.jetbrains.compose.ExperimentalComposeLibrary::class)
                 implementation(compose.components.resources)
                 implementation(compose.material3)
+                implementation(compose.materialIconsExtended)
                 implementation(compose.runtime)
                 implementation(project(":adapt"))
             }
@@ -129,6 +130,26 @@ android {
     compileOptions {
         sourceCompatibility = JavaVersion.VERSION_17
         targetCompatibility = JavaVersion.VERSION_17
+    }
+    signingConfigs {
+        getByName("debug") {
+            keyAlias = "alias"
+            keyPassword = "password"
+            storeFile = file("./keystore.jks")
+            storePassword = "password"
+        }
+    }
+    buildTypes {
+        getByName("release") {
+            isCrunchPngs = true
+            isMinifyEnabled = true
+            isShrinkResources = true
+            signingConfig = signingConfigs.getByName("debug")
+        }
+        getByName("debug") {
+            isDebuggable = true
+            signingConfig = signingConfigs.getByName("debug")
+        }
     }
 }
 

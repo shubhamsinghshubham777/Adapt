@@ -168,7 +168,7 @@ fun CupertinoSlider(
     }
 
     Row(
-        modifier = modifier,
+        modifier = modifier.graphicsLayer { alpha = if (enabled) 1f else 0.5f },
         horizontalArrangement = Arrangement.spacedBy(7.dp),
         verticalAlignment = Alignment.CenterVertically,
     ) {
@@ -268,7 +268,7 @@ fun CupertinoSlider(
                         else CupertinoSliderDefaults.ThumbWidth,
                         height = CupertinoSliderDefaults.ThumbHeight
                     )
-                    .thumbDropShadow(shape = thumbShape)
+                    .thumbDropShadow(shape = thumbShape, enabled = enabled)
                     .drawBehind {
                         val outline = thumbShape.createOutline(size, layoutDirection, density)
                         drawOutline(outline = outline, color = thumbColor)
@@ -308,9 +308,10 @@ private fun Modifier.trackInnerShadow(shape: Shape) = composed {
     } else this
 }
 
-private fun Modifier.thumbDropShadow(shape: Shape) = composed {
-    if (LocalPlatform.current.isDesktop) {
-        then(
+private fun Modifier.thumbDropShadow(shape: Shape, enabled: Boolean) = composed {
+    when {
+        !enabled -> this
+        LocalPlatform.current.isDesktop -> then(
             Modifier
                 .dropShadow(
                     shape = shape,
@@ -325,8 +326,7 @@ private fun Modifier.thumbDropShadow(shape: Shape) = composed {
                     color = Color.Black.copy(alpha = 0.05f),
                 )
         )
-    } else {
-        then(
+        else -> then(
             Modifier
                 .dropShadow(
                     shape = shape,
@@ -391,11 +391,11 @@ object CupertinoSliderDefaults {
         stepColor: Color = Color(0xFFC9C9C7),
         pressedThumbColor: Color = thumbColor,
         pressedThumbBorderColor: Color = thumbBorderColor,
-        disabledTrackColor: Color = trackColor.copy(alpha = 0.5f),
-        disabledFilledTrackColor: Color = filledTrackColor.copy(alpha = 0.5f),
-        disabledThumbColor: Color = thumbColor.copy(alpha = 0.5f),
-        disabledThumbBorderColor: Color = thumbBorderColor.copy(alpha = 0.5f),
-        disabledStepColor: Color = stepColor.copy(alpha = 0.5f),
+        disabledTrackColor: Color = trackColor,
+        disabledFilledTrackColor: Color = filledTrackColor,
+        disabledThumbColor: Color = thumbColor,
+        disabledThumbBorderColor: Color = thumbBorderColor,
+        disabledStepColor: Color = stepColor,
     ) = CupertinoSliderColors(
         trackColor = trackColor,
         filledTrackColor = filledTrackColor,

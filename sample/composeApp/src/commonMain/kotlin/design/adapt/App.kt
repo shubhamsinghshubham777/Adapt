@@ -16,8 +16,9 @@
 
 package design.adapt
 
+import androidx.compose.animation.animateColorAsState
 import androidx.compose.foundation.ExperimentalFoundationApi
-import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -26,6 +27,7 @@ import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.RowScope
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.systemBarsPadding
@@ -33,16 +35,18 @@ import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.pager.HorizontalPager
 import androidx.compose.foundation.pager.rememberPagerState
 import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.outlined.ArrowBack
 import androidx.compose.material.icons.automirrored.outlined.ArrowForward
+import androidx.compose.material.icons.filled.DarkMode
+import androidx.compose.material.icons.filled.LightMode
 import androidx.compose.material3.Button
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.Slider
 import androidx.compose.material3.Switch
-import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.runtime.getValue
@@ -53,6 +57,8 @@ import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
+import androidx.compose.ui.draw.drawBehind
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
@@ -76,74 +82,99 @@ import kotlinx.coroutines.launch
 internal fun App() {
     val coroutineScope = rememberCoroutineScope()
     val horizontalPagerState = rememberPagerState { 4 }
+    var isLightMode by remember { mutableStateOf(true) }
+    val animatedBackgroundColor by animateColorAsState(
+        if (isLightMode) Color.White else Color.Black
+    )
+    val animatedContentColor by animateColorAsState(
+        if (isLightMode) Color.Black else Color.White
+    )
 
-    AdaptTheme {
-        Box(
-            modifier = Modifier
-                .background(Color.White)
-                .systemBarsPadding()
-                .fillMaxSize()
-        ) {
-            Column {
-                AdaptText(
-                    modifier = Modifier.padding(start = 24.dp, top = 24.dp, end = 24.dp),
-                    text = "Adapt Demo",
-                    style = TextStyle(
-                        fontSize = 28.sp,
-                        fontWeight = FontWeight.Bold,
-                    )
-                )
-                Row(
-                    modifier = Modifier.padding(horizontal = 24.dp, vertical = 16.dp),
-                    verticalAlignment = Alignment.CenterVertically,
-                ) {
-                    IconButton(
-                        onClick = {
-                            coroutineScope.launch {
-                                horizontalPagerState.animateScrollToPage(
-                                    page = horizontalPagerState.currentPage - 1,
+    AdaptTheme(
+        configuration = if (isLightMode) lightAdaptThemeConfiguration()
+        else darkAdaptThemeConfiguration()
+    ) {
+        CompositionLocalProvider(LocalContentColor provides animatedContentColor) {
+            Box(
+                modifier = Modifier
+                    .drawBehind { drawRect(color = animatedBackgroundColor) }
+                    .systemBarsPadding()
+                    .fillMaxSize()
+            ) {
+                Column {
+                    Row(
+                        modifier = Modifier.fillMaxWidth(),
+                        horizontalArrangement = Arrangement.SpaceBetween,
+                        verticalAlignment = Alignment.CenterVertically,
+                    ) {
+                        AdaptText(
+                            modifier = Modifier.padding(start = 24.dp, top = 24.dp, end = 24.dp),
+                            text = "Adapt Demo",
+                            style = TextStyle(
+                                fontSize = 28.sp,
+                                fontWeight = FontWeight.Bold,
+                            )
+                        )
+                        AdaptIcon(
+                            modifier = Modifier
+                                .padding(8.dp)
+                                .clip(CircleShape)
+                                .clickable { isLightMode = !isLightMode }
+                                .padding(8.dp),
+                            imageVector = if (isLightMode) Icons.Default.DarkMode
+                            else Icons.Default.LightMode,
+                            contentDescription = null,
+                        )
+                    }
+                    Row(
+                        modifier = Modifier.padding(horizontal = 24.dp, vertical = 16.dp),
+                        verticalAlignment = Alignment.CenterVertically,
+                    ) {
+                        IconButton(
+                            onClick = {
+                                coroutineScope.launch {
+                                    horizontalPagerState.animateScrollToPage(
+                                        page = horizontalPagerState.currentPage - 1,
+                                    )
+                                }
+                            },
+                            content = {
+                                AdaptIcon(
+                                    imageVector = Icons.AutoMirrored.Outlined.ArrowBack,
+                                    contentDescription = null
                                 )
                             }
-                        },
-                        content = {
-                            AdaptIcon(
-                                imageVector = Icons.AutoMirrored.Outlined.ArrowBack,
-                                contentDescription = null
-                            )
-                        }
-                    )
-                    AdaptText(
-                        modifier = Modifier
-                            .padding(horizontal = 24.dp)
-                            .weight(1f),
-                        text = "Tap or Swipe horizontally to see more pages",
-                        style = TextStyle(textAlign = TextAlign.Center),
-                    )
-                    IconButton(
-                        onClick = {
-                            coroutineScope.launch {
-                                horizontalPagerState.animateScrollToPage(
-                                    page = horizontalPagerState.currentPage + 1,
+                        )
+                        AdaptText(
+                            modifier = Modifier
+                                .padding(horizontal = 24.dp)
+                                .weight(1f),
+                            text = "Tap or Swipe horizontally to see more pages",
+                            style = TextStyle(textAlign = TextAlign.Center),
+                        )
+                        IconButton(
+                            onClick = {
+                                coroutineScope.launch {
+                                    horizontalPagerState.animateScrollToPage(
+                                        page = horizontalPagerState.currentPage + 1,
+                                    )
+                                }
+                            },
+                            content = {
+                                AdaptIcon(
+                                    imageVector = Icons.AutoMirrored.Outlined.ArrowForward,
+                                    contentDescription = null
                                 )
                             }
-                        },
-                        content = {
-                            AdaptIcon(
-                                imageVector = Icons.AutoMirrored.Outlined.ArrowForward,
-                                contentDescription = null
-                            )
+                        )
+                    }
+                    HorizontalPager(state = horizontalPagerState) { page ->
+                        when (page) {
+                            0 -> ButtonsDemoPage(reverseContentColor = animatedBackgroundColor)
+                            1 -> IndicatorsDemoPage()
+                            2 -> SwitchesDemoPage()
+                            else -> SlidersDemoPage()
                         }
-                    )
-                }
-                HorizontalPager(
-                    state = horizontalPagerState,
-                    beyondBoundsPageCount = 1,
-                ) { page ->
-                    when (page) {
-                        0 -> ButtonsDemoPage()
-                        1 -> IndicatorsDemoPage()
-                        2 -> SwitchesDemoPage()
-                        else -> SlidersDemoPage()
                     }
                 }
             }
@@ -184,19 +215,17 @@ fun SpacedColumn(content: @Composable ColumnScope.() -> Unit) {
 }
 
 @Composable
-private fun ButtonsDemoPage() {
+private fun ButtonsDemoPage(reverseContentColor: Color) {
     ColumnScaffold(title = "Buttons") {
         AdaptText(text = "This button should look native-like on all platforms")
         AdaptButton(
             onClick = {},
             text = { AdaptText(text = "Adapt Button") }
         )
-        AdaptText(
-            text = "This button should use the Material design system on all platforms"
-        )
+        AdaptText(text = "This button should use the Material design system on all platforms")
         Button(
             onClick = {},
-            content = { Text(text = "Android Button") }
+            content = { AdaptText(text = "Android Button", color = reverseContentColor) }
         )
         AdaptText(
             text = "This button should use iOS' variant of the Cupertino design " +
@@ -214,9 +243,7 @@ private fun ButtonsDemoPage() {
             onClick = {},
             text = { AdaptText(text = "macOS Button") }
         )
-        AdaptText(
-            text = "This button should use the WinUI design system on all platforms",
-        )
+        AdaptText(text = "This button should use the WinUI design system on all platforms")
         WindowsButton(
             onClick = {},
             text = { AdaptText(text = "Windows Button") }

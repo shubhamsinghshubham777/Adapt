@@ -29,9 +29,7 @@ import design.adapt.windows.WindowsTheme
 
 @Preview
 @Composable
-private fun ProgressRingPreview(
-    modifier: Modifier = Modifier,
-) {
+private fun ProgressRingPreview() {
     WindowsTheme {
         Column(
             modifier = Modifier.padding(16.dp),
