@@ -37,6 +37,9 @@ that look, feel, and behave native-like.
 Expected upcoming components are: `Checkbox`, `TextField`, and `Date/Time Pickers`.
 
 ## Run Demo/Sample
+
+https://github.com/shubhamsinghshubham777/Adapt/assets/46640516/2cdbcc06-64f0-4045-880d-db968bb6dcfc
+
 This repository also contains a sample Compose Multiplatform app that showcases the components
 provided by this library. You can check out this repository and simply run the app, but before you
 do that, please make sure to:
