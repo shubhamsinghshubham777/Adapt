@@ -56,6 +56,28 @@ dependencyResolutionManagement {
 }
 ```
 
+Replace `Material` based components with `Adapt` based components:
+### Old Code
+```kotlin
+@Composable
+fun MyApp() {
+    MaterialTheme {
+        Button(onClick = {}, content = { Text("Click me") })
+    }
+}
+```
+
+### New Code
+```kotlin
+@Composable
+fun MyApp() {
+    AdaptTheme {
+        AdaptButton(onClick = {}, text = { Text("Click me") })
+        // You can also use platform-specific components like IOSButton, MacOSButton, or WindowsButton
+    }
+}
+```
+
 ## Available Components ✅
 
 | Name                | Image                                                     | Platform-agnostic variant |
