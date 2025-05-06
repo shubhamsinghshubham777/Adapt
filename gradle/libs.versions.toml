@@ -1,8 +1,8 @@
 [versions]
-agp = "8.9.2"
+agp = "8.10.0"
 androidx-activityCompose = "1.10.1"
 androidx-appcompat = "1.7.0"
-compose = "1.8.0+check"
+compose = "1.8.0"
 compose-compiler = "1.5.11"
 kotlin = "2.1.20"
 maven-publish = "0.31.0"
